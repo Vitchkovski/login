@@ -1,0 +1,128 @@
+html, body {
+    height: 100%;
+        margin: 0;
+    padding: 0;
+}
+
+.wrap {
+    min-height: 100%;
+    [rel="main"] {
+        padding-bottom: 30px;
+    }
+}
+
+.header{
+    padding-top: 60px;
+    padding-right: auto;
+    padding-left: auto;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    font-size: 12px;
+    height: 30px;
+    margin-top: -30px;
+}
+
+footer a{
+    
+    border: 0;
+    padding: 0;
+}
+
+footer a,
+footer a:visited {
+    text-decoration: underline;
+    color: inherit
+}
+
+
+
+.admin-table {
+    width: 100%;
+}
+
+
+label {
+    width: 100%;
+}
+
+label[for=info]
+{
+    /*background: #298eea;*/
+    color: #565656;
+}
+
+label[for=error]
+{
+    /*background: #298eea;*/
+    color: #b20000;
+}
+
+.form-item {
+    width: 50%;
+}
+
+.login {
+    background: #298eea;
+    font-family: "proxima-nova";
+    padding: 0;
+    margin: 0
+}
+
+
+.vertical-form {
+    margin: 0 auto;
+    width: 400px;
+    padding: 40px;
+    border-radius: 8px;
+    background: white
+}
+
+
+
+
+
+.vertical-form input[type='text'],
+.vertical-form input[type='email'],
+.vertical-form input[type='password'],
+.vertical-form input[type='number'],
+.vertical-form input[type='submit'] {
+    background: #fcfcfc;
+    border: 2px solid #e7e7e7;
+    margin: 20px auto;
+    padding: 10px;
+    width: 100%;
+    display: block;
+    border-radius: 3px;
+    font-size: 18px;
+    transition: opacity 0.4s;
+    text-align: left;
+    height: auto;
+    -webkit-appearance: none
+}
+
+
+
+
+.vertical-form input[type='submit'] {
+    color: white;
+    background: #298eea;
+    border: 0;
+    font-weight: 500;
+    font-size: 22px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 0;
+    height: auto;
+    -webkit-appearance: none
+}
+
+.vertical-form input:hover[type='submit'] {
+    background-color: #247fd2;
+    -webkit-transition: background 0.1s;
+    -moz-transition: background 0.1s;
+    -o-transition: background 0.1s;
+    transition: background 0.1s
+}
