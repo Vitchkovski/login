@@ -2,6 +2,11 @@ html, body {
     height: 100%;
         margin: 0;
     padding: 0;
+    
+}
+
+.main{
+    background: #298eea;
 }
 
 .wrap {
@@ -11,10 +16,13 @@ html, body {
     }
 }
 
+h1{
+    color: floralwhite;
+}
+
 .header{
     padding-top: 60px;
-    padding-right: auto;
-    padding-left: auto;
+
     text-align: center;
 }
 
@@ -39,10 +47,6 @@ footer a:visited {
 
 
 
-.admin-table {
-    width: 100%;
-}
-
 
 label {
     width: 100%;
@@ -60,21 +64,11 @@ label[for=error]
     color: #b20000;
 }
 
-.form-item {
-    width: 50%;
-}
-
-.login {
-    background: #298eea;
-    font-family: "proxima-nova";
-    padding: 0;
-    margin: 0
-}
 
 
 .vertical-form {
     margin: 0 auto;
-    width: 400px;
+    width: 330px;
     padding: 40px;
     border-radius: 8px;
     background: white
@@ -100,7 +94,7 @@ label[for=error]
     transition: opacity 0.4s;
     text-align: left;
     height: auto;
-    -webkit-appearance: none
+   
 }
 
 
@@ -108,7 +102,7 @@ label[for=error]
 
 .vertical-form input[type='submit'] {
     color: white;
-    background: #298eea;
+    background: #247fd2;
     border: 0;
     font-weight: 500;
     font-size: 22px;
@@ -116,13 +110,11 @@ label[for=error]
     cursor: pointer;
     margin-bottom: 0;
     height: auto;
-    -webkit-appearance: none
+    
+
 }
 
 .vertical-form input:hover[type='submit'] {
-    background-color: #247fd2;
-    -webkit-transition: background 0.1s;
-    -moz-transition: background 0.1s;
-    -o-transition: background 0.1s;
+    background-color: #2072bc;
     transition: background 0.1s
 }

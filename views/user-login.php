@@ -3,13 +3,13 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Vit</title>
+    <title>Registration Page</title>
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 
-<body>
+<body class="main">
     <div class="wrap">
         <div class="header">
             <h1>Registration</h1>
