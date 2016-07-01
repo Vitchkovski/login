@@ -1,13 +1,40 @@
 html, body {
     height: 100%;
-        margin: 0;
+    margin: 0;
     padding: 0;
+    font-family: sans-serif;
+    background-color: #F2F2F2;
     
 }
 
-.main{
-    background: #298eea;
+
+
+h1
+{
+  font-size: 24px;
+  font-weight: 200;
+  line-height: 1em;
+    color: #424f59;
+     padding-top: 20px;
 }
+
+body {
+    /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+    font-size: 14px;
+    line-height: 1.42857143;
+    
+    background-color: #fff;
+        color: #424f59;
+  font-size: 14px;
+  height: 100%;
+        
+}
+
+* {
+    box-sizing: border-box;
+  
+}
+
 
 .wrap {
     min-height: 100%;
@@ -16,9 +43,7 @@ html, body {
     }
 }
 
-h1{
-    color: floralwhite;
-}
+
 
 .header{
     padding-top: 60px;
@@ -31,6 +56,7 @@ footer {
     font-size: 12px;
     height: 30px;
     margin-top: -30px;
+   color: #424f59;
 }
 
 footer a{
@@ -49,13 +75,14 @@ footer a:visited {
 
 
 label {
-    width: 100%;
+    width: 300px;
 }
 
 label[for=info]
 {
     /*background: #298eea;*/
-    color: #565656;
+    
+   /* color: #565656;*/
 }
 
 label[for=error]
@@ -67,33 +94,73 @@ label[for=error]
 
 
 .vertical-form {
-    margin: 0 auto;
+   border-radius: 4px;
+    box-shadow: 0 1px 5px #8a9ba8;
     width: 330px;
-    padding: 40px;
-    border-radius: 8px;
+   
     background: white
 }
 
+.vertical-form-bottom{
+    width: 330px;
+   margin-top: 30px;
+    height: 60px;
+    border-radius: 4px;
+    background: white;
+    box-shadow: 0 1px 5px #8a9ba8;
+      background: #fcfcfc;
+    
+    margin-top: 20px;
+    
+   
+    padding: 10px;
+   
+    
+    font-size: 18px;
+    
+    text-align: left;
+    height: auto;
+    
+}
 
 
+.vertical-form input[type='email']{
+    margin-top: 15px;
+    background: #fcfcfc;
+    border: 1px solid #e7e7e7;
+    
+    
+    padding: 10px;
+    width: 250px;
+    display: inline;
+    border-radius: 3px;
+    font-size: 16px;
+   
+    transition: opacity 0.4s;
+    text-align: left;
+    height: 40px;
+}
 
 
 .vertical-form input[type='text'],
-.vertical-form input[type='email'],
+
 .vertical-form input[type='password'],
 .vertical-form input[type='number'],
 .vertical-form input[type='submit'] {
     background: #fcfcfc;
-    border: 2px solid #e7e7e7;
-    margin: 20px auto;
+    border: 1px solid #e7e7e7;
+    margin-top: 20px;
+    
+   
+    
     padding: 10px;
-    width: 100%;
-    display: block;
-    border-radius: 3px;
-    font-size: 18px;
+    width: 250px;
+    display: inline;
+   
+    font-size: 16px;
     transition: opacity 0.4s;
     text-align: left;
-    height: auto;
+    height: 40px;
    
 }
 
@@ -102,19 +169,20 @@ label[for=error]
 
 .vertical-form input[type='submit'] {
     color: white;
-    background: #247fd2;
+    background: #0996f8;
     border: 0;
+    width: 250px;
     font-weight: 500;
     font-size: 22px;
     text-align: center;
     cursor: pointer;
-    margin-bottom: 0;
-    height: auto;
+    margin-bottom: 30px;
+    height: 50px;
     
 
 }
 
 .vertical-form input:hover[type='submit'] {
-    background-color: #2072bc;
+    background-color: #0887df;
     transition: background 0.1s
 }
