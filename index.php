@@ -30,12 +30,13 @@ $link = db_connect();
         
         include("views/user-login.php");
         }
-            else 
+            else {
               $incorrect_pass = 1;
             $id = 0;
             $email = $_POST['email'];
             $login = $_POST['login'];
              include("views/user-login.php");
+            }
         }else {
             //User exist. Attempting to login...
             $user = user_login($link, $_POST['login'], $_POST['email'], $_POST['pass']);
