@@ -49,4 +49,10 @@ $user = mysqli_fetch_assoc($result);
     
     return $user;
 }
+
+function password_check($pass){
+    if (strlen($pass) < 6) return false;
+        else
+        return true;
+}
 ?>

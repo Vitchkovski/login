@@ -31,7 +31,7 @@
                 <input type="submit" value="Save"><br>
             </form>
         </div>
-                <?php if (!empty($_POST) && $id == 0) { ?>
+                <?php if (!empty($_POST) && $id == 0 && !isset($incorrect_pass)) { ?>
         <div align = "center">
             <form class="vertical-form-bottom">
 
@@ -56,6 +56,15 @@
         <div align = "center">
             <form class="vertical-form-bottom">
                 <input id="info" type="hidden" readonly><label for="info">User <?=$login?> has been created. User ID is: <?=$id?></label>
+            </form>
+        </div>
+                <?php } ?>
+        
+        
+                <?php if (isset($incorrect_pass)) {?>
+        <div align = "center">
+            <form class="vertical-form-bottom">
+                <input id="error" type="hidden" readonly><label for="error">Password should contain at least 6 signs!</label>
             </form>
         </div>
                 <?php } ?>
