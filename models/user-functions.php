@@ -19,7 +19,7 @@ function user_new($link, $login, $email, $pass){
     
 }
 
-function user_check ($link, $login, $email)
+function user_check ($link, $login, $email) //checking if user with provided params is already exist
 {
     
     $query = sprintf("select * from users where login = '%s' and email = '%s'", $login, $email);
