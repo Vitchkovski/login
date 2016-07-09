@@ -14,6 +14,7 @@
         <div class="header">
         </div>
         <div align = "center">
+            
             <form class="vertical-form" method="post">
                 <h1>Registration</h1>
 

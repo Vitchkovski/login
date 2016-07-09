@@ -2,7 +2,7 @@
 
 define('MYSQL_SERVER','localhost');
 define('MYSQL_USER','root');
-define('MYSQL_PASSWORD','vbnqp98F');
+define('MYSQL_PASSWORD','');
 define('MYSQL_DB','project');
 
 function db_connect(){

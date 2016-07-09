@@ -21,8 +21,9 @@ function user_new($link, $login, $email, $pass){
 
 function user_check ($link, $login, $email) //checking if user with provided params is already exist
 {
+    $escaped_login = mysqli_real_escape_string( $link, $login);
     
-    $query = sprintf("select * from users where login = '%s' and email = '%s'", $login, $email);
+    $query = sprintf("select * from users where login = '%s' and email = '%s'", $escaped_login, $email);
     $result = mysqli_query($link,$query);
     
     if (!$result)
