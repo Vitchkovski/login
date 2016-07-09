@@ -4,7 +4,6 @@ require_once("database.php");
 require_once("models/user-functions.php");
 
 
-
 $link = db_connect();
 
 
@@ -15,67 +14,64 @@ if (!empty($_POST))
 //escaping special & space characters first for all input
 if (!empty($_POST['login']))
 {
-$userEscapedSubmittedLogin = htmlspecialchars(ltrim(rtrim($_POST['login'])));
+$userEscapedLogin = htmlspecialchars(ltrim(rtrim($_POST['login'])));
 }
 if (!empty($_POST['email']))
 {
-$userEscapedSubmittedEmail = htmlspecialchars(ltrim(rtrim($_POST['email'])));
+$userEscapedEmail = htmlspecialchars(ltrim(rtrim($_POST['email'])));
 }
-if (!empty($_POST['pass']))
+if (!empty($_POST['password']))
 {
-$userEscapedSubmittedPassword = htmlspecialchars($_POST['pass']);
+$userEscapedPassword = htmlspecialchars($_POST['password']);
 }
 
     
 
 
-    if (user_check ($link, $userEscapedSubmittedLogin, $userEscapedSubmittedEmail) < 1)
+    if (!checkIfUserExist ($link, $userEscapedLogin, $userEscapedEmail))
     //User does not exist. Creating user in the database
     {
-        if (password_check($userEscapedSubmittedPassword) == true)
+        if (validateIfPasswordSecure($userEscapedPassword))
         //pass is complicated enough  
         {            
-            user_new($link, $userEscapedSubmittedLogin, $userEscapedSubmittedEmail, $userEscapedSubmittedPassword);
-            //immideatly after login - retrieving id
-            $user = user_login($link,  $userEscapedSubmittedLogin, $userEscapedSubmittedEmail, $userEscapedSubmittedPassword);
-        
-            (int)$id = $user['id'];
-            $email = $user['email'];
-            $login = $user['login'];
+            addNewUserToDB($link, $userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
             
-            $logged_user_flag = 0; 
-        
+            //immideatly after login - retrieving id
+            $userInfo = retriveUserInfo($link,  $userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
+            (int)$userId = $userInfo['id'];
+                        
+            $userCreatedFlag = true;
+            
             include("views/user-login.php");
         }
         else
         //password is to short. Notifying user.
         {
-            $incorrect_pass = 1;
-            $id = 0;
-            $email = $userEscapedSubmittedEmail;
-            $login = $userEscapedSubmittedLogin;
+            $passwordIsToShortFlag = true;
+            
             include("views/user-login.php");
+            
         }
     }
-    else 
+    else
     //User is already exist. Retrieving id.
     {
-        $user = user_login($link, $userEscapedSubmittedLogin, $userEscapedSubmittedEmail, $_POST['pass']);
+        $userInfo = retriveUserInfo($link, $userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
         if (isset($user['id']))
         {
-            (int)$id = $user['id'];
-            $email = $user['email'];
-            $login = $user['login'];
-            $logged_user_flag = 1;
+            (int)$userId = $userInfo['id'];
+            
+            $thisIsLoggedUserFlag = true;
+            
             include("views/user-login.php");
             //Login Succesfull
         } 
         else 
         {
-            //password is incorrect - setting id to 0 (unexisting user)
-            $id = 0;
-            $email = $userEscapedSubmittedEmail;
-            $login = $userEscapedSubmittedLogin;
+            //password is incorrect
+            
+            $passwordIsIncorrectFlag = true;
+
             include("views/user-login.php");
             //There is an existing user!
         }
@@ -83,11 +79,12 @@ $userEscapedSubmittedPassword = htmlspecialchars($_POST['pass']);
 }
 
 else
+//Nothing submitting yet - form just opened. Defining variables.
 {
-    //default state. Defining variables.
     $id = "";
-    $email = "";
-    $login = "";
+            
+    $userEscapedEmail = "";
+    $userEscapedLogin = "";
     include("views/user-login.php");
    
 }
