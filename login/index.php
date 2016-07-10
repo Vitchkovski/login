@@ -1,7 +1,7 @@
 <?php
 
-require_once("database.php");
-require_once("models/user-functions.php");
+require_once("../database.php");
+require_once("../models/user-functions.php");
 
 
 //$link = "";
@@ -28,7 +28,7 @@ $userEscapedPassword = htmlspecialchars($_POST['password']);
     
 
 
-    if (!checkIfUserExist ($userEscapedLogin, $userEscapedEmail))
+/*    if (!checkIfUserExist ($userEscapedLogin, $userEscapedEmail))
     //User does not exist. Creating user in the database
     {
         if (validateIfPasswordSecure($userEscapedPassword))
@@ -57,7 +57,7 @@ $userEscapedPassword = htmlspecialchars($_POST['password']);
     //User is already exist. Retrieving id.
     {
         $userInfo = retriveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
-        if (isset($userInfo['id']))
+        if (isset($user['id']))
         {
             (int)$userId = $userInfo['id'];
             
@@ -76,7 +76,7 @@ $userEscapedPassword = htmlspecialchars($_POST['password']);
             //There is an existing user!
         }
     }
-}
+*/}
 
 else
 //Nothing submitted yet - form just opened. Defining variables.
@@ -85,7 +85,7 @@ else
             
     $userEscapedEmail = "";
     $userEscapedLogin = "";
-    include("views/userRegister.php");
+    include("../views/userLogin.php");
    
 }
 

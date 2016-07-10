@@ -71,12 +71,17 @@ label[for=error] {
     color: #b20000;
 }
 
-.vertical-form {
+.vertical-form,
+.vertical-form-login{
     border-radius: 4px;
     box-shadow: 0 1px 5px #8a9ba8;
     width: 330px;
     height: 370px;
     background: white
+}
+
+.vertical-form-login{
+    height: 310px;
 }
 
 .vertical-form-bottom {
@@ -108,7 +113,10 @@ label[for=error] {
 
 .vertical-form input[type='text'],
 .vertical-form input[type='password'],
-.vertical-form input[type='number'] {
+.vertical-form input[type='number'] ,
+.vertical-form-login input[type='text'],
+.vertical-form-login  input[type='password'],
+.vertical-form-login  input[type='number'] {
     background: #fcfcfc;
     border: 1px solid #e7e7e7;
     margin-top: 20px;
@@ -119,7 +127,8 @@ label[for=error] {
     height: 40px;
 }
 
-.vertical-form input[type='submit'] {
+.vertical-form input[type='submit'],
+.vertical-form-login input[type='submit']{
     color: white;
     background: #0996f8;
     border: 0;
@@ -133,7 +142,8 @@ label[for=error] {
     height: 50px;
 }
 
-.vertical-form input:hover[type='submit'] {
+.vertical-form input:hover[type='submit'],
+.vertical-form-login input:hover[type='submit']{
     background-color: #0887df;
     transition: background 0.1s
 }
