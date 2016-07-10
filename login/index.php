@@ -3,6 +3,14 @@
 require_once("../database.php");
 require_once("../models/user-functions.php");
 
+if (!empty($_GET['login']))
+{
+$userEscapedLogin = htmlspecialchars(ltrim(rtrim($_GET['login'])));
+}
+if (!empty($_GET['email']))
+{
+$userEscapedEmail = htmlspecialchars(ltrim(rtrim($_GET['email'])));
+}
 
 //$link = "";
 
@@ -28,63 +36,44 @@ $userEscapedPassword = htmlspecialchars($_POST['password']);
     
 
 
-/*    if (!checkIfUserExist ($userEscapedLogin, $userEscapedEmail))
-    //User does not exist. Creating user in the database
-    {
-        if (validateIfPasswordSecure($userEscapedPassword))
-        //pass is complicated enough  
-        {            
-            addNewUserToDB($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
-            
-            //immideatly after login - retrieving id
-            $userInfo = retriveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
-            (int)$userId = $userInfo['id'];
-                        
-            $userCreatedFlag = true;
-            
-            include("views/userRegister.php");
-        }
-        else
-        //password is to short. Notifying user.
-        {
-            $passwordIsToShortFlag = true;
-            
-            include("views/userRegister.php");
-            
-        }
-    }
-    else
-    //User is already exist. Retrieving id.
-    {
         $userInfo = retriveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
-        if (isset($user['id']))
+        if (isset($userInfo['id']))
         {
             (int)$userId = $userInfo['id'];
+            $userEmail = $userInfo['email'];
+            $userName = $userInfo['login'];
             
-            $thisIsLoggedUserFlag = true;
+            //$thisIsLoggedUserFlag = true;
             
-            include("views/userRegister.php");
+            include("../views/userPersonalInfo.php");
             //Login Succesfull
         } 
         else 
         {
-            //password is incorrect
+            //credentials are incorrect
             
-            $passwordIsIncorrectFlag = true;
+            $credentialsAreIncorrectFlag = true;
 
-            include("views/userRegister.php");
+            include("../views/userLogin.php");
             //There is an existing user!
         }
-    }
-*/}
+    
+
+}
 
 else
 //Nothing submitted yet - form just opened. Defining variables.
 {
-    $id = "";
-            
+    //$id = "";
+    if (!isset($userEscapedEmail)) 
+    {
     $userEscapedEmail = "";
+    }
+    if (!isset($userEscapedLogin)) 
+    {
     $userEscapedLogin = "";
+    }
+   
     include("../views/userLogin.php");
    
 }

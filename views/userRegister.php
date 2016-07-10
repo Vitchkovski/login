@@ -24,26 +24,13 @@
             </form>
         </div>
  
-        <?php if (!empty($_POST) && isset($passwordIsIncorrectFlag)) 
+        <?php if (!empty($_POST) && isset($userIsAlreadyExistFlag)) 
         { ?>
         <div align="center">
             <form class="vertical-form-bottom">
-                <input id="error" type="hidden" readonly><label for="error">User you entered is already exist. Either provide a correct password or create a new user.</label>
+                <input id="error" type="hidden" readonly><label for="error">User you entered is already exist. Either choose another credentials or <a class="sign-in" href="login">login</a></label>
             </form>
         </div>
-
-        <?php 
-        }
-        
-        if (!empty($_POST) && isset($thisIsLoggedUserFlag)) 
-        {?>
-        <div align="center">
-            <form class="vertical-form-bottom">
-
-                <input id="info" type="hidden" readonly><label for="info">Welcome, <?=$userEscapedLogin?>. Your ID is: <?=$userId?></label>
-            </form>
-        </div>
-
 
         <?php 
         } 

@@ -35,6 +35,13 @@ body {
 
 }
 
+hr {
+   border: none; /* Убираем границу для браузера Firefox */
+    color: #8a9ba8; /* Цвет линии для остальных браузеров */
+    background-color: #8a9ba8; /* Цвет линии для браузера Firefox и Opera */
+    height: 1.2px; /* Толщина линии */
+}
+
 a:hover {
     text-decoration: underline;
 }
@@ -80,9 +87,7 @@ label[for=error] {
     background: white
 }
 
-.vertical-form-login{
-    height: 310px;
-}
+
 
 .vertical-form-bottom {
     width: 330px;
@@ -99,7 +104,8 @@ label[for=error] {
     height: auto;
 }
 
-.vertical-form input[type='email'] {
+.vertical-form input[type='email'],
+.vertical-form-login input[type='email']{
     margin-top: 15px;
     background: #fcfcfc;
     border: 1px solid #e7e7e7;

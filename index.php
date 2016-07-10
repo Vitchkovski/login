@@ -56,14 +56,18 @@ $userEscapedPassword = htmlspecialchars($_POST['password']);
     else
     //User is already exist. Retrieving id.
     {
-        $userInfo = retriveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
+        $userIsAlreadyExistFlag = true;
+        include("views/userRegister.php");
+        /*$userInfo = retriveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
         if (isset($userInfo['id']))
         {
             (int)$userId = $userInfo['id'];
+            $userEmail = $userInfo['email'];
+            $userName = $userInfo['login'];
             
             $thisIsLoggedUserFlag = true;
             
-            include("views/userRegister.php");
+            include("views/userPersonalInfo.php");
             //Login Succesfull
         } 
         else 
@@ -74,14 +78,14 @@ $userEscapedPassword = htmlspecialchars($_POST['password']);
 
             include("views/userRegister.php");
             //There is an existing user!
-        }
+        }*/
     }
 }
 
 else
 //Nothing submitted yet - form just opened. Defining variables.
 {
-    $id = "";
+    //$id = "";
             
     $userEscapedEmail = "";
     $userEscapedLogin = "";
