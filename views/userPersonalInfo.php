@@ -10,29 +10,16 @@
 <body class="main">
     <div class="wrap">
         <div class="header">
-        </div>
-        
-
-        
-       <div align="center">
+        </div>        
+        <div align="center">
             <form class="vertical-form-bottom">
-
-                <p><input id="info" type="hidden" readonly><label for="info">Welcome to your Personal Info page. </label></p>
-            
-       
-            
-       
-           
-
                 <p><input id="info" type="hidden" readonly><label for="info">ID: <?=$userId?><br>
                 Username: <?=$userName?><br>
                 Email: <?=$userEmail?></label></p>
-                </form>
-           <p align="center"><a class="sign-in" href="../" align="right">Logout</a></p>
+                
+                <p align="center"><a class="sign-in" href="../login?action=logout">Logout</a></p>
+            </form>
         </div>
- 
-       
-
     </div>
     <footer>
         Personal Info / 2016

@@ -1,11 +1,7 @@
 <?php
 
 require_once("database.php");
-require_once("models/user-functions.php");
-
-
-//$link = "";
-
+require_once("models/userFunctions.php");
 
 if (!empty($_POST))
 //Something has been submitted through the form
@@ -48,7 +44,6 @@ $userEscapedPassword = htmlspecialchars($_POST['password']);
         //password is to short. Notifying user.
         {
             $passwordIsToShortFlag = true;
-            
             include("views/userRegister.php");
             
         }
@@ -57,36 +52,17 @@ $userEscapedPassword = htmlspecialchars($_POST['password']);
     //User is already exist. Retrieving id.
     {
         $userIsAlreadyExistFlag = true;
+        
+        session_start(); 
+        $_SESSION['userSessionEmail'] = $userEscapedEmail;
+        $_SESSION['userSessionLogin'] = $userEscapedLogin;
         include("views/userRegister.php");
-        /*$userInfo = retriveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
-        if (isset($userInfo['id']))
-        {
-            (int)$userId = $userInfo['id'];
-            $userEmail = $userInfo['email'];
-            $userName = $userInfo['login'];
-            
-            $thisIsLoggedUserFlag = true;
-            
-            include("views/userPersonalInfo.php");
-            //Login Succesfull
-        } 
-        else 
-        {
-            //password is incorrect
-            
-            $passwordIsIncorrectFlag = true;
-
-            include("views/userRegister.php");
-            //There is an existing user!
-        }*/
     }
 }
 
 else
 //Nothing submitted yet - form just opened. Defining variables.
 {
-    //$id = "";
-            
     $userEscapedEmail = "";
     $userEscapedLogin = "";
     include("views/userRegister.php");

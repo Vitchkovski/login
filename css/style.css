@@ -28,11 +28,18 @@ body {
 
 .sign-in {
     text-decoration: none;
-    color: #0996f8;
+    color: #546069;
+  
     font-size: 13px;
     font-weight: 300;
     font-family: "Fira Sans",Helvetica,Arial,sans-serif;
 
+}
+
+.inner-text-href{
+    text-decoration: none;
+    color: #b20000;
+    
 }
 
 hr {
@@ -76,6 +83,7 @@ label[for=info] {
 label[for=error] {
     /*background: #298eea;*/
     color: #b20000;
+    
 }
 
 .vertical-form,
@@ -148,8 +156,17 @@ label[for=error] {
     height: 50px;
 }
 
+.vertical-form-login input[type='submit']{
+background-color: #28cb75;
+}
+
 .vertical-form input:hover[type='submit'],
-.vertical-form-login input:hover[type='submit']{
+{
     background-color: #0887df;
     transition: background 0.1s
+}
+
+.vertical-form-login input:hover[type='submit']{
+    transition: background 0.1s;
+    background-color: #24b669;
 }

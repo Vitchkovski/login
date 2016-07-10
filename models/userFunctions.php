@@ -2,25 +2,16 @@
 
 function addNewUserToDB ($login, $email, $password)
 {
-    $db = new DB();
+    $db_functions = new DBfunctions();
     
-    $escapedEmail = $db->escapeString($email);
-    $escapedLogin = $db->escapeString($login);
+    $escapedEmail = $db_functions->escapeString($email);
+    $escapedLogin = $db_functions->escapeString($login);
     
     $hashedPassword = hash( 'sha512', $password );
     
-    
-
-	//$sql = "DELETE FROM `blogs` WHERE `id` = $data->id";
     $queryToRun = sprintf("insert into users (login, email, password) values ('%s', '%s', '%s')", $escapedLogin, $escapedEmail, $hashedPassword);
     
-	$data = $db->qryFire($queryToRun);
-    
-    
-    //$sqlResult = mysqli_query($link, $queryToRun);
-    
-    //if (!$data)
-    //    die (mysqli_error($link));
+	$sqlDataReturn = $db_functions->qryFire($queryToRun);
     
     return true;
     
@@ -29,20 +20,14 @@ function addNewUserToDB ($login, $email, $password)
 function checkIfUserExist ($login, $email)
 //checking if user with provided params is already exist
 {
-    $db = new DB();
+    $db_functions = new DBfunctions();
     
-    $escapedEmail = $db->escapeString($email);
-    $escapedLogin = $db->escapeString($login);
+    $escapedEmail = $db_functions->escapeString($email);
+    $escapedLogin = $db_functions->escapeString($login);
     
     $queryToRun = sprintf("select * from users where login = '%s' and email = '%s'", $escapedLogin, $escapedEmail);
     
-    //$userInfo = array();
-    $userInfo = $db->qrySelect($queryToRun);
-    
-    //$numberOfRows = count($data);
-    
-    //$numberOfRows = mysqli_num_rows($sqlResult);
-    
+    $userInfo = $db_functions->qrySelect($queryToRun);
     
     if (!is_null($userInfo['id']))
         return true;
@@ -53,15 +38,15 @@ function checkIfUserExist ($login, $email)
 
 function retriveUserInfo ($login, $email, $password)
 {
-    $db = new DB();
+    $db_functions = new DBfunctions();
     
-    $escapedEmail = $db->escapeString($email);
-    $escapedLogin = $db->escapeString($login);
+    $escapedEmail = $db_functions->escapeString($email);
+    $escapedLogin = $db_functions->escapeString($login);
     $hashedPassword = hash( 'sha512', $password );
     
     $queryToRun = sprintf("select * from users where login = '%s' and email = '%s' and password = '%s'", $escapedLogin, $escapedEmail, $hashedPassword);
     
-    $userInfo = $db->qrySelect($queryToRun);
+    $userInfo = $db_functions->qrySelect($queryToRun);
     
     return $userInfo;
 }

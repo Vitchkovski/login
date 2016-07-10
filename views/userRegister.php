@@ -28,7 +28,7 @@
         { ?>
         <div align="center">
             <form class="vertical-form-bottom">
-                <input id="error" type="hidden" readonly><label for="error">User you entered is already exist. Either choose another credentials or <a class="sign-in" href="login">login</a></label>
+                <input id="error" type="hidden" readonly><label for="error">User you entered is already exist. Either choose another credentials or <a class="inner-text-href" href="login">log in</a></label>
             </form>
         </div>
 
@@ -62,5 +62,4 @@
         Registration Page / 2016
     </footer>
 </body>
-
 </html>
