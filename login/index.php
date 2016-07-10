@@ -84,7 +84,6 @@ else
         $userId = $_SESSION['userSessionId'];
         $userEmail = $_SESSION['userSessionEmail'];
         $userName = $_SESSION['userSessionName'];
-        
         include("../views/userPersonalInfo.php");
     }
     else

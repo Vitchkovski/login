@@ -86,6 +86,22 @@ label[for=error] {
     
 }
 
+a.log-out {
+    
+
+    color: white;
+    background: #0996f8;
+    border: 0;
+    width: 250px;
+    font-weight: 500;
+    font-size: 22px;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 50px;
+}
+
 .vertical-form,
 .vertical-form-login{
     border-radius: 4px;
@@ -95,6 +111,15 @@ label[for=error] {
     background: white
 }
 
+.vertical-form-info{
+    border-radius: 4px;
+    box-shadow: 0 1px 5px #8a9ba8;
+    width: 330px;
+    height: 340px;
+    font-size: 18px;
+    background: white;
+    padding: 10px 40px 10px;
+}
 
 
 .vertical-form-bottom {
@@ -130,7 +155,8 @@ label[for=error] {
 .vertical-form input[type='number'] ,
 .vertical-form-login input[type='text'],
 .vertical-form-login  input[type='password'],
-.vertical-form-login  input[type='number'] {
+.vertical-form-login  input[type='number'],
+.vertical-form-info input[type='text']{
     background: #fcfcfc;
     border: 1px solid #e7e7e7;
     margin-top: 20px;
@@ -142,7 +168,8 @@ label[for=error] {
 }
 
 .vertical-form input[type='submit'],
-.vertical-form-login input[type='submit']{
+.vertical-form-login input[type='submit'],
+.vertical-form-info input[type='submit']{
     color: white;
     background: #0996f8;
     border: 0;
@@ -160,9 +187,19 @@ label[for=error] {
 background-color: #28cb75;
 }
 
+.vertical-form-info input[type='submit']{
+background-color: #b20000;
+}
+
 .vertical-form input:hover[type='submit'],
 {
     background-color: #0887df;
+    transition: background 0.1s
+}
+
+.vertical-form-info input:hover[type='submit']
+{
+    background-color: #99001a;
     transition: background 0.1s
 }
 

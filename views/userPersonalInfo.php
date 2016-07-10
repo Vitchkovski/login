@@ -12,12 +12,13 @@
         <div class="header">
         </div>        
         <div align="center">
-            <form class="vertical-form-bottom">
-                <p><input id="info" type="hidden" readonly><label for="info">ID: <?=$userId?><br>
+            <form class="vertical-form-info" action="../login/index.php?action=logout" method="post">
+                <h1>Personal Info</h1><br>
+                <p align = left><input id="info" type="hidden" readonly><label for="info">ID: <?=$userId?><br></label>
                 Username: <?=$userName?><br>
-                Email: <?=$userEmail?></label></p>
+                Email: <?=$userEmail?></p>
                 
-                <p align="center"><a class="sign-in" href="../login?action=logout">Logout</a></p>
+                <input type="submit" value="Log Out"><br>
             </form>
         </div>
     </div>
