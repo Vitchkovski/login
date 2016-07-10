@@ -16,25 +16,26 @@ if (isset($_GET['action']))
 if (!empty($_POST))
 //Something has been submitted through the form
 {
-
     //escaping special & space characters first for all input
     if (!empty($_POST['login']))
     {
-        $userEscapedLogin = htmlspecialchars(ltrim(rtrim($_POST['login'])));
+       $userEscapedLogin = htmlspecialchars(ltrim(rtrim($_POST['login'])));
     }
-    if (!empty($_POST['email']))
+    /*if (!empty($_POST['email']))
     {
         $userEscapedEmail = htmlspecialchars(ltrim(rtrim($_POST['email'])));
-    }
+    }*/
     if (!empty($_POST['password']))
     {
         $userEscapedPassword = htmlspecialchars($_POST['password']);
     }
 
-
+    $userEscapedEmail = "";
+    
     $userInfo = retriveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
     if (isset($userInfo['id']))
     {
+        
         (int)$userId = $userInfo['id'];
         $userEmail = $userInfo['email'];
         $userName = $userInfo['login'];
@@ -89,6 +90,7 @@ else
     else
     //Session is not started forthe user - opening login page
     {
+        
         if (!isset($userEscapedEmail)) 
         {
             $userEscapedEmail = "";

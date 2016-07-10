@@ -35,10 +35,17 @@ $userEscapedPassword = htmlspecialchars($_POST['password']);
             //immideatly after login - retrieving id
             $userInfo = retriveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
             (int)$userId = $userInfo['id'];
-                        
-            $userCreatedFlag = true;
+            $userEmail = $userInfo['email'];
+            $userName = $userInfo['login'];           
             
-            include("views/userRegister.php");
+            session_start();
+            $_SESSION['thisIsLoggedUser'] = true;
+        
+        $_SESSION['userSessionId'] = $userId;
+        $_SESSION['userSessionEmail'] = $userEmail;
+        $_SESSION['userSessionName'] = $userName;
+                   
+            header("Location: login/index.php");
         }
         else
         //password is to short. Notifying user.

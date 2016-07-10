@@ -111,11 +111,15 @@ a.log-out {
     background: white
 }
 
+.vertical-form-login{
+    height: 315px;
+}
+
 .vertical-form-info{
     border-radius: 4px;
     box-shadow: 0 1px 5px #8a9ba8;
     width: 330px;
-    height: 340px;
+    height: 330px;
     font-size: 18px;
     background: white;
     padding: 10px 40px 10px;

@@ -25,7 +25,7 @@ function checkIfUserExist ($login, $email)
     $escapedEmail = $db_functions->escapeString($email);
     $escapedLogin = $db_functions->escapeString($login);
     
-    $queryToRun = sprintf("select * from users where login = '%s' and email = '%s'", $escapedLogin, $escapedEmail);
+    $queryToRun = sprintf("select * from users where login = '%s' or email = '%s'", $escapedLogin, $escapedEmail);
     
     $userInfo = $db_functions->qrySelect($queryToRun);
     
@@ -44,7 +44,7 @@ function retriveUserInfo ($login, $email, $password)
     $escapedLogin = $db_functions->escapeString($login);
     $hashedPassword = hash( 'sha512', $password );
     
-    $queryToRun = sprintf("select * from users where login = '%s' and email = '%s' and password = '%s'", $escapedLogin, $escapedEmail, $hashedPassword);
+    $queryToRun = sprintf("select * from users where (login = '%s' or email = '%s') and password = '%s'", $escapedLogin, $escapedEmail, $hashedPassword);
     
     $userInfo = $db_functions->qrySelect($queryToRun);
     
