@@ -41,9 +41,9 @@ $userEscapedPassword = htmlspecialchars($_POST['password']);
             session_start();
             $_SESSION['thisIsLoggedUser'] = true;
         
-        $_SESSION['userSessionId'] = $userId;
-        $_SESSION['userSessionEmail'] = $userEmail;
-        $_SESSION['userSessionName'] = $userName;
+            $_SESSION['userSessionId'] = $userId;
+            $_SESSION['userSessionEmail'] = $userEmail;
+            $_SESSION['userSessionName'] = $userName;
                    
             header("Location: login/index.php");
         }

@@ -28,7 +28,7 @@
         { ?>
         <div align="center">
             <form class="vertical-form-bottom">
-                <input id="error" type="hidden" readonly><label for="error">User with such name or enail is already exist. Either provide another credentials or <a class="inner-text-href" href="login">log in</a></label>
+                <input id="error" type="hidden" readonly><label for="error">User with such name or email is already exist. Either provide another credentials or <a class="inner-text-href" href="login">log in</a></label>
             </form>
         </div>
 
