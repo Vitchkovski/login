@@ -19,6 +19,8 @@
                 <input type="text" name="login" placeholder="Login" value="<?=$userEscapedLogin?>" required><br>
                 <input type="password" name="password" placeholder="Password" value="" required><br>
                 <input type="submit" value="Save"><br>
+                <a class="sign-in" href="#">Already have an account? Login.</a>
+                <br>
             </form>
         </div>
  

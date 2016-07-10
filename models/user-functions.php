@@ -1,48 +1,67 @@
 <?php
 
-function addNewUserToDB ($link, $login, $email, $password)
+function addNewUserToDB ($login, $email, $password)
 {
-    $escapedEmail = mysqli_real_escape_string( $link, $email);
-    $escapedLogin = mysqli_real_escape_string( $link, $login);
+    $db = new DB();
+    
+    $escapedEmail = $db->escapeString($email);
+    $escapedLogin = $db->escapeString($login);
+    
     $hashedPassword = hash( 'sha512', $password );
     
-    $queryToRun = sprintf("insert into users (login, email, password) values ('%s', '%s', '%s')", $escapedLogin, $escapedEmail, $hashedPassword);
-    $sqlResult = mysqli_query($link, $queryToRun);
     
-    if (!$sqlResult)
-        die (mysqli_error($link));
+
+	//$sql = "DELETE FROM `blogs` WHERE `id` = $data->id";
+    $queryToRun = sprintf("insert into users (login, email, password) values ('%s', '%s', '%s')", $escapedLogin, $escapedEmail, $hashedPassword);
+    
+	$data = $db->qryFire($queryToRun);
+    
+    
+    //$sqlResult = mysqli_query($link, $queryToRun);
+    
+    //if (!$data)
+    //    die (mysqli_error($link));
     
     return true;
     
 }
 
-function checkIfUserExist ($link, $login, $email)
+function checkIfUserExist ($login, $email)
 //checking if user with provided params is already exist
 {
-    $escapedLogin = mysqli_real_escape_string( $link, $login);
-    $escapedEmail = mysqli_real_escape_string( $link, $email);
+    $db = new DB();
+    
+    $escapedEmail = $db->escapeString($email);
+    $escapedLogin = $db->escapeString($login);
     
     $queryToRun = sprintf("select * from users where login = '%s' and email = '%s'", $escapedLogin, $escapedEmail);
-    $sqlResult = mysqli_query($link,$queryToRun);
-    $numberOfRows = mysqli_num_rows($sqlResult);
     
-    if ($numberOfRows == 0)
-        return false;
+    //$userInfo = array();
+    $userInfo = $db->qrySelect($queryToRun);
     
-    return true;
+    //$numberOfRows = count($data);
+    
+    //$numberOfRows = mysqli_num_rows($sqlResult);
+    
+    
+    if (!is_null($userInfo['id']))
+        return true;
+    
+    return false;
     
 }
 
-function retriveUserInfo ($link, $login, $email, $password)
+function retriveUserInfo ($login, $email, $password)
 {
-    $escapedEmail = mysqli_real_escape_string( $link, $email);
-    $escapedLogin = mysqli_real_escape_string( $link, $login);
+    $db = new DB();
+    
+    $escapedEmail = $db->escapeString($email);
+    $escapedLogin = $db->escapeString($login);
     $hashedPassword = hash( 'sha512', $password );
     
     $queryToRun = sprintf("select * from users where login = '%s' and email = '%s' and password = '%s'", $escapedLogin, $escapedEmail, $hashedPassword);
-    $sqlResult = mysqli_query($link,$queryToRun);
-
-    $userInfo = mysqli_fetch_assoc($sqlResult);
+    
+    $userInfo = $db->qrySelect($queryToRun);
     
     return $userInfo;
 }

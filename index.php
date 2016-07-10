@@ -4,7 +4,7 @@ require_once("database.php");
 require_once("models/user-functions.php");
 
 
-$link = db_connect();
+$link = "";
 
 
 if (!empty($_POST))
@@ -28,16 +28,16 @@ $userEscapedPassword = htmlspecialchars($_POST['password']);
     
 
 
-    if (!checkIfUserExist ($link, $userEscapedLogin, $userEscapedEmail))
+    if (!checkIfUserExist ($userEscapedLogin, $userEscapedEmail))
     //User does not exist. Creating user in the database
     {
         if (validateIfPasswordSecure($userEscapedPassword))
         //pass is complicated enough  
         {            
-            addNewUserToDB($link, $userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
+            addNewUserToDB($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
             
             //immideatly after login - retrieving id
-            $userInfo = retriveUserInfo($link,  $userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
+            $userInfo = retriveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
             (int)$userId = $userInfo['id'];
                         
             $userCreatedFlag = true;
@@ -79,7 +79,7 @@ $userEscapedPassword = htmlspecialchars($_POST['password']);
 }
 
 else
-//Nothing submitting yet - form just opened. Defining variables.
+//Nothing submitted yet - form just opened. Defining variables.
 {
     $id = "";
             
