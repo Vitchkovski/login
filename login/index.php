@@ -30,14 +30,15 @@ if (!empty($_POST))
     $userEscapedLogin = "";
     
     $userInfo = retriveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
+    
     if (isset($userInfo['id']))
+    //credentials are correct
     {
         
         (int)$userId = $userInfo['id'];
         $userEmail = $userInfo['email'];
         $userName = $userInfo['login'];
         
-        //$thisIsLoggedUserFlag = true;
         session_start();
         $_SESSION['thisIsLoggedUser'] = true;
         
@@ -50,12 +51,11 @@ if (!empty($_POST))
     } 
     else 
     {
-        //credentials are incorrect
+        //credentials are incorrect. Notifying user
         
         $credentialsAreIncorrectFlag = true;
         
         include("../views/userLogin.php");
-        //There is an existing user!
     }
     
     
@@ -85,7 +85,7 @@ else
         include("../views/userPersonalInfo.php");
     }
     else
-    //Session is not started forthe user - opening login page
+    //Session is not started for the user - opening login page
     {
         
         if (!isset($userEscapedEmail)) 

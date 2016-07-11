@@ -33,18 +33,7 @@
         </div>
 
         <?php 
-        } 
-        
-        if (!empty($_POST) && isset ($userCreatedFlag)) 
-        {?>
-        <div align="center">
-            <form class="vertical-form-bottom">
-                <input id="info" type="hidden" readonly><label for="info">User <?=$userEscapedLogin?> has been created. User ID is: <?=$userId?></label>
-            </form>
-        </div>
-        <?php 
         } ?>
-
 
         <?php if (isset($passwordIsToShortFlag)) 
         {?>

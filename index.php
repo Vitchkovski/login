@@ -32,7 +32,7 @@ $userEscapedPassword = htmlspecialchars($_POST['password']);
         {            
             addNewUserToDB($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
             
-            //immideatly after login - retrieving id
+            //immideatly after login - retrieving user info
             $userInfo = retriveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
             (int)$userId = $userInfo['id'];
             $userEmail = $userInfo['email'];
@@ -44,7 +44,8 @@ $userEscapedPassword = htmlspecialchars($_POST['password']);
             $_SESSION['userSessionId'] = $userId;
             $_SESSION['userSessionEmail'] = $userEmail;
             $_SESSION['userSessionName'] = $userName;
-                   
+            
+            //redirecting to the personal info page
             header("Location: login/index.php");
         }
         else
