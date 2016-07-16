@@ -6,7 +6,6 @@
     <title>Registration Page</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body class="main">
     <div class="wrap">
         <div class="header">
