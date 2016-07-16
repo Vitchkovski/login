@@ -55,9 +55,9 @@ function retriveUserProducts($userId)
 {
     $db_functions = new DBfunctions();
 
-  /*  $escapedEmail = $db_functions->escapeString($email);
-    $escapedLogin = $db_functions->escapeString($login);
-    $hashedPassword = hash('sha512', $password);*/
+    /*  $escapedEmail = $db_functions->escapeString($email);
+      $escapedLogin = $db_functions->escapeString($login);
+      $hashedPassword = hash('sha512', $password);*/
 
     $queryToRun = sprintf("select * from user_products where user_id = '%s'", $userId);
 

@@ -86,8 +86,8 @@ label[for=error] {
 
 }
 
-.products-table{
-    width:80%;
+.products-table {
+    width: 80%;
     border-radius: 4px;
     box-shadow: 0 1px 5px #8a9ba8;
     margin-top: 20px;
@@ -200,8 +200,7 @@ a.log-out {
     background-color: #b20000;
 }
 
-.vertical-form input:hover[type='submit']
-{
+.vertical-form input:hover[type='submit'] {
     background-color: #0887df;
     transition: background 0.1s
 }
