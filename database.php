@@ -23,12 +23,12 @@ class DBfunctions
 
         if ($qry->num_rows > 0) {
             while ($row = $qry->fetch_assoc()) {
-                $this->sqlDataReturn["id"] = $row['user_id'];
+                $this->sqlDataReturn["user_id"] = $row['user_id'];
                 $this->sqlDataReturn["login"] = $row['login'];
                 $this->sqlDataReturn["email"] = $row['email'];
             }
         } else {
-            $this->sqlDataReturn["id"] = null;
+            $this->sqlDataReturn["user_id"] = null;
         }
         return $this->sqlDataReturn;
         $this->connectDB->close();

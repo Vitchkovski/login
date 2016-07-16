@@ -29,7 +29,7 @@ function checkIfUserExist($login, $email)
 
     $userInfo = $db_functions->qrySelect($queryToRun);
 
-    if (!is_null($userInfo['id']))
+    if (!is_null($userInfo['user_id']))
         return true;
 
     return false;

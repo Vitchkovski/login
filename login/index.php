@@ -28,9 +28,9 @@ if (!empty($_POST)) {
     $userInfo = retriveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
 
     //credentials are correct
-    if (isset($userInfo['id'])) {
+    if (isset($userInfo['user_id'])) {
 
-        (int)$userId = $userInfo['id'];
+        (int)$userId = $userInfo['user_id'];
         $userEmail = $userInfo['email'];
         $userName = $userInfo['login'];
 

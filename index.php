@@ -27,7 +27,7 @@ if (!empty($_POST)) {
 
             //immideatly after login - retrieving user info
             $userInfo = retriveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
-            (int)$userId = $userInfo['id'];
+            (int)$userId = $userInfo['user_id'];
             $userEmail = $userInfo['email'];
             $userName = $userInfo['login'];
 
