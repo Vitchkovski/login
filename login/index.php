@@ -41,7 +41,7 @@ if (!empty($_POST)) {
         $_SESSION['userSessionEmail'] = $userEmail;
         $_SESSION['userSessionName'] = $userName;
 
-        include("../views/userPersonalInfo.php");
+        include("../views/userPersonalPage.php");
         //Login Succesfull
     } else {
         //credentials are incorrect. Notifying user
@@ -69,7 +69,7 @@ if (!empty($_POST)) {
         $userId = $_SESSION['userSessionId'];
         $userEmail = $_SESSION['userSessionEmail'];
         $userName = $_SESSION['userSessionName'];
-        include("../views/userPersonalInfo.php");
+        include("../views/userPersonalPage.php");
     } else {
         //Session is not started for the user - opening login page
         if (!isset($userEscapedEmail)) {
