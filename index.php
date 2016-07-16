@@ -27,9 +27,9 @@ if (!empty($_POST)) {
 
             //immideatly after login - retrieving user info
             $userInfo = retriveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
-            (int)$userId = $userInfo['user_id'];
-            $userEmail = $userInfo['email'];
-            $userName = $userInfo['login'];
+            $userId = $userInfo[0]->user_id;
+            $userEmail = $userInfo[0]->email;
+            $userName = $userInfo[0]->login;
 
             session_start();
             $_SESSION['thisIsLoggedUser'] = true;
@@ -38,8 +38,8 @@ if (!empty($_POST)) {
             $_SESSION['userSessionEmail'] = $userEmail;
             $_SESSION['userSessionName'] = $userName;
 
-            //redirecting to the personal info page
-            header("Location: login/index.php");
+            //redirecting to the personal page
+            header("Location: myPage");
         } else {
             //password is to short. Notifying user.
             $passwordIsToShortFlag = true;

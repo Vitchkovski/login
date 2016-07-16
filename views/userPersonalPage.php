@@ -20,7 +20,32 @@
 
             <input type="submit" value="Log Out"><br>
         </form>
+
+       <?php if (!is_null($userProducts[0])) { ?>
+        <table class="products-table">
+            <tr>
+                <th>IMG</th>
+                <th>Products</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <?php foreach ($userProducts as $uP): ?>
+                    <tr>
+                        <th>IMG Placeholder</th>
+                        <th><em><?= $uP->product_id ?></em></th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                <?php endforeach;
+            } else {?>
+            You do not have products in your cart yet.
+            <?php }?>
+        </table>
+
     </div>
+
+
+
 </div>
 <footer>
     Personal Info / 2016

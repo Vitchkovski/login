@@ -17,18 +17,17 @@ class DBfunctions
         $this->connectDB->connect_error;
     }
 
+
     public function qrySelect($sql)
     {
         $qry = $this->connectDB->query($sql);
 
         if ($qry->num_rows > 0) {
-            while ($row = $qry->fetch_assoc()) {
-                $this->sqlDataReturn["user_id"] = $row['user_id'];
-                $this->sqlDataReturn["login"] = $row['login'];
-                $this->sqlDataReturn["email"] = $row['email'];
+            while ($row = $qry->fetch_object()) {
+                $this->sqlDataReturn[] = $row;
             }
         } else {
-            $this->sqlDataReturn["user_id"] = null;
+            $this->sqlDataReturn[] = null;
         }
         return $this->sqlDataReturn;
         $this->connectDB->close();

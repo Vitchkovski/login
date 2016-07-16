@@ -28,11 +28,13 @@ if (!empty($_POST)) {
     $userInfo = retriveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
 
     //credentials are correct
-    if (isset($userInfo['user_id'])) {
+    if (!is_null($userInfo[0])) {
 
-        (int)$userId = $userInfo['user_id'];
-        $userEmail = $userInfo['email'];
-        $userName = $userInfo['login'];
+        $userId = $userInfo[0]->user_id;
+        $userEmail = $userInfo[0]->email;
+        $userName = $userInfo[0]->login;
+
+        //$userProducts = retriveUserProducts($userId);
 
         session_start();
         $_SESSION['thisIsLoggedUser'] = true;
@@ -41,7 +43,9 @@ if (!empty($_POST)) {
         $_SESSION['userSessionEmail'] = $userEmail;
         $_SESSION['userSessionName'] = $userName;
 
-        include("../views/userPersonalPage.php");
+        header("Location: ../myPage");
+        //include("../views/userPersonalPage.php");
+
         //Login Succesfull
     } else {
         //credentials are incorrect. Notifying user
@@ -69,7 +73,12 @@ if (!empty($_POST)) {
         $userId = $_SESSION['userSessionId'];
         $userEmail = $_SESSION['userSessionEmail'];
         $userName = $_SESSION['userSessionName'];
-        include("../views/userPersonalPage.php");
+
+        //$userProducts = retriveUserProducts($userId);
+
+        header("Location: ../myPage");
+
+        //include("../views/userPersonalPage.php");
     } else {
         //Session is not started for the user - opening login page
         if (!isset($userEscapedEmail)) {
