@@ -23,7 +23,7 @@ class DBfunctions
 
         if ($qry->num_rows > 0) {
             while ($row = $qry->fetch_assoc()) {
-                $this->sqlDataReturn["id"] = $row['id'];
+                $this->sqlDataReturn["id"] = $row['user_id'];
                 $this->sqlDataReturn["login"] = $row['login'];
                 $this->sqlDataReturn["email"] = $row['email'];
             }
