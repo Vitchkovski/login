@@ -36,6 +36,19 @@ function addProductToUserList($userId, $productName, $productCategories)
 {
     $db_functions = new DBfunctions();
 
+    $escapedProductName = $db_functions->escapeString($productName);
+    $escapedProductCategories = $db_functions->escapeString($productCategories);
+
+    //if non-existing product was submitted we must create a record for it in corresponding table
+    $queryToRun = sprintf('select * from user_products where user_id = "%s" and product_name = "%s"', $userId, $escapedProductName);
+    $userProductInfo = $db_functions->qrySelect($queryToRun);
+
+    if (is_null($userProductInfo[0])) {
+        $queryToRun = sprintf('insert into user_products (user_id, product_name) 
+                               values ("%s", "%s")', $userId, $escapedProductName);
+        $sqlDataReturn = $db_functions->qryFire($queryToRun);
+    }
+
     $queryToRun = sprintf('insert into user_product_categories (user_id, 
 									product_id, 
 									category1, 
@@ -43,7 +56,7 @@ function addProductToUserList($userId, $productName, $productCategories)
 values ("%1$s", 
 	   (select product_id from user_products up where up.product_name = "%2$s" and up.user_id = "%1$s"), 
 	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%3$s"), 
-	   sysdate())', $userId, $productName, $productCategories);
+	   sysdate())', $userId, $escapedProductName, $escapedProductCategories);
 
     $sqlDataReturn = $db_functions->qryFire($queryToRun);
 
@@ -100,7 +113,8 @@ function retriveUserProducts($userId)
                                        user_products up 
                                   where upc.user_id = '%s'  
                                         and up.product_id = upc.product_id
-                                        and up.user_id = upc.user_id", $userId);
+                                        and up.user_id = upc.user_id
+                                  order by upc.from_date desc", $userId);
 
     $userProducts = $db_functions->qrySelect($queryToRun);
 
