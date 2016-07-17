@@ -7,7 +7,7 @@ session_start();
 
 
 
-if (!empty($_POST['delete_flag']) && !empty($_POST['product_id'])) {
+if (!empty($_POST['deleteUserProduct']) && !empty($_POST['product_id'])) {
 
     if (isset($_SESSION['thisIsLoggedUser'])){
 

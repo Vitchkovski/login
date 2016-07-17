@@ -99,7 +99,7 @@ label[for=error] {
     width: 80%;
     border-radius: 4px;
     box-shadow: 0 1px 5px #8a9ba8;
-    margin-top: 20px;
+
 }
 
 a.log-out {
@@ -138,6 +138,7 @@ a.log-out {
     font-size: 18px;
     background: white;
     padding: 10px 40px 10px;
+    margin-bottom: 30px;
 }
 
 .vertical-form-bottom {
