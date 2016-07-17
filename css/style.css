@@ -42,6 +42,15 @@ body {
 
 }
 
+.control-button-href{
+    text-decoration: none;
+    color: #546069;
+
+    font-size: 13px;
+    font-weight: 300;
+    font-family: "Fira Sans", Helvetica, Arial, sans-serif;
+}
+
 hr {
     border: none; /* Убираем границу для браузера Firefox */
     color: #8a9ba8; /* Цвет линии для остальных браузеров */

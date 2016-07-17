@@ -14,6 +14,7 @@ class DBfunctions
     public function __construct()
     {
         $this->connectDB = new mysqli(MYSQL_SERVER, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB);
+        $this->connectDB->set_charset("utf8");
         $this->connectDB->connect_error;
     }
 
