@@ -8,17 +8,15 @@ session_start();
 
 
 if (!empty($_POST['delete_flag']) && !empty($_POST['product_id'])) {
-    $deleted = 2;
+
     if (isset($_SESSION['thisIsLoggedUser'])){
-        $deleted = 3;
+
 
         $userId = $_SESSION['userSessionId'];
         $productId =  $_POST['product_id'];
+        $fromDate =  $_POST['from_date'];
 
-        deleteProductFromUserList($userId, $productId);
-        $deleted = 1;
-
-
+        deleteProductFromUserList($userId, $productId, $fromDate);
 
     }
     else {
@@ -39,9 +37,6 @@ if (isset($_SESSION['thisIsLoggedUser'])) {
     $userEmail = $_SESSION['userSessionEmail'];
     $userName = $_SESSION['userSessionName'];
 
-    if (isset($deleted)){
-        echo $deleted;
-    }
 
     $userProducts = retriveUserProducts($userId);
 
