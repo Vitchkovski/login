@@ -23,6 +23,12 @@
 
         <?php if (!is_null($userProducts[0])) { ?>
 
+        <form action="../myPage/" method="post">
+            <th>
+                <input type="hidden" name="newUserProduct" value="true">
+                <input type="submit" value="Add Product">
+        </form>
+
         <table class="products-table">
             <tr>
                 <th>IMG</th>
@@ -47,7 +53,7 @@
                         <th>
                             <input type="hidden" name="product_id" value="<?= $uP->product_id ?>">
                             <input type="hidden" name="from_date" value="<?= $uP->from_date ?>">
-                            <input type="hidden" name="edit_flag" value="true">
+                            <input type="hidden" name="editUserProduct" value="true">
                             <input type="submit" value="Edit">
                     </form>
                     </th>
@@ -55,7 +61,7 @@
                         <th>
                             <input type="hidden" name="product_id" value="<?= $uP->product_id ?>">
                             <input type="hidden" name="from_date" value="<?= $uP->from_date ?>">
-                            <input type="hidden" name="delete_flag" value="true">
+                            <input type="hidden" name="deleteUserProduct" value="true">
                             <input type="submit" value="Delete">
                         </th>
                     </form>
