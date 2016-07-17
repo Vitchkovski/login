@@ -31,6 +31,25 @@ function deleteProductFromUserList($userId, $productId, $fromDate)
 
 }
 
+
+function addProductToUserList($userId, $productName, $productCategories)
+{
+    $db_functions = new DBfunctions();
+
+    $queryToRun = sprintf('insert into user_product_categories (user_id, 
+									product_id, 
+									category1, 
+									from_date) 
+values ("%1$s", 
+	   (select product_id from user_products up where up.product_name = "%2$s" and up.user_id = "%1$s"), 
+	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%3$s"), 
+	   sysdate())', $userId, $productName, $productCategories);
+
+    $sqlDataReturn = $db_functions->qryFire($queryToRun);
+
+    return true;
+}
+
 function checkIfUserExist($login, $email)
 //checking if user with provided params is already exist
 {
@@ -69,8 +88,8 @@ function retriveUserProducts($userId)
 {
     $db_functions = new DBfunctions();
 
-    $queryToRun = sprintf("select p.product_id,
-                                  p.product_name, 
+    $queryToRun = sprintf("select up.product_id,
+                                  up.product_name, 
                                   (select category_name from user_categories uc where uc.category_id = upc.category1) category_name1, 
                                   (select category_name from user_categories uc where uc.category_id = upc.category2) category_name2, 
                                   (select category_name from user_categories uc where uc.category_id = upc.category3) category_name3, 
@@ -78,9 +97,10 @@ function retriveUserProducts($userId)
                                   (select category_name from user_categories uc where uc.category_id = upc.category5) category_name5, 
                                   upc.from_date 
                                   from user_product_categories upc, 
-                                       products p 
+                                       user_products up 
                                   where upc.user_id = '%s'  
-                                        and p.product_id = upc.product_id", $userId);
+                                        and up.product_id = upc.product_id
+                                        and up.user_id = upc.user_id", $userId);
 
     $userProducts = $db_functions->qrySelect($queryToRun);
 

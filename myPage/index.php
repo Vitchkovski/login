@@ -29,16 +29,16 @@ if (!empty($_POST['deleteUserProduct']) && !empty($_POST['product_id'])) {
 
 
 
-/*if (!empty($_POST['newUserProduct'])) {
+if (!empty($_POST['newUserProductSubmitted'])) {
 
     if (isset($_SESSION['thisIsLoggedUser'])){
 
 
         $userId = $_SESSION['userSessionId'];
-        $productId =  $_POST['product_id'];
-        $fromDate =  $_POST['from_date'];
+        $productName =  $_POST['productName'];
+        $productCategories = $_POST['productCategories'];
 
-        deleteProductFromUserList($userId, $productId, $fromDate);
+        addProductToUserList($userId, $productName, $productCategories);
 
     }
     else {
@@ -47,7 +47,7 @@ if (!empty($_POST['deleteUserProduct']) && !empty($_POST['product_id'])) {
 
 
 
-}*/
+}
 
 
 
