@@ -2,6 +2,7 @@
 
 require_once("database.php");
 require_once("models/userFunctions.php");
+require_once("models/dataFunctions.php");
 
 if (!empty($_POST)) {
 //Something has been submitted through the form

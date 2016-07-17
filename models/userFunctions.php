@@ -137,12 +137,6 @@ function retriveUserProducts($userId)
     return $userProducts;
 }
 
-function validateIfPasswordSecure($password)
-{
-    if (strlen($password) < 6)
-        return false;
 
-    return true;
-}
 
 ?>

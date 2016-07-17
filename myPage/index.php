@@ -2,6 +2,7 @@
 
 require_once("../database.php");
 require_once("../models/userFunctions.php");
+require_once("../models/dataFunctions.php");
 
 session_start();
 
