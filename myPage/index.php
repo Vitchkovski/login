@@ -29,6 +29,27 @@ if (!empty($_POST['deleteUserProduct']) && !empty($_POST['product_id'])) {
 
 
 
+/*if (!empty($_POST['newUserProduct'])) {
+
+    if (isset($_SESSION['thisIsLoggedUser'])){
+
+
+        $userId = $_SESSION['userSessionId'];
+        $productId =  $_POST['product_id'];
+        $fromDate =  $_POST['from_date'];
+
+        deleteProductFromUserList($userId, $productId, $fromDate);
+
+    }
+    else {
+        header("Location: ../login");
+    }
+
+
+
+}*/
+
+
 
 
 //Redirecting authorized user to the personal info page

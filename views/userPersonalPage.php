@@ -21,13 +21,25 @@
             <input type="submit" value="Log Out"><br>
         </form>
 
-        <?php if (!is_null($userProducts[0])) { ?>
-
+        <?php if (empty($_POST['newUserProduct'])) { ?>
         <form action="../myPage/" method="post">
             <th>
                 <input type="hidden" name="newUserProduct" value="true">
                 <input type="submit" value="Add Product">
+            </th>
         </form>
+        <?php } ?>
+
+        <?php if (!empty($_POST['newUserProduct'])) { ?>
+            <form enctype="multipart/form-data" class="product-add-form" method="post" action="../myPage/">
+                <input name="productPicture" type="file" >
+                <input type="text" name="productName" placeholder="Product Name" autofocus required>
+                 <input type="text" name="productCategories" placeholder="Product Categories" required>
+                 <input type="submit" value="Add">
+            </form>
+        <?php } ?>
+
+        <?php if (!is_null($userProducts[0])) { ?>
 
         <table class="products-table">
             <tr>
@@ -70,7 +82,7 @@
 
             <?php endforeach;
             } else { ?>
-                You do not have products in your cart yet.
+                <br>You do not have products in your cart yet.
             <?php } ?>
         </table>
 
