@@ -37,6 +37,7 @@ class DBfunctions
     public function qryFire($sql)
     {
         $this->connectDB->query($sql);
+        $this->connectDB->close();
     }
 
     public function escapeString($string)

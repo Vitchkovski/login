@@ -49,6 +49,17 @@ function addProductToUserList($userId, $productName, $productCategories)
         $sqlDataReturn = $db_functions->qryFire($queryToRun);
     }
 
+
+    //if non-existing category was submitted we must create a record for it in corresponding table
+    $queryToRun = sprintf('select * from user_categories where user_id = "%s" and category_name = "%s"', $userId, $escapedProductCategories);
+    $userCategoryInfo = $db_functions->qrySelect($queryToRun);
+
+    if (is_null($userCategoryInfo[0])) {
+        $queryToRun = sprintf('insert into user_categories (user_id, category_name, from_date) 
+                               values ("%s", "%s", now())', $userId, $escapedProductCategories);
+        $sqlDataReturn = $db_functions->qryFire($queryToRun);
+    }
+
     $queryToRun = sprintf('insert into user_product_categories (user_id, 
 									product_id, 
 									category1, 
@@ -56,7 +67,7 @@ function addProductToUserList($userId, $productName, $productCategories)
 values ("%1$s", 
 	   (select product_id from user_products up where up.product_name = "%2$s" and up.user_id = "%1$s"), 
 	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%3$s"), 
-	   sysdate())', $userId, $escapedProductName, $escapedProductCategories);
+	   now())', $userId, $escapedProductName, $escapedProductCategories);
 
     $sqlDataReturn = $db_functions->qryFire($queryToRun);
 
