@@ -33,9 +33,13 @@ function deleteProductFromUserList($userId, $productId, $fromDate)
 }
 
 
-function addProductToUserList($userId, $productName, $productCategories)
+function addProductToUserList($userId, $productName, $productCategoriesString)
 {
     $db_functions = new DBfunctions();
+
+    $categoryDelimetersList = array(",",";",", ","; ");
+    $productCategoriesArray = explodeWithMultipleDelimeters($categoryDelimetersList, $productCategoriesString);
+    var_dump($productCategoriesArray);
 
     $escapedProductName = $db_functions->escapeString($productName);
     $escapedProductCategories = $db_functions->escapeString($productCategories);

@@ -27,7 +27,7 @@
             <form enctype="multipart/form-data" class="product-add-form" method="post" action="../myPage/">
                 <input name="productPicture" type="file" >
                 <input type="text" name="productName" placeholder="Product Name" autofocus required>
-                 <input type="text" name="productCategories" placeholder="Product Categories" required>
+                 <input type="text" name="productCategoriesString" placeholder="Product Categories" required>
                 <input type="hidden" name="newUserProductSubmitted" value="true">
                  <input type="submit" value="Add">
             </form>

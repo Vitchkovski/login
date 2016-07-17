@@ -37,9 +37,11 @@ if (!empty($_POST['newUserProductSubmitted'])) {
 
         $userId = $_SESSION['userSessionId'];
         $productName =  $_POST['productName'];
-        $productCategories = $_POST['productCategories'];
 
-        addProductToUserList($userId, $productName, $productCategories);
+        $productCategoriesString = $_POST['productCategoriesString'];
+
+
+        addProductToUserList($userId, $productName, $productCategoriesString);
 
     }
     else {
