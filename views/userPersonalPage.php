@@ -21,16 +21,9 @@
             <input type="submit" value="Log Out"><br>
         </form>
 
-        <?php if (empty($_POST['newUserProduct'])) { ?>
-        <form action="../myPage/" method="post">
-            <th>
-                <input type="hidden" name="newUserProduct" value="true">
-                <input type="submit" value="Add Product">
-            </th>
-        </form>
-        <?php } ?>
 
-        <?php if (!empty($_POST['newUserProduct'])) { ?>
+
+
             <form enctype="multipart/form-data" class="product-add-form" method="post" action="../myPage/">
                 <input name="productPicture" type="file" >
                 <input type="text" name="productName" placeholder="Product Name" autofocus required>
@@ -38,7 +31,7 @@
                 <input type="hidden" name="newUserProductSubmitted" value="true">
                  <input type="submit" value="Add">
             </form>
-        <?php } ?>
+
 
         <?php if (!is_null($userProducts[0])) { ?>
 
