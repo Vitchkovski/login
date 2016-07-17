@@ -21,6 +21,7 @@ class DBfunctions
 
     public function qrySelect($sql)
     {
+
         $qry = $this->connectDB->query($sql);
 
         if ($qry->num_rows > 0) {
@@ -28,16 +29,22 @@ class DBfunctions
                 $this->sqlDataReturn[] = $row;
             }
         } else {
-            $this->sqlDataReturn[] = null;
+            $this->sqlDataReturn[0] = null;
         }
+
         return $this->sqlDataReturn;
+
         $this->connectDB->close();
+
     }
 
-    public function qryFire($sql)
+    public function qryFire($sql, $closeConnectionFlag)
     {
         $this->connectDB->query($sql);
-        $this->connectDB->close();
+
+        if ($closeConnectionFlag == true) {
+            $this->connectDB->close();
+        }
     }
 
     public function escapeString($string)
