@@ -15,4 +15,8 @@ function explodeWithMultipleDelimeters ($delimiters, $string) {
     return  $explodeResult;
 }
 
+function clearArray($array) {
+    return array();
+}
+
 ?>

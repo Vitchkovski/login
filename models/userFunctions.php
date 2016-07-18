@@ -11,7 +11,10 @@ function addNewUserToDB($login, $email, $password)
 
     $queryToRun = sprintf("insert into users (login, email, password) values ('%s', '%s', '%s')", $escapedLogin, $escapedEmail, $hashedPassword);
 
-    $sqlDataReturn = $db_functions->qryFire($queryToRun);
+
+    $db_functions->qryFire($queryToRun);
+    $db_functions->closeDbConnection();
+
 
     return true;
 
@@ -25,8 +28,11 @@ function deleteProductFromUserList($userId, $productId, $fromDate)
 
     $queryToRun = sprintf("delete from user_product_categories where user_id = '%s' and product_id = '%s' and from_date = '%s' limit 1", $userId, $productId, $fromDate);
 
-    $closeConnectionFlag = true;
-    $sqlDataReturn = $db_functions->qryFire($queryToRun, $closeConnectionFlag);
+
+    $db_functions->qryFire($queryToRun);
+
+    $db_functions->closeDbConnection();
+
 
     return true;
 
@@ -37,36 +43,54 @@ function addProductToUserList($userId, $productName, $productCategoriesString)
 {
     $db_functions = new DBfunctions();
 
-    $categoryDelimetersList = array(",",";",", ","; ");
-    $productCategoriesArray = explodeWithMultipleDelimeters($categoryDelimetersList, $productCategoriesString);
-    var_dump($productCategoriesArray);
+    $escapedProductCategoriesString = $db_functions->escapeString(ltrim(rtrim($productCategoriesString)));
 
-    $escapedProductName = $db_functions->escapeString($productName);
-    $escapedProductCategories = $db_functions->escapeString($productCategories);
+    //Multiple delimeters can be used for the categories. Defining them and converting categories string to an array
+    //$categoryDelimetersList = array(",",";",", ","; ");
+    //$productCategoriesArray = explodeWithMultipleDelimeters($categoryDelimetersList, $escapedProductCategoriesString);
+    //var_dump($productCategoriesArray);
+
+    $escapedProductName = $db_functions->escapeString(ltrim(rtrim($productName)));
+
 
     //if non-existing product was submitted we must create a record for it in corresponding table
     $queryToRun = sprintf("select * from user_products where user_id = '%s' and product_name = '%s'", $userId, $escapedProductName);
+
+
     $userProductInfo = $db_functions->qrySelect($queryToRun);
+    echo "userProductInfo <br>";
+    var_dump($userProductInfo);
+    echo "<br>";
 
     if (is_null($userProductInfo[0])) {
         $queryToRun = sprintf("insert into user_products (user_id, product_name) 
                                values ('%s', '%s')", $userId, $escapedProductName);
-        $closeConnectionFlag = false;
-        $db_functions->qryFire($queryToRun, $closeConnectionFlag);
+
+        $db_functions->qryFire($queryToRun);
     }
 
 
     //if non-existing category was submitted we must create a record for it in corresponding table
-    $queryToRun = sprintf("select * from user_categories where user_id = '%s' and category_name = '%s'", $userId, $escapedProductCategories);
+    $queryToRun = sprintf("select * from user_categories where user_id = '%s' and category_name = '%s'", $userId, $escapedProductCategoriesString);
+
+
     $userCategoryInfo = $db_functions->qrySelect($queryToRun);
+    echo "userCategoryInfo <br>";
+    var_dump($userCategoryInfo);
+    echo "<br>";
 
     if (is_null($userCategoryInfo[0])) {
 
         $queryToRun = sprintf("insert into user_categories (user_id, category_name, from_date) 
-                               values ('%s', '%s', now())", $userId, $escapedProductCategories);
-        $closeConnectionFlag = false;
-        $db_functions->qryFire($queryToRun, $closeConnectionFlag);
+                               values ('%s', '%s', now())", $userId, $escapedProductCategoriesString);
+
+        $db_functions->qryFire($queryToRun);
     }
+    //$db_functions->closeDbConnection();
+
+/*    echo "userCategoryInfo after close <br>";
+    var_dump($userCategoryInfo);
+    echo "<br>";*/
 
     $queryToRun = sprintf('insert into user_product_categories (user_id, 
 									product_id, 
@@ -75,10 +99,12 @@ function addProductToUserList($userId, $productName, $productCategoriesString)
 values ("%1$s", 
 	   (select product_id from user_products up where up.product_name = "%2$s" and up.user_id = "%1$s"), 
 	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%3$s"), 
-	   now())', $userId, $escapedProductName, $escapedProductCategories);
+	   now())', $userId, $escapedProductName, $escapedProductCategoriesString);
 
-    $closeConnectionFlag = true;
-    $db_functions->qryFire($queryToRun, $closeConnectionFlag);
+
+    $db_functions->qryFire($queryToRun);
+    $db_functions->closeDbConnection();
+
 
     return true;
 }
@@ -93,7 +119,10 @@ function checkIfUserExist($login, $email)
 
     $queryToRun = sprintf("select * from users where login = '%s' or email = '%s'", $escapedLogin, $escapedEmail);
 
+
     $userInfo = $db_functions->qrySelect($queryToRun);
+    $db_functions->closeDbConnection();
+
 
     if (!is_null($userInfo[0]))
         return true;
@@ -112,7 +141,9 @@ function retriveUserInfo($login, $email, $password)
 
     $queryToRun = sprintf("select * from users where (login = '%s' or email = '%s') and password = '%s'", $escapedLogin, $escapedEmail, $hashedPassword);
 
+
     $userInfo = $db_functions->qrySelect($queryToRun);
+    $db_functions->closeDbConnection();
 
     return $userInfo;
 }
@@ -136,7 +167,9 @@ function retriveUserProducts($userId)
                                         and up.user_id = upc.user_id
                                   order by upc.from_date desc", $userId);
 
+
     $userProducts = $db_functions->qrySelect($queryToRun);
+    $db_functions->closeDbConnection();
 
     return $userProducts;
 }
