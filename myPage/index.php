@@ -8,7 +8,7 @@ session_start();
 
 
 
-if (!empty($_POST['deleteUserProduct']) && !empty($_POST['product_id'])) {
+if (!empty($_POST['deleteUserProduct']) && !empty($_POST['line_id'])) {
 
     if (isset($_SESSION['thisIsLoggedUser'])){
 
@@ -18,6 +18,35 @@ if (!empty($_POST['deleteUserProduct']) && !empty($_POST['product_id'])) {
         $productLineId =  $_POST['line_id'];
 
         deleteProductFromUserList($userId, $productId, $productLineId);
+
+    }
+    else {
+        header("Location: ../login");
+    }
+
+
+
+}
+
+if (!empty($_POST['cancelEditModeFlag'])) {
+
+    header("Location: ../login");
+
+}
+
+
+
+if (!empty($_POST['editUserProduct']) && !empty($_POST['line_id'])) {
+
+    if (isset($_SESSION['thisIsLoggedUser'])){
+
+
+        $userId = $_SESSION['userSessionId'];
+        $productId =  $_POST['product_id'];
+        $productLineId =  $_POST['line_id'];
+
+        //First we need to open form for editing
+        updateUserProductString($userId, $productId, $productLineId);
 
     }
     else {
@@ -60,7 +89,6 @@ if (isset($_SESSION['thisIsLoggedUser'])) {
     $userId = $_SESSION['userSessionId'];
     $userEmail = $_SESSION['userSessionEmail'];
     $userName = $_SESSION['userSessionName'];
-
 
     $userProducts = retriveUserProducts($userId);
 
