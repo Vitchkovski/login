@@ -64,6 +64,7 @@ a:hover {
 
 .wrap {
     min-height: 100%;
+    padding-bottom: 50px;
 
 }
 
@@ -99,7 +100,6 @@ label[for=error] {
     width: 650px;
     border-radius: 4px;
     box-shadow: 0 1px 5px #8a9ba8;
-    margin-bottom: 50px;
 
 }
 
@@ -156,14 +156,14 @@ a.log-out {
     margin-top: 30px;
     height: 60px;
     border-radius: 4px;
-    background: white;
+    /*background: white;*/
     box-shadow: 0 1px 5px #8a9ba8;
     background: #fcfcfc;
-    margin-top: 20px;
+    /*margin-top: 20px;*/
     padding: 10px;
     font-size: 18px;
     text-align: left;
-    height: auto;
+    /*height: auto;*/
 }
 
 .vertical-form input[type='email'],
