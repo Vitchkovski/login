@@ -21,12 +21,12 @@ function addNewUserToDB($login, $email, $password)
 }
 
 
-function deleteProductFromUserList($userId, $productId, $fromDate)
+function deleteProductFromUserList($userId, $productId, $productLineId)
 {
     $db_functions = new DBfunctions();
 
 
-    $queryToRun = sprintf("delete from user_product_categories where user_id = '%s' and product_id = '%s' and from_date = '%s' limit 1", $userId, $productId, $fromDate);
+    $queryToRun = sprintf("delete from user_product_categories where user_id = '%s' and product_id = '%s' and line_id = '%s' limit 1", $userId, $productId, $productLineId);
 
 
     $db_functions->qryFire($queryToRun);
@@ -177,7 +177,8 @@ function retriveUserProducts($userId)
 {
     $db_functions = new DBfunctions();
 
-    $queryToRun = sprintf("select up.product_id,
+    $queryToRun = sprintf("select upc.line_id,
+                                  up.product_id,
                                   up.product_name, 
                                   (select category_name from user_categories uc where uc.category_id = upc.category1) category_name1, 
                                   (select category_name from user_categories uc where uc.category_id = upc.category2) category_name2, 

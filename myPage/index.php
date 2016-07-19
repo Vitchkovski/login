@@ -15,9 +15,9 @@ if (!empty($_POST['deleteUserProduct']) && !empty($_POST['product_id'])) {
 
         $userId = $_SESSION['userSessionId'];
         $productId =  $_POST['product_id'];
-        $fromDate =  $_POST['from_date'];
+        $productLineId =  $_POST['line_id'];
 
-        deleteProductFromUserList($userId, $productId, $fromDate);
+        deleteProductFromUserList($userId, $productId, $productLineId);
 
     }
     else {

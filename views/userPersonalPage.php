@@ -57,6 +57,7 @@
                     <th><?= $uP->from_date ?></th>
                     <form action="../myPage/" method="post">
                         <th>
+                            <input type="hidden" name="line_id" value="<?= $uP->line_id ?>">
                             <input type="hidden" name="product_id" value="<?= $uP->product_id ?>">
                             <input type="hidden" name="from_date" value="<?= $uP->from_date ?>">
                             <input type="hidden" name="editUserProduct" value="true">
@@ -65,6 +66,7 @@
                     </th>
                     <form action="../myPage/" method="post">
                         <th>
+                            <input type="hidden" name="line_id" value="<?= $uP->line_id ?>">
                             <input type="hidden" name="product_id" value="<?= $uP->product_id ?>">
                             <input type="hidden" name="from_date" value="<?= $uP->from_date ?>">
                             <input type="hidden" name="deleteUserProduct" value="true">
