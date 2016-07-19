@@ -46,9 +46,22 @@ function addProductToUserList($userId, $productName, $productCategoriesString)
     $escapedProductCategoriesString = $db_functions->escapeString(ltrim(rtrim($productCategoriesString)));
 
     //Multiple delimeters can be used for the categories. Defining them and converting categories string to an array
-    //$categoryDelimetersList = array(",",";",", ","; ");
-    //$productCategoriesArray = explodeWithMultipleDelimeters($categoryDelimetersList, $escapedProductCategoriesString);
-    //var_dump($productCategoriesArray);
+    $categoryDelimetersList = array(",", ";", ", ", "; ");
+
+
+    $productCategoriesArray = explodeWithMultipleDelimeters($categoryDelimetersList, $escapedProductCategoriesString);
+    for ($i = 0; $i <= 4; $i++) {
+        if (isset($productCategoriesArray[$i])) {
+            $limitedCategoriesArray[$i] = $productCategoriesArray[$i];
+        } else {
+            $limitedCategoriesArray[$i] = null;
+        }
+
+    }
+
+    echo "limitedCategoriesArray <br>";
+    var_dump($limitedCategoriesArray);
+    echo "<br>";
 
     $escapedProductName = $db_functions->escapeString(ltrim(rtrim($productName)));
 
@@ -71,35 +84,47 @@ function addProductToUserList($userId, $productName, $productCategoriesString)
 
 
     //if non-existing category was submitted we must create a record for it in corresponding table
-    $queryToRun = sprintf("select * from user_categories where user_id = '%s' and category_name = '%s'", $userId, $escapedProductCategoriesString);
+    foreach ($limitedCategoriesArray as $lCA) {
+        if (!is_null($lCA)) {
+            $queryToRun = sprintf("select * from user_categories where user_id = '%s' and category_name = '%s'", $userId, $lCA);
 
 
-    $userCategoryInfo = $db_functions->qrySelect($queryToRun);
-    echo "userCategoryInfo <br>";
-    var_dump($userCategoryInfo);
-    echo "<br>";
+            $userCategoryInfo = $db_functions->qrySelect($queryToRun);
+            echo "userCategoryInfo <br>";
+            var_dump($userCategoryInfo);
+            echo "<br>";
 
-    if (is_null($userCategoryInfo[0])) {
+            if (is_null($userCategoryInfo[0])) {
 
-        $queryToRun = sprintf("insert into user_categories (user_id, category_name, from_date) 
-                               values ('%s', '%s', now())", $userId, $escapedProductCategoriesString);
+                $queryToRun = sprintf("insert into user_categories (user_id, category_name, from_date) 
+                               values ('%s', '%s', now())", $userId, $lCA);
 
-        $db_functions->qryFire($queryToRun);
+                $db_functions->qryFire($queryToRun);
+            }
+        }
     }
     //$db_functions->closeDbConnection();
 
-/*    echo "userCategoryInfo after close <br>";
-    var_dump($userCategoryInfo);
-    echo "<br>";*/
+    /*    echo "userCategoryInfo after close <br>";
+        var_dump($userCategoryInfo);
+        echo "<br>";*/
 
     $queryToRun = sprintf('insert into user_product_categories (user_id, 
 									product_id, 
-									category1, 
+									category1,
+									category2,
+									category3,
+									category4,
+									category5,
 									from_date) 
 values ("%1$s", 
 	   (select product_id from user_products up where up.product_name = "%2$s" and up.user_id = "%1$s"), 
 	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%3$s"), 
-	   now())', $userId, $escapedProductName, $escapedProductCategoriesString);
+	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%4$s"), 
+	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%5$s"), 
+	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%6$s"), 
+	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%7$s"), 
+	   now())', $userId, $escapedProductName, $limitedCategoriesArray[0], $limitedCategoriesArray[1], $limitedCategoriesArray[2], $limitedCategoriesArray[3], $limitedCategoriesArray[4]);
 
 
     $db_functions->qryFire($queryToRun);
@@ -173,7 +198,6 @@ function retriveUserProducts($userId)
 
     return $userProducts;
 }
-
 
 
 ?>
