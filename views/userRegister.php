@@ -15,9 +15,9 @@
         <form class="vertical-form" method="post">
             <h1>Registration</h1>
             <input type="email" name="email" placeholder="Email Address" spellcheck="false"
-                   value="<?= $userEscapedEmail ?>" required><br>
-            <input type="text" name="login" placeholder="Username" value="<?= $userEscapedLogin ?>" required><br>
-            <input type="password" name="password" placeholder="Password" value="" required><br>
+                   value="<?= $userEscapedEmail ?>" required maxlength="254"><br>
+            <input type="text" name="login" placeholder="Username" value="<?= $userEscapedLogin ?>" required maxlength="254"><br>
+            <input type="password" name="password" placeholder="Password" value="" required maxlength="254"><br>
             <input type="submit" value="Save"><br>
             <a class="sign-in" href="login">Already have an account? Login</a>
             <br>
