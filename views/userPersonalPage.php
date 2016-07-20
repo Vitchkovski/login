@@ -35,13 +35,7 @@
         <?php if (!is_null($userProducts[0])) { ?>
 
         <table class="products-table">
-            <tr>
-                <th></th>
-                <th>Product</th>
-                <th>Categories</th>
-                <th></th>
-                <th></th>
-            </tr>
+
 
             <?php foreach ($userProducts as $uP): ?>
 
@@ -49,10 +43,15 @@
                     <!-- if Edit button has been clicked we need to open edit-form for that specific product line-->
                     <?php if (!empty($_POST['editUserProductFlag']) && $_POST['line_id'] == $uP->line_id) { ?>
                         <form enctype="multipart/form-data" class="product-add-form" method="post" action="../myPage/">
-                            <th><input name="productPicture" type="file"></th>
-                            <th><input type="text" name="productName" value="<?= $uP->product_name ?>"
+                            <th width="50">
+                                <div class="hide-upload-btn-div">
+                                    <div><img src="../../media/products/upload-32.png"></div>
+                                    <input class="hide-upload-button-input" type="file" name="productPicture" id="file" size="1">
+                                </div>
+                                <!--<input name="productPicture" type="file"></th>-->
+                            <th  width="200"><input type="text" name="productName" value="<?= $uP->product_name ?>"
                                        placeholder="Product Name" autofocus required maxlength="254"></th>
-                            <th><input type="text" name="productCategoriesString"
+                            <th  width="300"><input type="text" size="38" name="productCategoriesString"
                                        value="<?php if (!is_null($uP->category_name1)) { ?><?= $uP->category_name1 ?><?php }
                                        if (!is_null($uP->category_name2)) { ?>, <?= $uP->category_name2 ?><?php }
                                        if (!is_null($uP->category_name3)) { ?>, <?= $uP->category_name3 ?><?php }
@@ -63,42 +62,46 @@
                                 <input type="hidden" name="updateUserProductString" value="true"></th>
                             <input type="hidden" name="line_id" value="<?= $uP->line_id ?>">
 
-                            <th><input type="submit" value="Save"></th>
+                            <th  width="50" align="right"><input TYPE="image" SRC="../../media/products/save-32.png" HEIGHT="24"
+                                                     WIDTH="24" BORDER="0" ALT="Save"></th>
                         </form>
-                        <th>
+                        <th  width="50" align="center">
                             <form action="../myPage/" method="post">
                                 <input type="hidden" name="cancelEditModeFlag" value="true">
-                                <input type="submit" value="Cancel">
+                                <input TYPE="image" SRC="../../media/products/cancel-32.png" HEIGHT="24" WIDTH="24"
+                                       BORDER="0" ALT="Cancel">
                             </form>
                         </th>
 
                         <!-- if Edit button was NOT clicked we need to open regular product list-->
                     <?php } else { ?>
 
-                        <th>IMG</th>
-                        <th><?= $uP->product_name ?></th>
-                        <th><?php if (!is_null($uP->category_name1)) { ?><?= $uP->category_name1 ?><?php }
+                        <th width="50"><img src="../../media/products/shopping-cart-32.png"></th>
+                        <th width="200"><?= $uP->product_name ?></th>
+                        <th width="300"><?php if (!is_null($uP->category_name1)) { ?><?= $uP->category_name1 ?><?php }
                             if (!is_null($uP->category_name2)) { ?>, <?= $uP->category_name2 ?><?php }
                             if (!is_null($uP->category_name3)) { ?>, <?= $uP->category_name3 ?><?php }
                             if (!is_null($uP->category_name3)) { ?>, <?= $uP->category_name4 ?><?php }
                             if (!is_null($uP->category_name3)) { ?>, <?= $uP->category_name5 ?><?php } ?></th>
-                        <th>
-                            <form action="../myPage/" method="post">
+                        <th  width="50" align="right" >
+                            <form action="../myPage/" class="product-btn-form" method="post">
                                 <input type="hidden" name="line_id" value="<?= $uP->line_id ?>">
                                 <input type="hidden" name="product_id" value="<?= $uP->product_id ?>">
                                 <input type="hidden" name="from_date" value="<?= $uP->from_date ?>">
                                 <input type="hidden" name="editUserProductFlag" value="true">
-                                <input type="submit" value="Edit">
+                                <input TYPE="image" SRC="../../media/products/edit-32.png" HEIGHT="24" WIDTH="24"
+                                       BORDER="0" ALT="Edit">
                             </form>
                         </th>
 
-                        <th>
+                        <th width="50" align="center">
                             <form action="../myPage/" method="post">
                                 <input type="hidden" name="line_id" value="<?= $uP->line_id ?>">
                                 <input type="hidden" name="product_id" value="<?= $uP->product_id ?>">
                                 <input type="hidden" name="from_date" value="<?= $uP->from_date ?>">
                                 <input type="hidden" name="deleteUserProduct" value="true">
-                                <input type="submit" value="Delete">
+                                <input TYPE="image" SRC="../../media/products/garbage-32.png" HEIGHT="24" WIDTH="24"
+                                       BORDER="0" ALT="Delete">
                             </form>
                         </th>
 

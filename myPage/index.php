@@ -6,8 +6,6 @@ require_once("../models/dataFunctions.php");
 
 session_start();
 
-
-
 if (!empty($_POST['deleteUserProduct']) && !empty($_POST['line_id'])) {
 
     if (isset($_SESSION['thisIsLoggedUser'])){
