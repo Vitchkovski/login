@@ -27,7 +27,7 @@ if (!empty($_POST)) {
             addNewUserToDB($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
 
             //immideatly after login - retrieving user info
-            $userInfo = retriveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
+            $userInfo = retrieveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
             $userId = $userInfo[0]->user_id;
             $userEmail = $userInfo[0]->email;
             $userName = $userInfo[0]->login;

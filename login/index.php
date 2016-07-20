@@ -4,15 +4,6 @@ require_once("../database.php");
 require_once("../models/userFunctions.php");
 require_once("../models/dataFunctions.php");
 
-//destroying session in case of log out
-/*if (isset($_GET['action'])) {
-    $action = $_GET['action'];
-    if ($action == "logout")
-        session_start();
-    session_unset();
-    session_destroy();
-}*/
-
 
 if (!empty($_POST['logout_flag'])) {
     session_start();
@@ -33,7 +24,7 @@ if (!empty($_POST) && !isset($_POST['logout_flag'])) {
 
     $userEscapedLogin = "";
 
-    $userInfo = retriveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
+    $userInfo = retrieveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
 
     //credentials are correct
     if (!is_null($userInfo[0])) {
@@ -42,7 +33,7 @@ if (!empty($_POST) && !isset($_POST['logout_flag'])) {
         $userEmail = $userInfo[0]->email;
         $userName = $userInfo[0]->login;
 
-        //$userProducts = retriveUserProducts($userId);
+        //$userProducts = retrieveUserProducts($userId);
 
         session_start();
         $_SESSION['thisIsLoggedUser'] = true;
@@ -82,7 +73,7 @@ if (!empty($_POST) && !isset($_POST['logout_flag'])) {
         $userEmail = $_SESSION['userSessionEmail'];
         $userName = $_SESSION['userSessionName'];
 
-        //$userProducts = retriveUserProducts($userId);
+        //$userProducts = retrieveUserProducts($userId);
 
         header("Location: ../myPage");
 

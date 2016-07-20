@@ -36,17 +36,22 @@ if (!empty($_POST['cancelEditModeFlag'])) {
 
 
 
-if (!empty($_POST['editUserProduct']) && !empty($_POST['line_id'])) {
+if (!empty($_POST['updateUserProductString']) && !empty($_POST['line_id'])) {
 
     if (isset($_SESSION['thisIsLoggedUser'])){
 
 
         $userId = $_SESSION['userSessionId'];
-        $productId =  $_POST['product_id'];
+
+        //Product Line tobe updated
         $productLineId =  $_POST['line_id'];
 
-        //First we need to open form for editing
-        updateUserProductString($userId, $productId, $productLineId);
+        //Changes submitted
+        $productName =  $_POST['productName'];
+        $productCategoriesString = $_POST['productCategoriesString'];
+
+
+        updateUserProductString($userId, $productLineId, $productName, $productCategoriesString);
 
     }
     else {
@@ -90,7 +95,7 @@ if (isset($_SESSION['thisIsLoggedUser'])) {
     $userEmail = $_SESSION['userSessionEmail'];
     $userName = $_SESSION['userSessionName'];
 
-    $userProducts = retriveUserProducts($userId);
+    $userProducts = retrieveUserProducts($userId);
 
     include("../views/userPersonalPage.php");
 } else {

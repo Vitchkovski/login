@@ -61,6 +61,7 @@
                                        placeholder="Product Categories"
                                        required maxlength="1000">
                                 <input type="hidden" name="updateUserProductString" value="true"></th>
+                            <input type="hidden" name="line_id" value="<?= $uP->line_id ?>">
 
                             <th></th>
                             <th><input type="submit" value="Save"></th>
@@ -72,6 +73,7 @@
                             </form>
                         </th>
 
+                        <!-- if Edit button was NOT clicked we need to open regular product list-->
                     <?php } else { ?>
 
                         <th>IMG</th>
