@@ -164,9 +164,9 @@ function updateUserProductString($userId, $productLineId, $productName, $product
 
             $userCategoryInfo = $db_functions->qrySelect($queryToRun);
 
-            echo "userCategoryInfo <br>";
+            /*echo "userCategoryInfo <br>";
             var_dump($userCategoryInfo);
-            echo "<br>";
+            echo "<br>";*/
 
             if (is_null($userCategoryInfo[0])) {
 

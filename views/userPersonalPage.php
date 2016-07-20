@@ -36,13 +36,13 @@
 
         <table class="products-table">
             <tr>
-                <th>IMG</th>
+                <th></th>
                 <th>Product</th>
                 <th>Categories</th>
-                <th>Date Added</th>
                 <th></th>
                 <th></th>
             </tr>
+
             <?php foreach ($userProducts as $uP): ?>
 
                 <tr>
@@ -63,7 +63,6 @@
                                 <input type="hidden" name="updateUserProductString" value="true"></th>
                             <input type="hidden" name="line_id" value="<?= $uP->line_id ?>">
 
-                            <th></th>
                             <th><input type="submit" value="Save"></th>
                         </form>
                         <th>
@@ -83,8 +82,6 @@
                             if (!is_null($uP->category_name3)) { ?>, <?= $uP->category_name3 ?><?php }
                             if (!is_null($uP->category_name3)) { ?>, <?= $uP->category_name4 ?><?php }
                             if (!is_null($uP->category_name3)) { ?>, <?= $uP->category_name5 ?><?php } ?></th>
-                        <th><?= $uP->from_date ?></th>
-
                         <th>
                             <form action="../myPage/" method="post">
                                 <input type="hidden" name="line_id" value="<?= $uP->line_id ?>">
