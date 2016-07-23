@@ -42,7 +42,7 @@ function categoryStringToArray($escapedProductCategoriesString)
 
 }
 
-function uploadProductPicture ($userId, $pictureNameAfterUpload){
+function uploadProductPicture ($userId){
 
 
     $typesAllowed = array('image/gif', 'image/png', 'image/jpeg', 'image/bmp');
@@ -54,8 +54,11 @@ function uploadProductPicture ($userId, $pictureNameAfterUpload){
 
             if (is_uploaded_file($_FILES["productPicture"]["tmp_name"])) {
 
+
                 @mkdir("../uploads/" . $userId."/cropped", 0777);
                 @mkdir("../uploads/" . $userId."/original", 0777);
+
+                $pictureNameAfterUpload = $userId."-".time().".png";
 
                 move_uploaded_file($_FILES["productPicture"]["tmp_name"], "../uploads/" . $userId . "/"."original/" .$pictureNameAfterUpload);
 
@@ -74,15 +77,17 @@ function uploadProductPicture ($userId, $pictureNameAfterUpload){
 
                 $productImage->save("../uploads/" . $userId . "/"."cropped/" .$pictureNameAfterUpload);
 
+                return $pictureNameAfterUpload;
+
 
             } else {
-                echo("Ошибка загрузки файла");
+                return "Error on load";
             }
         } else {
-            echo("Размер файла превышает три мегабайта");
+            return "File size is too big";
         }
     } else {
-        echo "Type is not allowed.";
+        return "Type is not allowed";
     }
 
 }
@@ -152,6 +157,10 @@ class resizeImage
         imagecopyresampled($new_image, $this->image, 0, 0, 0, 0, $width, $height, $this->getWidth(), $this->getHeight());
         $this->image = $new_image;
     }
+}
+
+function escapeSpecialCharactersHTML($string){
+    return htmlspecialchars(ltrim(rtrim($string)));
 }
 
 

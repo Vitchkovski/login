@@ -21,6 +21,13 @@
             <input type="submit" value="Log Out"><br>
         </form>
 
+        <?php if (!empty($_POST) && isset($imageIncorrectFlag)) { ?>
+            <div align="center">
+                <form class="vertical-form-bottom">
+                    <input id="error" type="hidden" readonly><label for="error">Image you submitted is incorrect. Only png, bmp, jpg and gif files not larger than 3 MB can be used.</label>
+                </form>
+            </div>
+        <?php } ?>
 
         <form enctype="multipart/form-data" class="product-add-form" method="post" action="../myPage/">
             <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
@@ -31,6 +38,8 @@
             <input type="hidden" name="newUserProductSubmitted" value="true">
             <input type="submit" value="Add">
         </form>
+
+
 
 
         <?php if (!is_null($userProducts[0])) { ?>
@@ -53,14 +62,15 @@
                                            size="1">
                                 </div>
                                 <!--<input name="productPicture" type="file"></th>-->
-                            <th width="200"><input type="text" name="productName" value="<?=  escapeSpecialCharactersHTML($uP->product_name) ?>"
+                            <th width="200"><input type="text" name="productName"
+                                                   value="<?= escapeSpecialCharactersHTML($uP->product_name) ?>"
                                                    placeholder="Product Name" autofocus required maxlength="254"></th>
                             <th width="300"><input type="text" size="38" name="productCategoriesString"
-                                                   value="<?php if (!is_null($uP->category_name1)) { ?><?=  escapeSpecialCharactersHTML($uP->category_name1) ?><?php }
-                                                   if (!is_null($uP->category_name2)) { ?>, <?=  escapeSpecialCharactersHTML($uP->category_name2) ?><?php }
-                                                   if (!is_null($uP->category_name3)) { ?>, <?=  escapeSpecialCharactersHTML($uP->category_name3) ?><?php }
-                                                   if (!is_null($uP->category_name3)) { ?>, <?=  escapeSpecialCharactersHTML($uP->category_name4) ?><?php }
-                                                   if (!is_null($uP->category_name3)) { ?>, <?=  escapeSpecialCharactersHTML($uP->category_name5) ?><?php } ?>"
+                                                   value="<?php if (!is_null($uP->category_name1)) { ?><?= escapeSpecialCharactersHTML($uP->category_name1) ?><?php }
+                                                   if (!is_null($uP->category_name2)) { ?>, <?= escapeSpecialCharactersHTML($uP->category_name2) ?><?php }
+                                                   if (!is_null($uP->category_name3)) { ?>, <?= escapeSpecialCharactersHTML($uP->category_name3) ?><?php }
+                                                   if (!is_null($uP->category_name3)) { ?>, <?= escapeSpecialCharactersHTML($uP->category_name4) ?><?php }
+                                                   if (!is_null($uP->category_name3)) { ?>, <?= escapeSpecialCharactersHTML($uP->category_name5) ?><?php } ?>"
                                                    placeholder="Product Categories"
                                                    required maxlength="1000">
                                 <input type="hidden" name="updateUserProductString" value="true"></th>

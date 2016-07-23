@@ -191,6 +191,7 @@ a.log-out {
     font-size: 18px;
     text-align: left;
     height: auto;
+    margin-bottom: 30px;
 }
 
 .vertical-form input[type='email'],
