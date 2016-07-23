@@ -81,8 +81,7 @@ if (!empty($_POST['newUserProductSubmitted'])) {
         //product picture submitted
         if (isset ($_FILES["productPicture"]) && !empty( $_FILES["productPicture"]["name"] )) {
 
-            $pictureNameAfterUpload = $userId."-".time().".png";
-            uploadProductPicture($userId, $pictureNameAfterUpload);
+            $pictureNameAfterUpload = uploadProductPicture($userId);
 
         }
 
@@ -90,7 +89,7 @@ if (!empty($_POST['newUserProductSubmitted'])) {
         $productCategoriesString = $_POST['productCategoriesString'];
 
         //picture can be not submitted. In that case - setting picture name to NULL
-        if(!isset ($pictureNameAfterUpload))
+        if(!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Type is not allowed" || $pictureNameAfterUpload == "File size is too big" || $pictureNameAfterUpload == "Error on load")
             $pictureNameAfterUpload = null;
 
         addProductToUserList($userId, $productName, $pictureNameAfterUpload, $productCategoriesString);

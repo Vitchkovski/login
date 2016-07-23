@@ -115,7 +115,7 @@ label[for=error] {
 
 .product-add-form {
     width: 660px;
-    height: 32px;
+    height: 29px;
     padding: 4px;
     border-radius: 4px;
     box-shadow: 0 1px 5px #8a9ba8;
@@ -190,7 +190,7 @@ a.log-out {
     padding: 10px;
     font-size: 18px;
     text-align: left;
-    /*height: auto;*/
+    height: auto;
 }
 
 .vertical-form input[type='email'],
