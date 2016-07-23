@@ -81,8 +81,8 @@
                     <?php } else { ?>
 
                         <th width="50"><?php if (is_null($uP->product_img_name)) { ?><img
-                                src="../../media/products/shopping-cart-32.png"><?php } else { ?><img
-                                src="../uploads/<?= $userId ?>/cropped/<?= $uP->product_img_name ?>"><?php } ?></th>
+                                src="../../media/products/shopping-cart-32.png"><?php } else { ?><a href="../uploads/<?= $userId ?>/original/<?= $uP->product_img_name ?>" target="_blank"><img
+                                src="../uploads/<?= $userId ?>/cropped/<?= $uP->product_img_name ?>"></a><?php } ?></th>
                         <th width="200"><?= $uP->product_name ?></th>
                         <th width="300"><?php if (!is_null($uP->category_name1)) { ?><?= $uP->category_name1 ?><?php }
                             if (!is_null($uP->category_name2)) { ?>, <?= $uP->category_name2 ?><?php }
