@@ -39,14 +39,14 @@ function deleteProductFromUserList($userId, $productId, $productLineId)
 }
 
 
-function addProductToUserList($userId, $productName, $productCategoriesString)
+function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $productCategoriesString)
 {
     $db_functions = new DBfunctions();
 
     $escapedProductCategoriesString = $db_functions->escapeString(ltrim(rtrim($productCategoriesString)));
 
     //Multiple delimiters can be used for the categories. Defining them and converting categories string to an array
-    $limitedCategoriesArray = categoryStringToArray ($escapedProductCategoriesString);
+    $limitedCategoriesArray = categoryStringToArray($escapedProductCategoriesString);
 
     /*echo "limitedCategoriesArray <br>";
     var_dump($limitedCategoriesArray);
@@ -94,6 +94,9 @@ function addProductToUserList($userId, $productName, $productCategoriesString)
         }
     }
 
+    //mysql treating null php values as "" value and not NULL. Thus defining correct value before insert
+    if (is_null($pictureNameAfterUpload))
+        $pictureNameAfterUpload = "null";
 
     $queryToRun = sprintf('insert into user_product_categories (user_id, 
 									product_id, 
@@ -102,6 +105,7 @@ function addProductToUserList($userId, $productName, $productCategoriesString)
 									category3,
 									category4,
 									category5,
+									product_img_name,
 									from_date) 
 values ("%1$s", 
 	   (select product_id from user_products up where up.product_name = "%2$s" and up.user_id = "%1$s"), 
@@ -109,8 +113,9 @@ values ("%1$s",
 	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%4$s"), 
 	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%5$s"), 
 	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%6$s"), 
-	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%7$s"), 
-	   now())', $userId, $escapedProductName, $limitedCategoriesArray[0], $limitedCategoriesArray[1], $limitedCategoriesArray[2], $limitedCategoriesArray[3], $limitedCategoriesArray[4]);
+	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%7$s"),
+	   if ("%8$s" = "null", null, "%8$s"), 
+	   now())', $userId, $escapedProductName, $limitedCategoriesArray[0], $limitedCategoriesArray[1], $limitedCategoriesArray[2], $limitedCategoriesArray[3], $limitedCategoriesArray[4], $pictureNameAfterUpload);
 
 
     $db_functions->qryFire($queryToRun);
@@ -121,7 +126,7 @@ values ("%1$s",
 }
 
 //updating user products list string
-function updateUserProductString($userId, $productLineId, $productName, $productCategoriesString)
+function updateUserProductString($userId, $productLineId, $productName, $pictureNameAfterUpload, $productCategoriesString)
 {
 
     $db_functions = new DBfunctions();
@@ -129,7 +134,7 @@ function updateUserProductString($userId, $productLineId, $productName, $product
     $escapedProductCategoriesString = $db_functions->escapeString(ltrim(rtrim($productCategoriesString)));
 
     //Multiple delimiters can be used for the categories. Defining them and converting categories string to an array
-    $limitedCategoriesArray = categoryStringToArray ($escapedProductCategoriesString);
+    $limitedCategoriesArray = categoryStringToArray($escapedProductCategoriesString);
 
     /*echo "limitedCategoriesArray <br>";
     var_dump($limitedCategoriesArray);
@@ -177,6 +182,9 @@ function updateUserProductString($userId, $productLineId, $productName, $product
             }
         }
     }
+    //mysql treating null php values as "" value and not NULL. Thus defining correct value before update
+    if (is_null($pictureNameAfterUpload))
+        $pictureNameAfterUpload = "null";
 
     //updating existing record in user's product list
     $queryToRun = sprintf('update user_product_categories 
@@ -185,8 +193,9 @@ function updateUserProductString($userId, $productLineId, $productName, $product
 							   category2 = (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%4$s"),
 							   category3 = (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%5$s"),
 							   category4 = (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%6$s"),
-							   category5 = (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%7$s")
-						   where line_id = "%8$s"', $userId, $escapedProductName, $limitedCategoriesArray[0], $limitedCategoriesArray[1], $limitedCategoriesArray[2], $limitedCategoriesArray[3], $limitedCategoriesArray[4], $productLineId);
+							   category5 = (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%7$s"),
+							   product_img_name = (if ("%9$s" = "null", null, "%9$s"))
+						   where line_id = "%8$s"', $userId, $escapedProductName, $limitedCategoriesArray[0], $limitedCategoriesArray[1], $limitedCategoriesArray[2], $limitedCategoriesArray[3], $limitedCategoriesArray[4], $productLineId, $pictureNameAfterUpload);
 
 
     $db_functions->qryFire($queryToRun);
@@ -248,7 +257,8 @@ function retrieveUserProducts($userId)
                                   (select category_name from user_categories uc where uc.category_id = upc.category2) category_name2, 
                                   (select category_name from user_categories uc where uc.category_id = upc.category3) category_name3, 
                                   (select category_name from user_categories uc where uc.category_id = upc.category4) category_name4, 
-                                  (select category_name from user_categories uc where uc.category_id = upc.category5) category_name5, 
+                                  (select category_name from user_categories uc where uc.category_id = upc.category5) category_name5,
+                                  upc.product_img_name,
                                   upc.from_date 
                                   from user_product_categories upc, 
                                        user_products up 

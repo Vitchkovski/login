@@ -40,7 +40,7 @@ body {
 
 }
 
-.control-button-href{
+.control-button-href {
     text-decoration: none;
     color: #546069;
 
@@ -50,10 +50,10 @@ body {
 }
 
 hr {
-    border: none; /* Убираем границу для браузера Firefox */
-    color: #8a9ba8; /* Цвет линии для остальных браузеров */
-    background-color: #8a9ba8; /* Цвет линии для браузера Firefox и Opera */
-    height: 1px; /* Толщина линии */
+    /*   border: none;
+       color: #8a9ba8;
+       background-color: #8a9ba8;
+       height: 1px; */
 }
 
 a:hover {
@@ -113,7 +113,7 @@ label[for=error] {
     background:url("../../media/products/edit-32.png");
 }*/
 
-.product-add-form{
+.product-add-form {
     width: 660px;
     height: 32px;
     padding: 4px;
@@ -122,16 +122,16 @@ label[for=error] {
     margin-bottom: 20px;
 }
 
-.hide-upload-btn-div{
+.hide-upload-btn-div {
     overflow: hidden;
     width: 32px;
     height: 32px;
     border: 0px;
 }
 
-.hide-upload-button-input{
+.hide-upload-button-input {
     margin-top: -50px;
-    margin-left:-410px;
+    margin-left: -410px;
     -moz-opacity: 0;
     filter: alpha(opacity=0);
     opacity: 0;

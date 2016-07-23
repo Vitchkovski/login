@@ -8,20 +8,18 @@ session_start();
 
 if (!empty($_POST['deleteUserProduct']) && !empty($_POST['line_id'])) {
 
-    if (isset($_SESSION['thisIsLoggedUser'])){
+    if (isset($_SESSION['thisIsLoggedUser'])) {
 
 
         $userId = $_SESSION['userSessionId'];
-        $productId =  $_POST['product_id'];
-        $productLineId =  $_POST['line_id'];
+        $productId = $_POST['product_id'];
+        $productLineId = $_POST['line_id'];
 
         deleteProductFromUserList($userId, $productId, $productLineId);
 
-    }
-    else {
+    } else {
         header("Location: ../login");
     }
-
 
 
 }
@@ -33,58 +31,76 @@ if (!empty($_POST['cancelEditModeFlag'])) {
 }
 
 
-
 if (!empty($_POST['updateUserProductString']) && !empty($_POST['line_id'])) {
 
-    if (isset($_SESSION['thisIsLoggedUser'])){
+    if (isset($_SESSION['thisIsLoggedUser'])) {
 
 
         $userId = $_SESSION['userSessionId'];
 
+        //product picture submitted
+        if (isset ($_FILES["productPicture"]) && !empty( $_FILES["productPicture"]["name"] )) {
+
+            $pictureNameAfterUpload = $userId."-".time().".png";
+            uploadProductPicture($userId, $pictureNameAfterUpload);
+
+        }
+
         //Product Line tobe updated
-        $productLineId =  $_POST['line_id'];
+        $productLineId = $_POST['line_id'];
 
         //Changes submitted
-        $productName =  $_POST['productName'];
+        $productName = $_POST['productName'];
         $productCategoriesString = $_POST['productCategoriesString'];
 
 
-        updateUserProductString($userId, $productLineId, $productName, $productCategoriesString);
+        //picture can be not submitted. In that case - setting picture name to the initial value
+        if(!isset ($pictureNameAfterUpload))
+            $pictureNameAfterUpload = $_POST['initialProductPictureName'];
 
-    }
-    else {
+
+        updateUserProductString($userId, $productLineId, $productName, $pictureNameAfterUpload, $productCategoriesString);
+
+    } else {
         header("Location: ../login");
     }
 
 
-
 }
-
 
 
 if (!empty($_POST['newUserProductSubmitted'])) {
 
-    if (isset($_SESSION['thisIsLoggedUser'])){
+    if (isset($_SESSION['thisIsLoggedUser'])) {
 
 
         $userId = $_SESSION['userSessionId'];
-        $productName =  $_POST['productName'];
+        $productName = $_POST['productName'];
+
+
+        //product picture submitted
+        if (isset ($_FILES["productPicture"]) && !empty( $_FILES["productPicture"]["name"] )) {
+
+            $pictureNameAfterUpload = $userId."-".time().".png";
+            uploadProductPicture($userId, $pictureNameAfterUpload);
+
+        }
+
 
         $productCategoriesString = $_POST['productCategoriesString'];
 
+        //picture can be not submitted. In that case - setting picture name to NULL
+        if(!isset ($pictureNameAfterUpload))
+            $pictureNameAfterUpload = null;
 
-        addProductToUserList($userId, $productName, $productCategoriesString);
+        addProductToUserList($userId, $productName, $pictureNameAfterUpload, $productCategoriesString);
 
-    }
-    else {
+    } else {
         header("Location: ../login");
     }
 
 
-
 }
-
-
 
 
 //Redirecting authorized user to the personal info page
