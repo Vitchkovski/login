@@ -46,8 +46,8 @@
                     <!-- if Edit button has been clicked we need to open edit-form for that specific product line-->
                     <?php if (!empty($_POST['editUserProductFlag']) && $_POST['line_id'] == $uP->line_id) { ?>
 
-                            <th width="50">
-                                <form enctype="multipart/form-data" method="post" action="../myPage/">
+                        <th width="50">
+                            <form enctype="multipart/form-data" method="post" action="../myPage/">
                                 <div class="hide-upload-btn-div">
                                     <div><img src="../media/products/upload-32.png"></div>
                                     <input type="hidden" name="initialProductPictureName"
@@ -56,31 +56,32 @@
                                            size="1">
                                 </div>
                                 <!--<input name="productPicture" type="file"></th>-->
-                            <th width="200"><input type="text" name="productName"
-                                                   value="<?= escapeSpecialCharactersHTML($uP->product_name) ?>"
-                                                   placeholder="Product Name" autofocus required maxlength="254"></th>
-                            <th width="300"><input type="text" size="38" name="productCategoriesString"
-                                                   value="<?php if (!is_null($uP->category_name1) && $uP->category_name1 !== "") { ?><?= escapeSpecialCharactersHTML($uP->category_name1) ?><?php }
-                                                   if (!is_null($uP->category_name2) && $uP->category_name2 !== "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name2) ?><?php }
-                                                   if (!is_null($uP->category_name3) && $uP->category_name3 !== "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name3) ?><?php }
-                                                   if (!is_null($uP->category_name3) && $uP->category_name4 !== "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name4) ?><?php }
-                                                   if (!is_null($uP->category_name3) && $uP->category_name5 !== "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name5) ?><?php } ?>"
-                                                   placeholder="Product Categories"
-                                                   maxlength="1000">
-                                <input type="hidden" name="updateUserProductString" value="true"></th>
-                            <input type="hidden" name="line_id" value="<?= $uP->line_id ?>">
+                        <th width="200"><input type="text" name="productName"
+                                               value="<?= escapeSpecialCharactersHTML($uP->product_name) ?>"
+                                               placeholder="Product Name" autofocus required maxlength="254"></th>
+                        <th width="300"><input type="text" size="38" name="productCategoriesString"
+                                               value="<?php if (!is_null($uP->category_name1) && $uP->category_name1 != "") { ?><?= escapeSpecialCharactersHTML($uP->category_name1) ?><?php }
+                                               if (!is_null($uP->category_name2) && $uP->category_name2 != "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name2) ?><?php }
+                                               if (!is_null($uP->category_name3) && $uP->category_name3 != "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name3) ?><?php }
+                                               if (!is_null($uP->category_name3) && $uP->category_name4 != "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name4) ?><?php }
+                                               if (!is_null($uP->category_name3) && $uP->category_name5 != "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name5) ?><?php } ?>"
+                                               placeholder="Product Categories"
+                                               maxlength="1000">
+                            <input type="hidden" name="updateUserProductString" value="true"></th>
+                        <input type="hidden" name="line_id" value="<?= $uP->line_id ?>">
 
-                            <th width="66" align="right"><input TYPE="image" SRC="../media/products/save-32.png"
-                                                                HEIGHT="24"
-                                                                WIDTH="24" BORDER="0" ALT="Save"></th>
+                        <th width="66" align="right"><input TYPE="image" SRC="../media/products/save-32.png"
+                                                            HEIGHT="24"
+                                                            WIDTH="24" BORDER="0" ALT="Save"></th>
+                        </form>
 
-                            <th width="32" align="right">
-                                <form action="../myPage/" method="post">
-                                    <input type="hidden" name="cancelEditModeFlag" value="true">
-                                    <input TYPE="image" SRC="../media/products/cancel-32.png" HEIGHT="24" WIDTH="24"
-                                           BORDER="0" ALT="Cancel">
-                                </form>
-                            </th>
+                        <th width="32" align="right">
+                            <form action="../myPage/" method="post">
+                                <input type="hidden" name="cancelEditModeFlag" value="true">
+                                <input TYPE="image" SRC="../media/products/cancel-32.png" HEIGHT="24" WIDTH="24"
+                                       BORDER="0" ALT="Cancel">
+                            </form>
+                        </th>
 
 
                         <!-- if Edit button was NOT clicked we need to open regular product list-->
@@ -93,11 +94,11 @@
                                     src="../uploads/<?= $userId ?>/cropped/<?= $uP->product_img_name ?>"></a><?php } ?>
                         </th>
                         <th width="200"><?= htmlspecialchars(ltrim(rtrim($uP->product_name))) ?></th>
-                        <th width="300"><?php if (!is_null($uP->category_name1) && $uP->category_name1 !== "") { ?><?= escapeSpecialCharactersHTML($uP->category_name1) ?><?php }
-                            if (!is_null($uP->category_name2) && $uP->category_name2 !== "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name2) ?><?php }
-                            if (!is_null($uP->category_name3) && $uP->category_name3 !== "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name3) ?><?php }
-                            if (!is_null($uP->category_name3) && $uP->category_name4 !== "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name4) ?><?php }
-                            if (!is_null($uP->category_name3) && $uP->category_name5 !== "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name5) ?><?php } ?></th>
+                        <th width="300"><?php if (!is_null($uP->category_name1) && $uP->category_name1 != "") { ?><?= escapeSpecialCharactersHTML($uP->category_name1) ?><?php }
+                            if (!is_null($uP->category_name2) && $uP->category_name2 != "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name2) ?><?php }
+                            if (!is_null($uP->category_name3) && $uP->category_name3 != "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name3) ?><?php }
+                            if (!is_null($uP->category_name3) && $uP->category_name4 != "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name4) ?><?php }
+                            if (!is_null($uP->category_name3) && $uP->category_name5 != "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name5) ?><?php } ?></th>
                         <th width="66" align="right">
                             <form action="../myPage/" class="product-btn-form" method="post">
                                 <input type="hidden" name="line_id" value="<?= $uP->line_id ?>">

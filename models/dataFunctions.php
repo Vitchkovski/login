@@ -85,10 +85,10 @@ function uploadProductPicture($userId)
                 return "Error on load";
             }
         } else {
-            return "File size is too big";
+            return "Error on load";
         }
     } else {
-        return "Type is not allowed";
+        return "Error on load";
     }
 
 }

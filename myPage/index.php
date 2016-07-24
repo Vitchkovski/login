@@ -17,6 +17,8 @@ if (!empty($_POST['deleteUserProduct']) && !empty($_POST['line_id'])) {
 
         deleteProductFromUserList($userId, $productId, $productLineId);
 
+        header("Location: ../login");
+
     } else {
         header("Location: ../login");
     }
@@ -53,9 +55,11 @@ if (!empty($_POST['updateUserProductString']) && !empty($_POST['line_id'])) {
         $productCategoriesString = $_POST['productCategoriesString'];
 
         //picture can be not submitted. In that case - setting picture name to the initial value
-        if (!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Type is not allowed" || $pictureNameAfterUpload == "File size is too big" || $pictureNameAfterUpload == "Error on load") {
+        if (!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Error on load") {
 
-            if (isset($pictureNameAfterUpload) && ($pictureNameAfterUpload == "Type is not allowed" || $pictureNameAfterUpload == "File size is too big" || $pictureNameAfterUpload == "Error on load"))
+
+
+            if (isset($pictureNameAfterUpload) && $pictureNameAfterUpload == "Error on load")
                 $imageIncorrectFlag = true;
 
             $pictureNameAfterUpload = $_POST['initialProductPictureName'];
@@ -68,6 +72,9 @@ if (!empty($_POST['updateUserProductString']) && !empty($_POST['line_id'])) {
 
 
         updateUserProductString($userId, $productLineId, $productName, $pictureNameAfterUpload, $productCategoriesString);
+
+
+        header("Location: ../login");
 
     } else {
         header("Location: ../login");
@@ -97,9 +104,9 @@ if (!empty($_POST['newUserProductSubmitted'])) {
         $productCategoriesString = $_POST['productCategoriesString'];
 
         //picture can be not submitted. In that case - setting picture name to NULL
-        if (!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Type is not allowed" || $pictureNameAfterUpload == "File size is too big" || $pictureNameAfterUpload == "Error on load") {
+        if (!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Error on load") {
 
-            if (isset($pictureNameAfterUpload) && ($pictureNameAfterUpload == "Type is not allowed" || $pictureNameAfterUpload == "File size is too big" || $pictureNameAfterUpload == "Error on load"))
+            if (isset($pictureNameAfterUpload) && $pictureNameAfterUpload == "Error on load")
                 $imageIncorrectFlag = true;
 
             $pictureNameAfterUpload = null;
@@ -107,6 +114,8 @@ if (!empty($_POST['newUserProductSubmitted'])) {
         }
 
         addProductToUserList($userId, $productName, $pictureNameAfterUpload, $productCategoriesString);
+
+        header("Location: ../login");
 
     } else {
         header("Location: ../login");
