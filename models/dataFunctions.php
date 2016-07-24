@@ -55,8 +55,8 @@ function uploadProductPicture ($userId){
             if (is_uploaded_file($_FILES["productPicture"]["tmp_name"])) {
 
 
-                mkdir("../uploads/" . $userId."/cropped", 0777, true);
-                mkdir("../uploads/" . $userId."/original", 0777, true);
+                @mkdir("../uploads/" . $userId."/cropped", 0777, true);
+                @mkdir("../uploads/" . $userId."/original", 0777, true);
 
                 $pictureNameAfterUpload = $userId."-".time().".png";
 
