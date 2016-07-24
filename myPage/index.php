@@ -64,7 +64,6 @@ if (!empty($_POST['updateUserProductString']) && !empty($_POST['line_id'])) {
             if ($pictureNameAfterUpload == "")
                 $pictureNameAfterUpload = null;
 
-            echo $imageIncorrectFlag;
         }
 
 
