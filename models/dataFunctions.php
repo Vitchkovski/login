@@ -55,12 +55,12 @@ function uploadProductPicture ($userId){
             if (is_uploaded_file($_FILES["productPicture"]["tmp_name"])) {
 
 
-                @mkdir("../uploads/" . $userId."/cropped", 0777);
-                @mkdir("../uploads/" . $userId."/original", 0777);
+                mkdir("../uploads/" . $userId."/cropped", 0777, true);
+                mkdir("../uploads/" . $userId."/original", 0777, true);
 
                 $pictureNameAfterUpload = $userId."-".time().".png";
 
-                move_uploaded_file($_FILES["productPicture"]["tmp_name"], "../uploads/" . $userId . "/"."original/" .$pictureNameAfterUpload);
+                move_uploaded_file($_FILES["productPicture"]["tmp_name"], "../uploads/" . $userId . "/original/" .$pictureNameAfterUpload);
 
 
                 $productImage = new resizeImage();
