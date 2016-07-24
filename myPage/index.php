@@ -10,7 +10,6 @@ if (!empty($_POST['deleteUserProduct']) && !empty($_POST['line_id'])) {
 
     if (isset($_SESSION['thisIsLoggedUser'])) {
 
-
         $userId = $_SESSION['userSessionId'];
         $productId = $_POST['product_id'];
         $productLineId = $_POST['line_id'];
@@ -37,7 +36,6 @@ if (!empty($_POST['updateUserProductString']) && !empty($_POST['line_id'])) {
 
     if (isset($_SESSION['thisIsLoggedUser'])) {
 
-
         $userId = $_SESSION['userSessionId'];
 
         //product picture submitted
@@ -57,8 +55,6 @@ if (!empty($_POST['updateUserProductString']) && !empty($_POST['line_id'])) {
         //picture can be not submitted. In that case - setting picture name to the initial value
         if (!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Error on load") {
 
-
-
             if (isset($pictureNameAfterUpload) && $pictureNameAfterUpload == "Error on load")
                 $imageIncorrectFlag = true;
 
@@ -72,7 +68,6 @@ if (!empty($_POST['updateUserProductString']) && !empty($_POST['line_id'])) {
 
 
         updateUserProductString($userId, $productLineId, $productName, $pictureNameAfterUpload, $productCategoriesString);
-
 
         header("Location: ../login");
 
@@ -88,10 +83,8 @@ if (!empty($_POST['newUserProductSubmitted'])) {
 
     if (isset($_SESSION['thisIsLoggedUser'])) {
 
-
         $userId = $_SESSION['userSessionId'];
         $productName = $_POST['productName'];
-
 
         //product picture submitted
         if (isset ($_FILES["productPicture"]) && !empty($_FILES["productPicture"]["name"])) {
@@ -99,7 +92,6 @@ if (!empty($_POST['newUserProductSubmitted'])) {
             $pictureNameAfterUpload = uploadProductPicture($userId);
 
         }
-
 
         $productCategoriesString = $_POST['productCategoriesString'];
 
@@ -127,6 +119,7 @@ if (!empty($_POST['newUserProductSubmitted'])) {
 
 //Redirecting authorized user to the personal info page
 if (isset($_SESSION['thisIsLoggedUser'])) {
+
     $userId = $_SESSION['userSessionId'];
     $userEmail = $_SESSION['userSessionEmail'];
     $userName = $_SESSION['userSessionName'];
@@ -134,6 +127,7 @@ if (isset($_SESSION['thisIsLoggedUser'])) {
     $userProducts = retrieveUserProducts($userId);
 
     include("../views/userPersonalPage.php");
+
 } else {
     //Session is not started for the user - opening login page
     if (!isset($userEscapedEmail)) {

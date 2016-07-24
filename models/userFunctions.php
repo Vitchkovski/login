@@ -9,7 +9,9 @@ function addNewUserToDB($login, $email, $password)
 
     $hashedPassword = hash('sha512', $password);
 
-    $queryToRun = sprintf("insert into users (login, email, password) values ('%s', '%s', '%s')", $escapedLogin, $escapedEmail, $hashedPassword);
+    $queryToRun = sprintf("insert into users (login, email, password) values ('%s', '%s', '%s')", $escapedLogin,
+                                                                                                  $escapedEmail,
+                                                                                                  $hashedPassword);
 
 
     $db_functions->qryFire($queryToRun);
@@ -26,7 +28,11 @@ function deleteProductFromUserList($userId, $productId, $productLineId)
     $db_functions = new DBfunctions();
 
 
-    $queryToRun = sprintf("delete from user_product_categories where user_id = '%s' and product_id = '%s' and line_id = '%s' limit 1", $userId, $productId, $productLineId);
+    $queryToRun = sprintf("delete from user_product_categories where user_id = '%s' 
+                                                                 and product_id = '%s' 
+                                                                 and line_id = '%s' limit 1", $userId,
+                                                                                              $productId,
+                                                                                              $productLineId);
 
 
     $db_functions->qryFire($queryToRun);
@@ -56,7 +62,8 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
 
 
     //if non-existing product was submitted we must create a record for it in corresponding table
-    $queryToRun = sprintf("select * from user_products where user_id = '%s' and product_name = '%s'", $userId, $escapedProductName);
+    $queryToRun = sprintf("select * from user_products where user_id = '%s' 
+                                                         and product_name = '%s'", $userId, $escapedProductName);
 
 
     $userProductInfo = $db_functions->qrySelect($queryToRun);
@@ -75,7 +82,8 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
     //if non-existing category was submitted we must create a record for it in corresponding table
     foreach ($limitedCategoriesArray as $lCA) {
         if (!is_null($lCA)) {
-            $queryToRun = sprintf("select * from user_categories where user_id = '%s' and category_name = '%s'", $userId, $lCA);
+            $queryToRun = sprintf("select * from user_categories where user_id = '%s' 
+                                                                   and category_name = '%s'", $userId, $lCA);
 
 
             $userCategoryInfo = $db_functions->qrySelect($queryToRun);
@@ -116,7 +124,14 @@ values ("%1$s",
 	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%6$s"), 
 	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%7$s"),
 	   if ("%8$s" = "null", null, "%8$s"), 
-	   now())', $userId, $escapedProductName, $limitedCategoriesArray[0], $limitedCategoriesArray[1], $limitedCategoriesArray[2], $limitedCategoriesArray[3], $limitedCategoriesArray[4], $pictureNameAfterUpload);
+	   now())', $userId,
+                $escapedProductName,
+                $limitedCategoriesArray[0],
+                $limitedCategoriesArray[1],
+                $limitedCategoriesArray[2],
+                $limitedCategoriesArray[3],
+                $limitedCategoriesArray[4],
+                $pictureNameAfterUpload);
 
 
     $db_functions->qryFire($queryToRun);
@@ -145,7 +160,8 @@ function updateUserProductString($userId, $productLineId, $productName, $picture
 
 
     //if non-existing product was submitted we must create a record for it in corresponding table
-    $queryToRun = sprintf("select * from user_products where user_id = '%s' and product_name = '%s'", $userId, $escapedProductName);
+    $queryToRun = sprintf("select * from user_products where user_id = '%s' 
+                                                         and product_name = '%s'", $userId, $escapedProductName);
 
 
     $userProductInfo = $db_functions->qrySelect($queryToRun);
@@ -165,7 +181,8 @@ function updateUserProductString($userId, $productLineId, $productName, $picture
     //if non-existing category was submitted we must create a record for it in corresponding table
     foreach ($limitedCategoriesArray as $lCA) {
         if (!is_null($lCA)) {
-            $queryToRun = sprintf("select * from user_categories where user_id = '%s' and category_name = '%s'", $userId, $lCA);
+            $queryToRun = sprintf("select * from user_categories where user_id = '%s' 
+                                                                   and category_name = '%s'", $userId, $lCA);
 
 
             $userCategoryInfo = $db_functions->qrySelect($queryToRun);
@@ -192,14 +209,28 @@ function updateUserProductString($userId, $productLineId, $productName, $picture
 
     //updating existing record in user's product list
     $queryToRun = sprintf('update user_product_categories 
-                           set product_id = (select product_id from user_products up where up.product_name = "%2$s" and up.user_id = "%1$s"), 
-							   category1 = (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%3$s"),
-							   category2 = (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%4$s"),
-							   category3 = (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%5$s"),
-							   category4 = (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%6$s"),
-							   category5 = (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%7$s"),
+                           set product_id = (select product_id from user_products up where up.product_name = "%2$s" 
+                                                                                       and up.user_id = "%1$s"), 
+							   category1 = (select category_id from user_categories uc where uc.user_id = "%1$s" 
+							                                                             and uc.category_name = "%3$s"),
+							   category2 = (select category_id from user_categories uc where uc.user_id = "%1$s" 
+							                                                             and uc.category_name = "%4$s"),
+							   category3 = (select category_id from user_categories uc where uc.user_id = "%1$s" 
+							                                                             and uc.category_name = "%5$s"),
+							   category4 = (select category_id from user_categories uc where uc.user_id = "%1$s" 
+							                                                             and uc.category_name = "%6$s"),
+							   category5 = (select category_id from user_categories uc where uc.user_id = "%1$s" 
+							                                                             and uc.category_name = "%7$s"),
 							   product_img_name = (if ("%9$s" = "null", null, "%9$s"))
-						   where line_id = "%8$s"', $userId, $escapedProductName, $limitedCategoriesArray[0], $limitedCategoriesArray[1], $limitedCategoriesArray[2], $limitedCategoriesArray[3], $limitedCategoriesArray[4], $productLineId, $pictureNameAfterUpload);
+						   where line_id = "%8$s"', $userId,
+                                                    $escapedProductName,
+                                                    $limitedCategoriesArray[0],
+                                                    $limitedCategoriesArray[1],
+                                                    $limitedCategoriesArray[2],
+                                                    $limitedCategoriesArray[3],
+                                                    $limitedCategoriesArray[4],
+                                                    $productLineId,
+                                                    $pictureNameAfterUpload);
 
 
     $db_functions->qryFire($queryToRun);
@@ -241,7 +272,8 @@ function retrieveUserInfo($login, $email, $password)
     $escapedLogin = $db_functions->escapeString($login);
     $hashedPassword = hash('sha512', $password);
 
-    $queryToRun = sprintf("select * from users where (login = '%s' or email = '%s') and password = '%s'", $escapedLogin, $escapedEmail, $hashedPassword);
+    $queryToRun = sprintf("select * from users where (login = '%s' or email = '%s') 
+                                                 and password = '%s'", $escapedLogin, $escapedEmail, $hashedPassword);
 
 
     $userInfo = $db_functions->qrySelect($queryToRun);
@@ -277,6 +309,5 @@ function retrieveUserProducts($userId)
 
     return $userProducts;
 }
-
 
 ?>

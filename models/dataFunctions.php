@@ -61,7 +61,7 @@ function uploadProductPicture($userId)
 
                 $pictureNameAfterUpload = $userId . "-" . time() . ".png";
 
-                move_uploaded_file($_FILES["productPicture"]["tmp_name"], "../uploads/" . $userId . "/original/" . $pictureNameAfterUpload);
+                move_uploaded_file($_FILES["productPicture"]["tmp_name"], "../uploads/".$userId."/original/".$pictureNameAfterUpload);
 
 
                 $productImage = new resizeImage();

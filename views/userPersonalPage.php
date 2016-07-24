@@ -60,11 +60,21 @@
                                                value="<?= escapeSpecialCharactersHTML($uP->product_name) ?>"
                                                placeholder="Product Name" autofocus required maxlength="254"></th>
                         <th width="300"><input type="text" size="38" name="productCategoriesString"
-                                               value="<?php if (!is_null($uP->category_name1) && $uP->category_name1 != "") { ?><?= escapeSpecialCharactersHTML($uP->category_name1) ?><?php }
-                                               if (!is_null($uP->category_name2) && $uP->category_name2 != "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name2) ?><?php }
-                                               if (!is_null($uP->category_name3) && $uP->category_name3 != "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name3) ?><?php }
-                                               if (!is_null($uP->category_name3) && $uP->category_name4 != "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name4) ?><?php }
-                                               if (!is_null($uP->category_name3) && $uP->category_name5 != "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name5) ?><?php } ?>"
+                                               value="<?php if (!is_null($uP->category_name1) && $uP->category_name1 != "") { ?>
+                                               <?= escapeSpecialCharactersHTML($uP->category_name1) ?><?php
+                                               }
+                                               if (!is_null($uP->category_name2) && $uP->category_name2 != "") { ?>
+                                               , <?= escapeSpecialCharactersHTML($uP->category_name2) ?><?php
+                                               }
+                                               if (!is_null($uP->category_name3) && $uP->category_name3 != "") { ?>
+                                               , <?= escapeSpecialCharactersHTML($uP->category_name3) ?><?php
+                                               }
+                                               if (!is_null($uP->category_name3) && $uP->category_name4 != "") { ?>
+                                               , <?= escapeSpecialCharactersHTML($uP->category_name4) ?><?php
+                                               }
+                                               if (!is_null($uP->category_name3) && $uP->category_name5 != "") { ?>
+                                               , <?= escapeSpecialCharactersHTML($uP->category_name5) ?><?php
+                                               } ?>"
                                                placeholder="Product Categories"
                                                maxlength="1000">
                             <input type="hidden" name="updateUserProductString" value="true"></th>
@@ -94,11 +104,22 @@
                                     src="../uploads/<?= $userId ?>/cropped/<?= $uP->product_img_name ?>"></a><?php } ?>
                         </th>
                         <th width="200"><?= htmlspecialchars(ltrim(rtrim($uP->product_name))) ?></th>
-                        <th width="300"><?php if (!is_null($uP->category_name1) && $uP->category_name1 != "") { ?><?= escapeSpecialCharactersHTML($uP->category_name1) ?><?php }
-                            if (!is_null($uP->category_name2) && $uP->category_name2 != "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name2) ?><?php }
-                            if (!is_null($uP->category_name3) && $uP->category_name3 != "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name3) ?><?php }
-                            if (!is_null($uP->category_name3) && $uP->category_name4 != "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name4) ?><?php }
-                            if (!is_null($uP->category_name3) && $uP->category_name5 != "") { ?>, <?= escapeSpecialCharactersHTML($uP->category_name5) ?><?php } ?></th>
+                        <th width="300"><?php if (!is_null($uP->category_name1) && $uP->category_name1 != "") { ?>
+                                <?= escapeSpecialCharactersHTML($uP->category_name1) ?><?php
+                            }
+                            if (!is_null($uP->category_name2) && $uP->category_name2 != "") { ?>
+                                , <?= escapeSpecialCharactersHTML($uP->category_name2) ?><?php
+                            }
+                            if (!is_null($uP->category_name3) && $uP->category_name3 != "") { ?>
+                                , <?= escapeSpecialCharactersHTML($uP->category_name3) ?><?php
+                            }
+                            if (!is_null($uP->category_name3) && $uP->category_name4 != "") { ?>
+                                , <?= escapeSpecialCharactersHTML($uP->category_name4) ?><?php
+                            }
+                            if (!is_null($uP->category_name3) && $uP->category_name5 != "") { ?>
+                                , <?= escapeSpecialCharactersHTML($uP->category_name5) ?><?php
+                            } ?>
+                        </th>
                         <th width="66" align="right">
                             <form action="../myPage/" class="product-btn-form" method="post">
                                 <input type="hidden" name="line_id" value="<?= $uP->line_id ?>">
@@ -120,24 +141,15 @@
                                        BORDER="0" ALT="Delete">
 
                             </form>
-
                         </th>
-
-
                     <?php } ?>
-
                 </tr>
-
-
             <?php endforeach;
             } else { ?>
                 <br>You do not have products in your cart yet.
             <?php } ?>
         </table>
-
     </div>
-
-
 </div>
 <footer>
     Personal Info / 2016
