@@ -98,6 +98,7 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
     if (is_null($pictureNameAfterUpload))
         $pictureNameAfterUpload = "null";
 
+
     $queryToRun = sprintf('insert into user_product_categories (user_id, 
 									product_id, 
 									category1,
@@ -183,8 +184,11 @@ function updateUserProductString($userId, $productLineId, $productName, $picture
         }
     }
     //mysql treating null php values as "" value and not NULL. Thus defining correct value before update
-    if (is_null($pictureNameAfterUpload))
+
+    if (is_null($pictureNameAfterUpload)) {
         $pictureNameAfterUpload = "null";
+    }
+
 
     //updating existing record in user's product list
     $queryToRun = sprintf('update user_product_categories 

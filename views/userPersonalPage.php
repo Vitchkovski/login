@@ -9,8 +9,6 @@
 
 <body class="main">
 <div class="wrap">
-    <div class="header">
-    </div>
 
     <div align="center">
         <h1>My Product List Page | <?php echo $userName; ?> <a href='../login/index.php?action=logout' class="log-out">(logout)</a>
@@ -50,7 +48,7 @@
                                 <div class="hide-upload-btn-div">
                                     <div><img src="../../media/products/upload-32.png"></div>
                                     <input type="hidden" name="initialProductPictureName"
-                                           value="<?= escapeSpecialCharactersHTML($uP->product_img_name) ?>">
+                                           value="<?= $uP->product_img_name ?>">
                                     <input class="hide-upload-button-input" type="file" name="productPicture" id="file"
                                            size="1">
                                 </div>
