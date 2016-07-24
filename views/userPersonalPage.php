@@ -9,7 +9,8 @@
 
 <body class="main">
 <div class="wrap">
-
+    <div class="header">
+    </div>
     <div align="center">
         <h1>My Product List Page | <?php echo $userName; ?> <a href='../login/index.php?action=logout' class="log-out">(logout)</a>
         </h1><br>
@@ -46,7 +47,7 @@
                         <form enctype="multipart/form-data" class="product-add-form" method="post" action="../myPage/">
                             <th width="50">
                                 <div class="hide-upload-btn-div">
-                                    <div><img src="../../media/products/upload-32.png"></div>
+                                    <div><img src="../media/products/upload-32.png"></div>
                                     <input type="hidden" name="initialProductPictureName"
                                            value="<?= $uP->product_img_name ?>">
                                     <input class="hide-upload-button-input" type="file" name="productPicture" id="file"
@@ -67,14 +68,14 @@
                                 <input type="hidden" name="updateUserProductString" value="true"></th>
                             <input type="hidden" name="line_id" value="<?= $uP->line_id ?>">
 
-                            <th width="66" align="right"><input TYPE="image" SRC="../../media/products/save-32.png"
+                            <th width="66" align="right"><input TYPE="image" SRC="../media/products/save-32.png"
                                                                 HEIGHT="24"
                                                                 WIDTH="24" BORDER="0" ALT="Save"></th>
                         </form>
                         <th width="32" align="center">
                             <form action="../myPage/" method="post">
                                 <input type="hidden" name="cancelEditModeFlag" value="true">
-                                <input TYPE="image" SRC="../../media/products/cancel-32.png" HEIGHT="24" WIDTH="24"
+                                <input TYPE="image" SRC="../media/products/cancel-32.png" HEIGHT="24" WIDTH="24"
                                        BORDER="0" ALT="Cancel">
                             </form>
                         </th>
@@ -83,7 +84,7 @@
                     <?php } else { ?>
 
                         <th width="50"><?php if (is_null($uP->product_img_name)) { ?><img
-                                src="../../media/products/shopping-cart-32.png"><?php } else { ?><a
+                                src="../media/products/shopping-cart-32.png"><?php } else { ?><a
                                 href="../uploads/<?= $userId ?>/original/<?= $uP->product_img_name ?>" target="_blank">
                                 <img
                                     src="../uploads/<?= $userId ?>/cropped/<?= $uP->product_img_name ?>"></a><?php } ?>
@@ -100,7 +101,7 @@
                                 <input type="hidden" name="product_id" value="<?= $uP->product_id ?>">
                                 <input type="hidden" name="from_date" value="<?= $uP->from_date ?>">
                                 <input type="hidden" name="editUserProductFlag" value="true">
-                                <input TYPE="image" SRC="../../media/products/edit-32.png" HEIGHT="24" WIDTH="24"
+                                <input TYPE="image" SRC="../media/products/edit-32.png" HEIGHT="24" WIDTH="24"
                                        BORDER="0" ALT="Edit">
                             </form>
                         </th>
@@ -111,7 +112,7 @@
                                 <input type="hidden" name="product_id" value="<?= $uP->product_id ?>">
                                 <input type="hidden" name="from_date" value="<?= $uP->from_date ?>">
                                 <input type="hidden" name="deleteUserProduct" value="true">
-                                <input TYPE="image" SRC="../../media/products/garbage-32.png" HEIGHT="24" WIDTH="24"
+                                <input TYPE="image" SRC="../media/products/garbage-32.png" HEIGHT="24" WIDTH="24"
                                        BORDER="0" ALT="Delete">
 
                             </form>
