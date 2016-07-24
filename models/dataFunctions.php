@@ -42,7 +42,8 @@ function categoryStringToArray($escapedProductCategoriesString)
 
 }
 
-function uploadProductPicture ($userId){
+function uploadProductPicture($userId)
+{
 
 
     $typesAllowed = array('image/gif', 'image/png', 'image/jpeg', 'image/bmp');
@@ -55,27 +56,27 @@ function uploadProductPicture ($userId){
             if (is_uploaded_file($_FILES["productPicture"]["tmp_name"])) {
 
 
-                @mkdir("../uploads/" . $userId."/cropped", 0777, true);
-                @mkdir("../uploads/" . $userId."/original", 0777, true);
+                @mkdir("../uploads/" . $userId . "/cropped", 0777, true);
+                @mkdir("../uploads/" . $userId . "/original", 0777, true);
 
-                $pictureNameAfterUpload = $userId."-".time().".png";
+                $pictureNameAfterUpload = $userId . "-" . time() . ".png";
 
-                move_uploaded_file($_FILES["productPicture"]["tmp_name"], "../uploads/" . $userId . "/original/" .$pictureNameAfterUpload);
+                move_uploaded_file($_FILES["productPicture"]["tmp_name"], "../uploads/" . $userId . "/original/" . $pictureNameAfterUpload);
 
 
                 $productImage = new resizeImage();
-                $productImage->load("../uploads/" . $userId . "/"."original/" .$pictureNameAfterUpload);
+                $productImage->load("../uploads/" . $userId . "/" . "original/" . $pictureNameAfterUpload);
 
                 $productPictureHeight = $productImage->getHeight();
                 $productPictureWidth = $productImage->getWidth();
 
-                if ($productPictureHeight>=$productPictureWidth)
+                if ($productPictureHeight >= $productPictureWidth)
                     $productImage->resizeToHeight(48);
                 else
                     $productImage->resizeToWidth(48);
 
 
-                $productImage->save("../uploads/" . $userId . "/"."cropped/" .$pictureNameAfterUpload);
+                $productImage->save("../uploads/" . $userId . "/" . "cropped/" . $pictureNameAfterUpload);
 
                 return $pictureNameAfterUpload;
 
@@ -159,10 +160,10 @@ class resizeImage
     }
 }
 
-function escapeSpecialCharactersHTML($string){
+function escapeSpecialCharactersHTML($string)
+{
     return htmlspecialchars(ltrim(rtrim($string)));
 }
-
 
 
 ?>
