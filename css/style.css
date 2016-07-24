@@ -140,18 +140,10 @@ label[for=error] {
 }
 
 a.log-out {
+    font-size: 15px;
 
-    color: white;
-    background: #0996f8;
-    border: 0;
-    width: 250px;
-    font-weight: 500;
-    font-size: 22px;
-    text-align: center;
-    cursor: pointer;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    height: 50px;
+    text-decoration: none;
+    color: #424f59;
 }
 
 .vertical-form,

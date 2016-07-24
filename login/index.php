@@ -11,6 +11,18 @@ if (!empty($_POST['logout_flag'])) {
     session_destroy();
 }
 
+
+if (isset($_GET['action'])) {
+
+    $action = $_GET['action'];
+    if ($action == "logout") {
+        session_start();
+        session_unset();
+        session_destroy();
+    }
+}
+
+
 //Something has been submitted through the form
 if (!empty($_POST) && !isset($_POST['logout_flag'])) {
     //escaping special & space characters first for all input

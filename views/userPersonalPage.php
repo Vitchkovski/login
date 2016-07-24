@@ -11,20 +11,15 @@
 <div class="wrap">
     <div class="header">
     </div>
-    <div align="center">
-        <form class="vertical-form-info" action="../login/" method="post">
-            <h1>My Personal Page</h1><br>
-            <p align=left><input id="info" type="hidden" readonly><label for="info">ID: <?= $userId ?><br></label>
-                Username: <?= escapeSpecialCharactersHTML($userName) ?><br>
-                Email: <?= escapeSpecialCharactersHTML($userEmail) ?></p>
-            <input type="hidden" name="logout_flag" value="true">
-            <input type="submit" value="Log Out"><br>
-        </form>
 
+    <div align="center">
+        <h1>My Product List Page | <?php echo $userName; ?> <a href='../login/index.php?action=logout' class="log-out">(logout)</a>
+        </h1><br>
         <?php if (!empty($_POST) && isset($imageIncorrectFlag)) { ?>
             <div align="center">
                 <form class="vertical-form-bottom">
-                    <input id="error" type="hidden" readonly><label for="error">Image you submitted is incorrect. Only png, bmp, jpg and gif files not larger than 3 MB can be used.</label>
+                    <input id="error" type="hidden" readonly><label for="error">Image you submitted is incorrect. Only
+                        png, bmp, jpg and gif files not larger than 3 MB can be used.</label>
                 </form>
             </div>
         <?php } ?>
@@ -38,8 +33,6 @@
             <input type="hidden" name="newUserProductSubmitted" value="true">
             <input type="submit" value="Add">
         </form>
-
-
 
 
         <?php if (!is_null($userProducts[0])) { ?>
