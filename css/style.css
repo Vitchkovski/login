@@ -116,11 +116,15 @@ label[for=error] {
 
 .product-add-form {
     width: 669px;
-    height: 29px;
-    padding: 4px 0px;
+    height: 32px;
+    padding: 4px 0;
     border-radius: 3px;
     box-shadow: 0 1px 5px #8a9ba8;
     margin-bottom: 20px;
+    vertical-align: middle;
+    display: table-cell;
+
+
 }
 
 .hide-upload-btn-div {
