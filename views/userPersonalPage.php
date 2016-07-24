@@ -28,7 +28,7 @@
             <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
             <input name="productPicture" type="file">
             <input type="text" name="productName" placeholder="Product Name" autofocus required maxlength="254">
-            <input type="text" name="productCategoriesString" placeholder="Product Categories" required
+            <input type="text" style="width: 177px" width="300" name="productCategoriesString" placeholder="Categories (use , ; delimiters)" required
                    maxlength="1000">
             <input type="hidden" name="newUserProductSubmitted" value="true">
             <input type="submit" value="Add">

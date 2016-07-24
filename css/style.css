@@ -105,6 +105,7 @@ label[for=error] {
     font-weight: 100;
     font-family: "Fira Sans", Helvetica, Arial, sans-serif;
     table-layout: fixed;
+    padding: 2px 6px 2px;
 
 }
 
@@ -114,10 +115,10 @@ label[for=error] {
 }*/
 
 .product-add-form {
-    width: 660px;
+    width: 669px;
     height: 29px;
-    padding: 4px;
-    border-radius: 4px;
+    padding: 4px 0px;
+    border-radius: 3px;
     box-shadow: 0 1px 5px #8a9ba8;
     margin-bottom: 20px;
 }
