@@ -72,7 +72,7 @@
                                                                 HEIGHT="24"
                                                                 WIDTH="24" BORDER="0" ALT="Save"></th>
                         </form>
-                        <th width="32" align="center">
+                        <th width="32" align="right">
                             <form action="../myPage/" method="post">
                                 <input type="hidden" name="cancelEditModeFlag" value="true">
                                 <input TYPE="image" SRC="../media/products/cancel-32.png" HEIGHT="24" WIDTH="24"
