@@ -39,9 +39,9 @@ if (!empty($_POST['updateUserProductString']) && !empty($_POST['line_id'])) {
         $userId = $_SESSION['userSessionId'];
 
         //product picture submitted
-        if (isset ($_FILES["productPicture"]) && !empty( $_FILES["productPicture"]["name"] )) {
+        if (isset ($_FILES["productPicture"]) && !empty($_FILES["productPicture"]["name"])) {
 
-            $pictureNameAfterUpload = $userId."-".time().".png";
+            $pictureNameAfterUpload = $userId . "-" . time() . ".png";
             uploadProductPicture($userId, $pictureNameAfterUpload);
 
         }
@@ -55,7 +55,7 @@ if (!empty($_POST['updateUserProductString']) && !empty($_POST['line_id'])) {
 
 
         //picture can be not submitted. In that case - setting picture name to the initial value
-        if(!isset ($pictureNameAfterUpload))
+        if (!isset ($pictureNameAfterUpload))
             $pictureNameAfterUpload = $_POST['initialProductPictureName'];
 
 
@@ -79,7 +79,7 @@ if (!empty($_POST['newUserProductSubmitted'])) {
 
 
         //product picture submitted
-        if (isset ($_FILES["productPicture"]) && !empty( $_FILES["productPicture"]["name"] )) {
+        if (isset ($_FILES["productPicture"]) && !empty($_FILES["productPicture"]["name"])) {
 
             $pictureNameAfterUpload = uploadProductPicture($userId);
 
@@ -89,9 +89,12 @@ if (!empty($_POST['newUserProductSubmitted'])) {
         $productCategoriesString = $_POST['productCategoriesString'];
 
         //picture can be not submitted. In that case - setting picture name to NULL
-        if(!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Type is not allowed" || $pictureNameAfterUpload == "File size is too big" || $pictureNameAfterUpload == "Error on load") {
+        if (!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Type is not allowed" || $pictureNameAfterUpload == "File size is too big" || $pictureNameAfterUpload == "Error on load") {
+
+            if ($pictureNameAfterUpload == "Type is not allowed" || $pictureNameAfterUpload == "File size is too big" || $pictureNameAfterUpload == "Error on load")
+                $imageIncorrectFlag = true;
+
             $pictureNameAfterUpload = null;
-            $imageIncorrectFlag = true;
         }
 
         addProductToUserList($userId, $productName, $pictureNameAfterUpload, $productCategoriesString);
