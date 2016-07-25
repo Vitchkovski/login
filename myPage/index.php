@@ -17,7 +17,12 @@ if (!empty($_POST['deleteUserProduct']) && !empty($_POST['line_id'])) {
 
         deleteProductFromUserList($userId, $productId, $productLineId);
 
+        if (isset($_SESSION['imageIncorrectFlag']) && $_SESSION['imageIncorrectFlag'] == true) {
+            $_SESSION['imageIncorrectFlag'] = false;
+        }
+
         header("Location: ../login");
+
 
     } else {
         header("Location: ../login");
@@ -27,6 +32,10 @@ if (!empty($_POST['deleteUserProduct']) && !empty($_POST['line_id'])) {
 }
 
 if (!empty($_POST['cancelEditModeFlag'])) {
+
+    if (isset($_SESSION['imageIncorrectFlag']) && $_SESSION['imageIncorrectFlag'] == true) {
+        $_SESSION['imageIncorrectFlag'] = false;
+    }
 
     header("Location: ../login");
 

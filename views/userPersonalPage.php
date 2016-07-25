@@ -148,7 +148,8 @@
             <?php endforeach;
             } else { ?>
                 <br>You do not have products in your cart yet.
-            <?php } ?>
+            <?php }
+            ?>
         </table>
     </div>
 </div>
