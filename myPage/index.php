@@ -31,7 +31,7 @@ if (!empty($_POST['deleteUserProduct']) && !empty($_POST['line_id'])) {
 
 }
 
-if (!empty($_POST['cancelEditModeFlag'])) {
+if (!empty($_POST['cancelEditModeFlag']) || isset($_GET['action'])) {
 
     if (isset($_SESSION['imageIncorrectFlag']) && $_SESSION['imageIncorrectFlag'] == true) {
         $_SESSION['imageIncorrectFlag'] = false;

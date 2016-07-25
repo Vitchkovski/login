@@ -152,6 +152,14 @@ a.log-out {
     color: #424f59;
 }
 
+a.close {
+    font-size: 13px;
+    text-decoration: none;
+    color: #b20000;
+    text-align:  right;
+    display:block;
+}
+
 .vertical-form,
 .vertical-form-login {
     border-radius: 4px;

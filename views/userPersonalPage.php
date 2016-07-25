@@ -19,7 +19,8 @@
             <div align="center">
                 <form class="vertical-form-bottom">
                     <input id="error" type="hidden" readonly><label for="error">Image you submitted is incorrect. Only
-                        png, jpg and gif files not larger than 3 MB can be used.</label>
+                        png, jpg and gif files not larger than 3 MB can be used.<br>
+                        <a href='../myPage/index.php?action=close' class="close">(close)</a></label>
                 </form>
             </div>
         <?php }  ?>
