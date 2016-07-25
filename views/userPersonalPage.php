@@ -12,16 +12,17 @@
     <div class="header">
     </div>
     <div align="center">
-        <h1>My Product List Page | <?php echo $userName; ?> <a href='../login/index.php?action=logout' class="log-out">(logout)</a>
+        <h1>My Product List Page | <?php echo $userName; ?>
+            <a href='../login/index.php?action=logout' class="log-out">(logout)</a>
         </h1><br>
-        <?php if (!empty($_POST) && isset($imageIncorrectFlag)) { ?>
+        <?php if (isset($_SESSION['imageIncorrectFlag']) && $_SESSION['imageIncorrectFlag'] == true) { ?>
             <div align="center">
                 <form class="vertical-form-bottom">
                     <input id="error" type="hidden" readonly><label for="error">Image you submitted is incorrect. Only
                         png, jpg and gif files not larger than 3 MB can be used.</label>
                 </form>
             </div>
-        <?php } ?>
+        <?php }  ?>
 
         <form enctype="multipart/form-data" class="product-add-form" method="post" action="../myPage/">
             <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
@@ -60,20 +61,20 @@
                                                value="<?= escapeSpecialCharactersHTML($uP->product_name) ?>"
                                                placeholder="Product Name" autofocus required maxlength="254"></th>
                         <th width="300"><input type="text" size="38" name="productCategoriesString"
-                                               value="<?php if (!is_null($uP->category_name1) && $uP->category_name1 != "") { ?>
-                                               <?= escapeSpecialCharactersHTML($uP->category_name1) ?><?php
+                                               value="<?php if (!is_null($uP->category_name1) && $uP->category_name1 != "") { ?><?=
+                                                   escapeSpecialCharactersHTML($uP->category_name1) ?><?php
                                                }
-                                               if (!is_null($uP->category_name2) && $uP->category_name2 != "") { ?>
-                                               , <?= escapeSpecialCharactersHTML($uP->category_name2) ?><?php
+                                               if (!is_null($uP->category_name2) && $uP->category_name2 != "") { ?>, <?=
+                                                   escapeSpecialCharactersHTML($uP->category_name2) ?><?php
                                                }
-                                               if (!is_null($uP->category_name3) && $uP->category_name3 != "") { ?>
-                                               , <?= escapeSpecialCharactersHTML($uP->category_name3) ?><?php
+                                               if (!is_null($uP->category_name3) && $uP->category_name3 != "") { ?>, <?=
+                                                   escapeSpecialCharactersHTML($uP->category_name3) ?><?php
                                                }
-                                               if (!is_null($uP->category_name3) && $uP->category_name4 != "") { ?>
-                                               , <?= escapeSpecialCharactersHTML($uP->category_name4) ?><?php
+                                               if (!is_null($uP->category_name3) && $uP->category_name4 != "") { ?>, <?=
+                                                   escapeSpecialCharactersHTML($uP->category_name4) ?><?php
                                                }
-                                               if (!is_null($uP->category_name3) && $uP->category_name5 != "") { ?>
-                                               , <?= escapeSpecialCharactersHTML($uP->category_name5) ?><?php
+                                               if (!is_null($uP->category_name3) && $uP->category_name5 != "") { ?>, <?=
+                                                   escapeSpecialCharactersHTML($uP->category_name5) ?><?php
                                                } ?>"
                                                placeholder="Product Categories"
                                                maxlength="1000">
@@ -107,17 +108,17 @@
                         <th width="300"><?php if (!is_null($uP->category_name1) && $uP->category_name1 != "") { ?>
                                 <?= escapeSpecialCharactersHTML($uP->category_name1) ?><?php
                             }
-                            if (!is_null($uP->category_name2) && $uP->category_name2 != "") { ?>
-                                , <?= escapeSpecialCharactersHTML($uP->category_name2) ?><?php
+                            if (!is_null($uP->category_name2) && $uP->category_name2 != "") { ?>, <?=
+                                escapeSpecialCharactersHTML($uP->category_name2) ?><?php
                             }
-                            if (!is_null($uP->category_name3) && $uP->category_name3 != "") { ?>
-                                , <?= escapeSpecialCharactersHTML($uP->category_name3) ?><?php
+                            if (!is_null($uP->category_name3) && $uP->category_name3 != "") { ?>, <?=
+                                escapeSpecialCharactersHTML($uP->category_name3) ?><?php
                             }
-                            if (!is_null($uP->category_name3) && $uP->category_name4 != "") { ?>
-                                , <?= escapeSpecialCharactersHTML($uP->category_name4) ?><?php
+                            if (!is_null($uP->category_name3) && $uP->category_name4 != "") { ?>, <?=
+                                escapeSpecialCharactersHTML($uP->category_name4) ?><?php
                             }
-                            if (!is_null($uP->category_name3) && $uP->category_name5 != "") { ?>
-                                , <?= escapeSpecialCharactersHTML($uP->category_name5) ?><?php
+                            if (!is_null($uP->category_name3) && $uP->category_name5 != "") { ?>, <?=
+                                escapeSpecialCharactersHTML($uP->category_name5) ?><?php
                             } ?>
                         </th>
                         <th width="66" align="right">

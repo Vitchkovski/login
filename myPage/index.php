@@ -6,6 +6,7 @@ require_once("../models/dataFunctions.php");
 
 session_start();
 
+
 if (!empty($_POST['deleteUserProduct']) && !empty($_POST['line_id'])) {
 
     if (isset($_SESSION['thisIsLoggedUser'])) {
@@ -69,6 +70,12 @@ if (!empty($_POST['updateUserProductString']) && !empty($_POST['line_id'])) {
 
         updateUserProductString($userId, $productLineId, $productName, $pictureNameAfterUpload, $productCategoriesString);
 
+        //incorrect image flag should be saved in session before refreshing
+        $_SESSION['imageIncorrectFlag'] = false;
+        if (isset($imageIncorrectFlag)) {
+            $_SESSION['imageIncorrectFlag'] = $imageIncorrectFlag;
+        }
+
         header("Location: ../login");
 
     } else {
@@ -95,6 +102,7 @@ if (!empty($_POST['newUserProductSubmitted'])) {
 
         $productCategoriesString = $_POST['productCategoriesString'];
 
+
         //picture can be not submitted. In that case - setting picture name to NULL
         if (!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Error on load") {
 
@@ -106,6 +114,12 @@ if (!empty($_POST['newUserProductSubmitted'])) {
         }
 
         addProductToUserList($userId, $productName, $pictureNameAfterUpload, $productCategoriesString);
+
+        //incorrect image flag should be saved in session before refreshing
+        $_SESSION['imageIncorrectFlag'] = false;
+        if (isset($imageIncorrectFlag)) {
+            $_SESSION['imageIncorrectFlag'] = $imageIncorrectFlag;
+        }
 
         header("Location: ../login");
 
