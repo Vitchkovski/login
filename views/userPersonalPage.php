@@ -23,7 +23,7 @@
                         <a href='../myPage/index.php?action=close' class="close">(close)</a></label>
                 </form>
             </div>
-        <?php }  ?>
+        <?php } ?>
 
         <form enctype="multipart/form-data" class="product-add-form" method="post" action="../myPage/">
             <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
@@ -61,26 +61,27 @@
                         <th width="200"><input type="text" name="productName"
                                                value="<?= escapeSpecialCharactersHTML($uP->product_name) ?>"
                                                placeholder="Product Name" autofocus required maxlength="254"></th>
+
+
                         <th width="300"><input type="text" size="38" name="productCategoriesString"
-                                               value="<?php if (!is_null($uP->category_name1) && $uP->category_name1 != "") { ?><?=
-                                                   escapeSpecialCharactersHTML($uP->category_name1) ?><?php
-                                               }
-                                               if (!is_null($uP->category_name2) && $uP->category_name2 != "") { ?>, <?=
-                                                   escapeSpecialCharactersHTML($uP->category_name2) ?><?php
-                                               }
-                                               if (!is_null($uP->category_name3) && $uP->category_name3 != "") { ?>, <?=
-                                                   escapeSpecialCharactersHTML($uP->category_name3) ?><?php
-                                               }
-                                               if (!is_null($uP->category_name3) && $uP->category_name4 != "") { ?>, <?=
-                                                   escapeSpecialCharactersHTML($uP->category_name4) ?><?php
-                                               }
-                                               if (!is_null($uP->category_name3) && $uP->category_name5 != "") { ?>, <?=
-                                                   escapeSpecialCharactersHTML($uP->category_name5) ?><?php
-                                               } ?>"
+                                               value="<?php
+                                               $lastCategoryElement = end($productCategories[$uP->product_id]);
+                                               foreach ($productCategories[$uP->product_id] as $pC):
+                                                   if (!is_null($pC)) {
+
+                                                       if (!is_null($pC->category_name) && $pC->category_name != "") {
+                                                           echo escapeSpecialCharactersHTML($pC->category_name);
+                                                           if ($lastCategoryElement->category_id != $pC->category_id && count($productCategories[$uP->product_id]) > 2)
+                                                               echo ", ";
+                                                       }
+                                                   }
+                                               endforeach; ?>"
+
                                                placeholder="Product Categories"
                                                maxlength="1000">
+
                             <input type="hidden" name="updateUserProductString" value="true"></th>
-                        <input type="hidden" name="line_id" value="<?= $uP->line_id ?>">
+                        <input type="hidden" name="line_id" value="">
 
                         <th width="66" align="right"><input TYPE="image" SRC="../media/products/save-32.png"
                                                             HEIGHT="24"
@@ -106,27 +107,25 @@
                                     src="../uploads/<?= $userId ?>/cropped/<?= $uP->product_img_name ?>"></a><?php } ?>
                         </th>
                         <th width="200"><?= htmlspecialchars(ltrim(rtrim($uP->product_name))) ?></th>
-                        <th width="300"><?php if (!is_null($uP->category_name1) && $uP->category_name1 != "") { ?>
-                                <?= escapeSpecialCharactersHTML($uP->category_name1) ?><?php
-                            }
-                            if (!is_null($uP->category_name2) && $uP->category_name2 != "") { ?>, <?=
-                                escapeSpecialCharactersHTML($uP->category_name2) ?><?php
-                            }
-                            if (!is_null($uP->category_name3) && $uP->category_name3 != "") { ?>, <?=
-                                escapeSpecialCharactersHTML($uP->category_name3) ?><?php
-                            }
-                            if (!is_null($uP->category_name3) && $uP->category_name4 != "") { ?>, <?=
-                                escapeSpecialCharactersHTML($uP->category_name4) ?><?php
-                            }
-                            if (!is_null($uP->category_name3) && $uP->category_name5 != "") { ?>, <?=
-                                escapeSpecialCharactersHTML($uP->category_name5) ?><?php
-                            } ?>
+                        <th width="300"><?php
+                            $lastCategoryElement = end($productCategories[$uP->product_id]);
+                            foreach ($productCategories[$uP->product_id] as $pC):
+                                if (!is_null($pC)) {
+
+                                    if (!is_null($pC->category_name) && $pC->category_name != "") {
+                                        echo escapeSpecialCharactersHTML($pC->category_name);
+                                        if ($lastCategoryElement->category_id != $pC->category_id && count($productCategories[$uP->product_id]) > 2)
+                                            echo ", ";
+                                    }
+                                }
+                            endforeach; ?>
                         </th>
+
                         <th width="66" align="right">
                             <form action="../myPage/" class="product-btn-form" method="post">
-                                <input type="hidden" name="line_id" value="<?= $uP->line_id ?>">
+                                <input type="hidden" name="line_id" value="">
                                 <input type="hidden" name="product_id" value="<?= $uP->product_id ?>">
-                                <input type="hidden" name="from_date" value="<?= $uP->from_date ?>">
+                                <input type="hidden" name="from_date" value="">
                                 <input type="hidden" name="editUserProductFlag" value="true">
                                 <input TYPE="image" SRC="../media/products/edit-32.png" HEIGHT="24" WIDTH="24"
                                        BORDER="0" ALT="Edit">
@@ -135,9 +134,9 @@
 
                         <th width="32" align="right">
                             <form action="../myPage/" method="post">
-                                <input type="hidden" name="line_id" value="<?= $uP->line_id ?>">
+                                <input type="hidden" name="line_id" value="">
                                 <input type="hidden" name="product_id" value="<?= $uP->product_id ?>">
-                                <input type="hidden" name="from_date" value="<?= $uP->from_date ?>">
+                                <input type="hidden" name="from_date" value="">
                                 <input type="hidden" name="deleteUserProduct" value="true">
                                 <input TYPE="image" SRC="../media/products/garbage-32.png" HEIGHT="24" WIDTH="24"
                                        BORDER="0" ALT="Delete">

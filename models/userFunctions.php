@@ -10,8 +10,8 @@ function addNewUserToDB($login, $email, $password)
     $hashedPassword = hash('sha512', $password);
 
     $queryToRun = sprintf("insert into users (login, email, password) values ('%s', '%s', '%s')", $escapedLogin,
-                                                                                                  $escapedEmail,
-                                                                                                  $hashedPassword);
+        $escapedEmail,
+        $hashedPassword);
 
 
     $db_functions->qryFire($queryToRun);
@@ -31,8 +31,8 @@ function deleteProductFromUserList($userId, $productId, $productLineId)
     $queryToRun = sprintf("delete from user_product_categories where user_id = '%s' 
                                                                  and product_id = '%s' 
                                                                  and line_id = '%s' limit 1", $userId,
-                                                                                              $productId,
-                                                                                              $productLineId);
+        $productId,
+        $productLineId);
 
 
     $db_functions->qryFire($queryToRun);
@@ -54,30 +54,28 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
     //Multiple delimiters can be used for the categories. Defining them and converting categories string to an array
     $limitedCategoriesArray = categoryStringToArray($escapedProductCategoriesString);
 
-    /*echo "limitedCategoriesArray <br>";
+    echo "limitedCategoriesArray <br>";
     var_dump($limitedCategoriesArray);
-    echo "<br>";*/
+    echo "<br>";
 
     $escapedProductName = $db_functions->escapeString(ltrim(rtrim($productName)));
 
+    //mysql treating null php values as "" value and not NULL. Thus defining correct value before insert
+    if (is_null($pictureNameAfterUpload))
+        $pictureNameAfterUpload = "null";
 
-    //if non-existing product was submitted we must create a record for it in corresponding table
-    $queryToRun = sprintf("select * from user_products where user_id = '%s' 
-                                                         and product_name = '%s'", $userId, $escapedProductName);
 
+    $queryToRun = sprintf('insert into user_products (user_id, product_name, product_img_name) 
+                               values ("%1$s", "%2$s", if ("%3$s" = "null", null, "%3$s"))', $userId,
+        $escapedProductName,
+        $pictureNameAfterUpload);
 
-    $userProductInfo = $db_functions->qrySelect($queryToRun);
-    /*echo "userProductInfo <br>";
-    var_dump($userProductInfo);
-    echo "<br>";*/
+    $db_functions->qryFire($queryToRun);
 
-    if (is_null($userProductInfo[0])) {
-        $queryToRun = sprintf("insert into user_products (user_id, product_name) 
-                               values ('%s', '%s')", $userId, $escapedProductName);
+    $lastCreatedProductID = $db_functions->getLastCreatedID();
 
-        $db_functions->qryFire($queryToRun);
-    }
-
+    echo "Last ID: ".$lastCreatedProductID;
+    echo "Test";
 
     //if non-existing category was submitted we must create a record for it in corresponding table
     foreach ($limitedCategoriesArray as $lCA) {
@@ -102,43 +100,24 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
         }
     }
 
-    //mysql treating null php values as "" value and not NULL. Thus defining correct value before insert
-    if (is_null($pictureNameAfterUpload))
-        $pictureNameAfterUpload = "null";
+
+    //link between user_products and user_categories must be created
+   foreach ($limitedCategoriesArray as $lCA) {
+
+        $queryToRun = sprintf('insert into product_categories (product_id, category_id) 
+                               values ("%1$s", (select category_id from user_categories 
+                                                                  where user_id = "%2$s"
+                                                                  and category_name = "%3$s"))', $lastCreatedProductID, $userId, $lCA);
+
+        $db_functions->qryFire($queryToRun);
+
+    }
 
 
-    $queryToRun = sprintf('insert into user_product_categories (user_id, 
-									product_id, 
-									category1,
-									category2,
-									category3,
-									category4,
-									category5,
-									product_img_name,
-									from_date) 
-values ("%1$s", 
-	   (select product_id from user_products up where up.product_name = "%2$s" and up.user_id = "%1$s"), 
-	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%3$s"), 
-	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%4$s"), 
-	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%5$s"), 
-	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%6$s"), 
-	   (select category_id from user_categories uc where uc.user_id = "%1$s" and uc.category_name = "%7$s"),
-	   if ("%8$s" = "null", null, "%8$s"), 
-	   now())', $userId,
-                $escapedProductName,
-                $limitedCategoriesArray[0],
-                $limitedCategoriesArray[1],
-                $limitedCategoriesArray[2],
-                $limitedCategoriesArray[3],
-                $limitedCategoriesArray[4],
-                $pictureNameAfterUpload);
+$db_functions->closeDbConnection();
 
 
-    $db_functions->qryFire($queryToRun);
-    $db_functions->closeDbConnection();
-
-
-    return true;
+return true;
 }
 
 //updating user products list string
@@ -223,14 +202,14 @@ function updateUserProductString($userId, $productLineId, $productName, $picture
 							                                                             and uc.category_name = "%7$s"),
 							   product_img_name = (if ("%9$s" = "null", null, "%9$s"))
 						   where line_id = "%8$s"', $userId,
-                                                    $escapedProductName,
-                                                    $limitedCategoriesArray[0],
-                                                    $limitedCategoriesArray[1],
-                                                    $limitedCategoriesArray[2],
-                                                    $limitedCategoriesArray[3],
-                                                    $limitedCategoriesArray[4],
-                                                    $productLineId,
-                                                    $pictureNameAfterUpload);
+        $escapedProductName,
+        $limitedCategoriesArray[0],
+        $limitedCategoriesArray[1],
+        $limitedCategoriesArray[2],
+        $limitedCategoriesArray[3],
+        $limitedCategoriesArray[4],
+        $productLineId,
+        $pictureNameAfterUpload);
 
 
     $db_functions->qryFire($queryToRun);
@@ -286,28 +265,39 @@ function retrieveUserProducts($userId)
 {
     $db_functions = new DBfunctions();
 
-    $queryToRun = sprintf("select upc.line_id,
+    $queryToRun = sprintf("select up.user_id,
                                   up.product_id,
                                   up.product_name, 
-                                  (select category_name from user_categories uc where uc.category_id = upc.category1) category_name1, 
-                                  (select category_name from user_categories uc where uc.category_id = upc.category2) category_name2, 
-                                  (select category_name from user_categories uc where uc.category_id = upc.category3) category_name3, 
-                                  (select category_name from user_categories uc where uc.category_id = upc.category4) category_name4, 
-                                  (select category_name from user_categories uc where uc.category_id = upc.category5) category_name5,
-                                  upc.product_img_name,
-                                  upc.from_date 
-                                  from user_product_categories upc, 
-                                       user_products up 
-                                  where upc.user_id = '%s'  
-                                        and up.product_id = upc.product_id
-                                        and up.user_id = upc.user_id
-                                  order by upc.from_date desc", $userId);
+                                  up.product_img_name
+                                  from user_products up 
+                                  where up.user_id = '%s'  
+                                  order by up.product_id desc", $userId);
 
 
     $userProducts = $db_functions->qrySelect($queryToRun);
     $db_functions->closeDbConnection();
 
     return $userProducts;
+}
+
+function retrieveProductCategories($productId)
+{
+    $db_functions = new DBfunctions();
+
+    $queryToRun = sprintf("select pc.product_id,
+                                  pc.category_id,
+                                  uc.category_name
+                           from product_categories pc,
+                                user_categories uc                                
+                           where pc.product_id = '%s'
+                             and pc.category_id = uc.category_id
+                           order by pc.category_id", $productId);
+
+
+    $productCategories = $db_functions->qrySelect($queryToRun);
+    $db_functions->closeDbConnection();
+
+    return $productCategories;
 }
 
 ?>

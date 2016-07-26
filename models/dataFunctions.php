@@ -28,14 +28,19 @@ function categoryStringToArray($escapedProductCategoriesString)
 
 
     $productCategoriesArray = explodeWithMultipleDelimiters($categoryDelimitersList, $escapedProductCategoriesString);
-    for ($i = 0; $i <= 4; $i++) {
-        if (isset($productCategoriesArray[$i])) {
-            $limitedCategoriesArray[$i] = $productCategoriesArray[$i];
-        } else {
-            $limitedCategoriesArray[$i] = null;
-        }
 
-    }
+    $categoryCounter = 0;
+    foreach ($productCategoriesArray as $pCA):
+
+        if (isset($pCA)) {
+
+            $limitedCategoriesArray[$categoryCounter] = $pCA;
+
+        } else {
+            $limitedCategoriesArray[$categoryCounter] = null;
+        }
+        $categoryCounter++;
+    endforeach;
 
     return $limitedCategoriesArray;
 
@@ -61,7 +66,7 @@ function uploadProductPicture($userId)
 
                 $pictureNameAfterUpload = $userId . "-" . time() . ".png";
 
-                move_uploaded_file($_FILES["productPicture"]["tmp_name"], "../uploads/".$userId."/original/".$pictureNameAfterUpload);
+                move_uploaded_file($_FILES["productPicture"]["tmp_name"], "../uploads/" . $userId . "/original/" . $pictureNameAfterUpload);
 
 
                 $productImage = new resizeImage();

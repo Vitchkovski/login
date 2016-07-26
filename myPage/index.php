@@ -130,7 +130,8 @@ if (!empty($_POST['newUserProductSubmitted'])) {
             $_SESSION['imageIncorrectFlag'] = $imageIncorrectFlag;
         }
 
-        header("Location: ../login");
+        //include("../views/userPersonalPage.php");
+        //header("Location: ../login");
 
     } else {
         header("Location: ../login");
@@ -147,7 +148,24 @@ if (isset($_SESSION['thisIsLoggedUser'])) {
     $userEmail = $_SESSION['userSessionEmail'];
     $userName = $_SESSION['userSessionName'];
 
+
+
+    //echo "User ID: ".$userId."<br>";
     $userProducts = retrieveUserProducts($userId);
+
+/*    echo "userProducts: ";
+    var_dump($userProducts);
+    echo "<br><br>";*/
+
+    foreach ($userProducts as $uP):
+    $productCategories[$uP->product_id] = retrieveProductCategories($uP->product_id);
+    endforeach;
+
+ /*   echo "productCategories: ";
+    var_dump($productCategories);
+    echo "<br><br>";*/
+
+
 
     include("../views/userPersonalPage.php");
 

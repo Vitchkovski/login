@@ -55,6 +55,12 @@ class DBfunctions
     {
         $this->connectDB->close();
     }
+
+    public function getLastCreatedID()
+    {
+        $lastCreatedID = $this->connectDB->insert_id;
+        return $lastCreatedID;
+    }
 }
 
 ?>
