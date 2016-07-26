@@ -23,16 +23,14 @@ function addNewUserToDB($login, $email, $password)
 }
 
 
-function deleteProductFromUserList($userId, $productId, $productLineId)
+function deleteProductFromUserList($userId, $productId)
 {
     $db_functions = new DBfunctions();
 
 
-    $queryToRun = sprintf("delete from user_product_categories where user_id = '%s' 
-                                                                 and product_id = '%s' 
-                                                                 and line_id = '%s' limit 1", $userId,
-        $productId,
-        $productLineId);
+    $queryToRun = sprintf("delete from user_products where user_id = '%s' 
+                                                                 and product_id = '%s'", $userId,
+        $productId);
 
 
     $db_functions->qryFire($queryToRun);
@@ -74,7 +72,7 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
 
     $lastCreatedProductID = $db_functions->getLastCreatedID();
 
-    echo "Last ID: ".$lastCreatedProductID;
+    echo "Last ID: " . $lastCreatedProductID;
     echo "Test";
 
     //if non-existing category was submitted we must create a record for it in corresponding table
@@ -102,7 +100,7 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
 
 
     //link between user_products and user_categories must be created
-   foreach ($limitedCategoriesArray as $lCA) {
+    foreach ($limitedCategoriesArray as $lCA) {
 
         $queryToRun = sprintf('insert into product_categories (product_id, category_id) 
                                values ("%1$s", (select category_id from user_categories 
@@ -114,10 +112,10 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
     }
 
 
-$db_functions->closeDbConnection();
+    $db_functions->closeDbConnection();
 
 
-return true;
+    return true;
 }
 
 //updating user products list string

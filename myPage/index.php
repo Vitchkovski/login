@@ -7,15 +7,15 @@ require_once("../models/dataFunctions.php");
 session_start();
 
 
-if (!empty($_POST['deleteUserProduct']) && !empty($_POST['line_id'])) {
+if (!empty($_POST['deleteUserProduct']) && !empty($_POST['product_id'])) {
 
     if (isset($_SESSION['thisIsLoggedUser'])) {
 
         $userId = $_SESSION['userSessionId'];
         $productId = $_POST['product_id'];
-        $productLineId = $_POST['line_id'];
 
-        deleteProductFromUserList($userId, $productId, $productLineId);
+
+        deleteProductFromUserList($userId, $productId);
 
         if (isset($_SESSION['imageIncorrectFlag']) && $_SESSION['imageIncorrectFlag'] == true) {
             $_SESSION['imageIncorrectFlag'] = false;
