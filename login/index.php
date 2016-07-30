@@ -20,6 +20,7 @@ if (isset($_GET['action'])) {
         session_unset();
         session_destroy();
     }
+
 }
 
 

@@ -7,6 +7,15 @@ require_once("../models/dataFunctions.php");
 session_start();
 
 
+if (isset($_GET['action'])) {
+
+    if ($action = "edit"){
+        $editUserProductFlag = true;
+        $productId = $_GET['product_id'];
+    }
+}
+
+
 if (!empty($_POST['deleteUserProduct']) && !empty($_POST['product_id'])) {
 
     if (isset($_SESSION['thisIsLoggedUser'])) {
@@ -31,7 +40,7 @@ if (!empty($_POST['deleteUserProduct']) && !empty($_POST['product_id'])) {
 
 }
 
-if (!empty($_POST['cancelEditModeFlag']) || isset($_GET['action'])) {
+if (!empty($_POST['cancelEditModeFlag']) /*|| isset($_GET['action'])*/) {
 
     if (isset($_SESSION['imageIncorrectFlag']) && $_SESSION['imageIncorrectFlag'] == true) {
         $_SESSION['imageIncorrectFlag'] = false;
@@ -42,7 +51,7 @@ if (!empty($_POST['cancelEditModeFlag']) || isset($_GET['action'])) {
 }
 
 
-if (!empty($_POST['updateUserProductString']) && !empty($_POST['line_id'])) {
+if (!empty($_POST['updateUserProductString']) && !empty($_POST['product_id'])) {
 
     if (isset($_SESSION['thisIsLoggedUser'])) {
 
@@ -56,7 +65,7 @@ if (!empty($_POST['updateUserProductString']) && !empty($_POST['line_id'])) {
         }
 
         //Product Line tobe updated
-        $productLineId = $_POST['line_id'];
+        $productId = $_POST['product_id'];
 
         //Changes submitted
         $productName = $_POST['productName'];
@@ -77,7 +86,7 @@ if (!empty($_POST['updateUserProductString']) && !empty($_POST['line_id'])) {
         }
 
 
-        updateUserProductString($userId, $productLineId, $productName, $pictureNameAfterUpload, $productCategoriesString);
+        updateUserProductString($userId, $productId, $productName, $pictureNameAfterUpload, $productCategoriesString);
 
         //incorrect image flag should be saved in session before refreshing
         $_SESSION['imageIncorrectFlag'] = false;

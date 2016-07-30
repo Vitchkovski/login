@@ -119,7 +119,7 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
 }
 
 //updating user products list string
-function updateUserProductString($userId, $productLineId, $productName, $pictureNameAfterUpload, $productCategoriesString)
+function updateUserProductString($userId, $productId, $productName, $pictureNameAfterUpload, $productCategoriesString)
 {
 
     $db_functions = new DBfunctions();
@@ -135,24 +135,6 @@ function updateUserProductString($userId, $productLineId, $productName, $picture
 
     $escapedProductName = $db_functions->escapeString(ltrim(rtrim($productName)));
 
-
-    //if non-existing product was submitted we must create a record for it in corresponding table
-    $queryToRun = sprintf("select * from user_products where user_id = '%s' 
-                                                         and product_name = '%s'", $userId, $escapedProductName);
-
-
-    $userProductInfo = $db_functions->qrySelect($queryToRun);
-
-    /*echo "userProductInfo <br>";
-    var_dump($userProductInfo);
-    echo "<br>";*/
-
-    if (is_null($userProductInfo[0])) {
-        $queryToRun = sprintf("insert into user_products (user_id, product_name) 
-                               values ('%s', '%s')", $userId, $escapedProductName);
-
-        $db_functions->qryFire($queryToRun);
-    }
 
 
     //if non-existing category was submitted we must create a record for it in corresponding table
@@ -177,6 +159,8 @@ function updateUserProductString($userId, $productLineId, $productName, $picture
             }
         }
     }
+
+
     //mysql treating null php values as "" value and not NULL. Thus defining correct value before update
 
     if (is_null($pictureNameAfterUpload)) {
@@ -185,32 +169,31 @@ function updateUserProductString($userId, $productLineId, $productName, $picture
 
 
     //updating existing record in user's product list
-    $queryToRun = sprintf('update user_product_categories 
-                           set product_id = (select product_id from user_products up where up.product_name = "%2$s" 
-                                                                                       and up.user_id = "%1$s"), 
-							   category1 = (select category_id from user_categories uc where uc.user_id = "%1$s" 
-							                                                             and uc.category_name = "%3$s"),
-							   category2 = (select category_id from user_categories uc where uc.user_id = "%1$s" 
-							                                                             and uc.category_name = "%4$s"),
-							   category3 = (select category_id from user_categories uc where uc.user_id = "%1$s" 
-							                                                             and uc.category_name = "%5$s"),
-							   category4 = (select category_id from user_categories uc where uc.user_id = "%1$s" 
-							                                                             and uc.category_name = "%6$s"),
-							   category5 = (select category_id from user_categories uc where uc.user_id = "%1$s" 
-							                                                             and uc.category_name = "%7$s"),
-							   product_img_name = (if ("%9$s" = "null", null, "%9$s"))
-						   where line_id = "%8$s"', $userId,
+    $queryToRun = sprintf('update user_products 
+                           set product_name = "%1$s",
+							   product_img_name = (if ("%2$s" = "null", null, "%2$s"))
+						   where product_id = "%3$s"',
         $escapedProductName,
-        $limitedCategoriesArray[0],
-        $limitedCategoriesArray[1],
-        $limitedCategoriesArray[2],
-        $limitedCategoriesArray[3],
-        $limitedCategoriesArray[4],
-        $productLineId,
-        $pictureNameAfterUpload);
+        $pictureNameAfterUpload,
+        $productId);
 
 
     $db_functions->qryFire($queryToRun);
+
+
+    //link between user_products and user_categories must be created - only if new category was submitted
+    foreach ($limitedCategoriesArray as $lCA) {
+
+        $queryToRun = sprintf('insert into product_categories (product_id, category_id) 
+                               values ("%1$s", (select category_id from user_categories 
+                                                                  where user_id = "%2$s"
+                                                                  and category_name = "%3$s"))', $productId, $userId, $lCA);
+
+        $db_functions->qryFire($queryToRun);
+
+    }
+
+
     $db_functions->closeDbConnection();
 
 
