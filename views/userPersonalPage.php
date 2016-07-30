@@ -87,7 +87,7 @@
                                 <input type="hidden" name="from_date" value="">
                                 <input type="hidden" name="deleteUserProduct" value="true">
                                 <input TYPE="image" SRC="../media/products/garbage-32.png" HEIGHT="24" WIDTH="24"
-                                       BORDER="0" ALT="Delete">
+                                       BORDER="0" ALT="Delete" onclick="if(confirm('Delete product?'))submit();else return false;">
 
                             </form>
                         </th>

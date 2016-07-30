@@ -130,9 +130,9 @@ label[for=error] {
 
 .hide-upload-btn-div {
     overflow: hidden;
-    width: 32px;
+    width: 48px;
     height: 32px;
-    border: 0px;
+    border: 0;
 }
 
 .hide-upload-button-input {

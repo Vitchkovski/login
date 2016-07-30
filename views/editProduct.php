@@ -1,7 +1,8 @@
 <th width="50">
     <form enctype="multipart/form-data" method="post" action="../myPage/">
         <div class="hide-upload-btn-div">
-            <div><img src="../media/products/upload-32.png"></div>
+            <img src="<?php if (is_null($uP->product_img_name)) { ?>../media/products/upload-32.png<?php } else { ?>../uploads/<?= $userId ?>/cropped/<?= $uP->product_img_name ?><?php } ?>">
+
             <input type="hidden" name="initialProductPictureName"
                    value="<?= $uP->product_img_name ?>">
             <input class="hide-upload-button-input" type="file" name="productPicture" id="file"
