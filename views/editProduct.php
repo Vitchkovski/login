@@ -32,12 +32,10 @@
         <div class="form-group">
             <div class="hide-upload-btn-div">
                 <label for="productPicture">Product Picture:</label>
-                <br><img class="img-rounded" style="margin-bottom: 3px"
-                         src="<?php if (is_null($productInfo[0]->product_img_name)) {
-                         ?>""<?php
-                } else {
-                    ?>../uploads/<?= $userId ?>/cropped/<?= $productInfo[0]->product_img_name ?><?php
-                } ?>">
+                <br><?php if (!is_null($productInfo[0]->product_img_name)) {?>
+                <img class="img-rounded" style="margin-bottom: 3px"
+                         src="../uploads/<?= $userId ?>/cropped/<?= $productInfo[0]->product_img_name ?>">
+                <?php } ?>
 
                 <input type="hidden" name="initialProductPictureName"
                        value="<?= $productInfo[0]->product_img_name ?>">

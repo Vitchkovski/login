@@ -35,7 +35,7 @@ if (isset($_POST['addEditCategory'])) {
 }
 
 
-if (!empty($_POST['deleteUserProduct']) && !empty($_POST['product_id'])) {
+if (isset($_POST['deleteUserProduct'])) {
 
     if (isset($_SESSION['thisIsLoggedUser'])) {
 
@@ -188,13 +188,14 @@ if (isset($_SESSION['thisIsLoggedUser'])) {
     //echo "User ID: ".$userId."<br>";
     $userProducts = retrieveUserProducts($userId);
 
-    /*    echo "userProducts: ";
-        var_dump($userProducts);
-        echo "<br><br>";*/
-
-    foreach ($userProducts as $uP):
-        $productCategories[$uP->product_id] = retrieveProductCategories($uP->product_id);
-    endforeach;
+   /* echo "userProducts: ";
+    var_dump($userProducts);
+    echo "<br><br>";*/
+    if ($userProducts[0] != null) {
+        foreach ($userProducts as $uP):
+            $productCategories[$uP->product_id] = retrieveProductCategories($uP->product_id);
+        endforeach;
+    }
 
     /*   echo "productCategories: ";
        var_dump($productCategories);
@@ -229,9 +230,8 @@ if (isset($_SESSION['thisIsLoggedUser'])) {
 
             include("../views/editProduct.php");
 
-
-
         }
+
         if ($_GET['action'] == "close") {
             $_SESSION['imageIncorrectFlag'] = false;
             header("Location: ../login");
