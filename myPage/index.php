@@ -9,10 +9,13 @@ session_start();
 
 if (isset($_GET['action'])) {
 
-    if ($action = "edit"){
+    if ($_GET['action'] == "edit") {
+
         $editUserProductFlag = true;
         $productId = $_GET['product_id'];
     }
+
+
 }
 
 if (!empty($_POST['addCategoryFlag'])) {
@@ -90,7 +93,7 @@ if (!empty($_POST['updateUserProductString']) && !empty($_POST['product_id'])) {
 
         }
 
-        var_dump($productCategoriesArray) ;
+        var_dump($productCategoriesArray);
         echo "<- category";
         updateUserProductString($userId, $productId, $productName, $pictureNameAfterUpload, $productCategoriesArray);
 
@@ -164,24 +167,27 @@ if (isset($_SESSION['thisIsLoggedUser'])) {
     $userName = $_SESSION['userSessionName'];
 
 
-
     //echo "User ID: ".$userId."<br>";
     $userProducts = retrieveUserProducts($userId);
 
-/*    echo "userProducts: ";
-    var_dump($userProducts);
-    echo "<br><br>";*/
+    /*    echo "userProducts: ";
+        var_dump($userProducts);
+        echo "<br><br>";*/
 
     foreach ($userProducts as $uP):
-    $productCategories[$uP->product_id] = retrieveProductCategories($uP->product_id);
+        $productCategories[$uP->product_id] = retrieveProductCategories($uP->product_id);
     endforeach;
 
- /*   echo "productCategories: ";
-    var_dump($productCategories);
-    echo "<br><br>";*/
+    /*   echo "productCategories: ";
+       var_dump($productCategories);
+       echo "<br><br>";*/
 
 
+    if (isset($_GET['action']) && $_GET['action'] == "add") {
 
+        include("../views/addProduct.php");
+
+    }else
     include("../views/userPersonalPage.php");
 
 } else {

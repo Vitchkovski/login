@@ -25,6 +25,8 @@
             </div>
         <?php } ?>
 
+        <a href='../myPage/index.php?action=add'>Add New Product</a>
+<!--
         <form enctype="multipart/form-data" class="product-add-form" method="post" action="../myPage/">
             <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
             <input name="productPicture" type="file">
@@ -35,6 +37,7 @@
             <input type="hidden" name="newUserProductSubmitted" value="true">
             <input type="submit" value="Add">
         </form>
+        -->
 
 
         <?php
