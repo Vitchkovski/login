@@ -13,8 +13,7 @@
 <body>
 
 <div class="container">
-    <h2> Edit Product | <?php echo $userName; ?> <a href='../login/index.php?action=logout'>(logout)</a>
-    </h2>
+    <h2> Edit Product | <?php echo $userName; ?></h2>
 
 
     <?php if (isset($incorrectProductNameFlag)) { ?>

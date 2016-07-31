@@ -11,8 +11,7 @@
 <body>
 
 <div class="container">
-    <h2> Add New Product to the List | <?php echo $userName; ?><a href='../login/index.php?action=logout'> (logout)</a>
-    </h2>
+    <h2> Add New Product to the List | <?php echo $userName; ?></h2>
 
 
     <?php if (isset($incorrectProductNameFlag)) { ?>
