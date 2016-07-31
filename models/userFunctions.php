@@ -77,7 +77,7 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
 
     //if non-existing category was submitted we must create a record for it in corresponding table
     foreach ($productCategoriesArray as $pCA) {
-        if (!is_null($pCA)) {
+        if (!is_null($pCA) && $pCA != "") {
             $queryToRun = sprintf("select * from user_categories where user_id = '%s' 
                                                                    and category_name = '%s'", $userId, $pCA);
 
@@ -141,7 +141,7 @@ function updateUserProductString($userId, $productId, $productName, $pictureName
     //if non-existing category was submitted we must create a record for it in corresponding table
     foreach ($productCategoriesArray as $pCA) {
         $pCA = $db_functions->escapeString(ltrim(rtrim($pCA)));
-        if (!is_null($pCA)) {
+        if (!is_null($pCA) && $pCA != "") {
             $queryToRun = sprintf("select * from user_categories where user_id = '%s' 
                                                                    and category_name = '%s'", $userId, $pCA);
 
@@ -152,7 +152,7 @@ function updateUserProductString($userId, $productId, $productName, $pictureName
             var_dump($userCategoryInfo);
             echo "<br>";*/
 
-            if (is_null($userCategoryInfo[0]) && $pCA != "") {
+            if (is_null($userCategoryInfo[0])) {
 
                 $queryToRun = sprintf("insert into user_categories (user_id, category_name, from_date) 
                                values ('%s', '%s', now())", $userId, $pCA);

@@ -7,14 +7,29 @@ require_once("../models/dataFunctions.php");
 session_start();
 
 
-if (isset($_POST['addCategory'])) {
+if (isset($_POST['addSaveCategory'])) {
 
     $categoryCounter = $_POST['categoryCounter'];
 
     $productName = $_POST['productName'];
+
     $productCategoriesArray = $_POST['productCategoriesArray'];
 
+
     $_GET['action'] = "add";
+}
+
+if (isset($_POST['addEditCategory'])) {
+
+    $categoryCounter = $_POST['categoryCounter'];
+
+    $productId = $_POST['product_id'];
+    if (!empty($_POST['productCategoriesArray']))
+        $productCategoriesArray = $_POST['productCategoriesArray'];
+    else
+        $productCategoriesArray = null;
+
+    $_GET['action'] = "edit";
 }
 
 
@@ -200,7 +215,12 @@ if (isset($_SESSION['thisIsLoggedUser'])) {
 
         }
         if ($_GET['action'] == "edit") {
-            $productId = $_GET['product_id'];
+            if (!isset($productId))
+                $productId = $_GET['product_id'];
+            if (!isset($categoryCounter))
+                $categoryCounter = 1;
+            if (!isset($productCategoriesArray[$categoryCounter]))
+                $productCategoriesArray[$categoryCounter - 1] = null;
 
             $productInfo = retrieveProductInfo($userId, $productId);
 

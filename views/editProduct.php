@@ -64,24 +64,36 @@
 
 
         <?php
-
+        $i = 0;
         foreach ($productCategories[$productInfo[0]->product_id] as $pC):
 
             if (!is_null($pC)) {
+
                 if (!is_null($pC->category_name) && $pC->category_name != "") { ?>
                     <div class="form-group">
                         <label for="productCategoriesArray[]">Category:</label>
                         <input type="text" class="form-control" size="38" name="productCategoriesArray[]"
                                value="<?= escapeSpecialCharactersHTML($pC->category_name) ?>" maxlength="255">
                     </div>
-                <?php }
+                <?php $i++;
+                }
             }
-        endforeach; ?>
+        endforeach; echo $i; ?>
 
-        <input type="hidden" name="categoryCounter" value="<?= 1 ?>">
+        <?php for ($i; $i < $categoryCounter; $i++) { ?>
+            <div class="form-group">
+                <label for="productCategoriesArray[]">Category:</label>
+                <input type="text" class="form-control" name="productCategoriesArray[]"
+                       placeholder="Enter product category"
+                       maxlength="1000" value="<?= $productCategoriesArray[$i]?>">
+                <input type="hidden" name="newUserProductSubmitted" value="true">
+            </div>
+        <?php } ?>
+
+        <input type="hidden" name="categoryCounter" value="<?=$i+1?>">
         <input type="hidden" name="product_id" value="<?= $productInfo[0]->product_id ?>">
 
-        <input class="btn btn-default" name="addCategory" type="submit" value="Add Category">
+        <input class="btn btn-default" name="addEditCategory" type="submit" value="Add Category">
         <input class="btn btn-success" name="updateProduct" type="submit" value="Save">
 
 
