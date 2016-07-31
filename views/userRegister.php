@@ -34,7 +34,7 @@
     <?php if (!empty($_POST) && isset($userIsAlreadyExistFlag)) { ?>
         <div class="alert alert-danger">
             <a href="index.php" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            User with such name or email is already exist. Either provide another credentials or log in</a>
+            User with such email is already exist. Either provide another credentials or log in</a>
         </div>
 
         <?php
