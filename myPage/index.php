@@ -90,30 +90,34 @@ if (isset($_POST['updateProduct'])) {
         $productName = $_POST['productName'];
         $productCategoriesArray = $_POST['productCategoriesArray'];
 
-        //picture can be not submitted. In that case - setting picture name to the initial value
-        if (!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Error on load") {
+        if ($productName != null || $productName != "") {
+            //picture can be not submitted. In that case - setting picture name to the initial value
+            if (!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Error on load") {
 
-            if (isset($pictureNameAfterUpload) && $pictureNameAfterUpload == "Error on load")
-                $imageIncorrectFlag = true;
+                if (isset($pictureNameAfterUpload) && $pictureNameAfterUpload == "Error on load")
+                    $imageIncorrectFlag = true;
 
-            $pictureNameAfterUpload = $_POST['initialProductPictureName'];
+                $pictureNameAfterUpload = $_POST['initialProductPictureName'];
 
-            //empty value after submit to null for processing
-            if ($pictureNameAfterUpload == "")
-                $pictureNameAfterUpload = null;
+                //empty value after submit to null for processing
+                if ($pictureNameAfterUpload == "")
+                    $pictureNameAfterUpload = null;
 
+            }
+
+
+            updateUserProductString($userId, $productId, $productName, $pictureNameAfterUpload, $productCategoriesArray);
+
+            //incorrect image flag should be saved in session before refreshing
+            $_SESSION['imageIncorrectFlag'] = false;
+            if (isset($imageIncorrectFlag)) {
+                $_SESSION['imageIncorrectFlag'] = $imageIncorrectFlag;
+            }
+        } else {
+            $_GET['action'] = "edit";
+            $incorrectProductNameFlag = true;
         }
 
-
-        updateUserProductString($userId, $productId, $productName, $pictureNameAfterUpload, $productCategoriesArray);
-
-        //incorrect image flag should be saved in session before refreshing
-        $_SESSION['imageIncorrectFlag'] = false;
-        if (isset($imageIncorrectFlag)) {
-            $_SESSION['imageIncorrectFlag'] = $imageIncorrectFlag;
-        }
-
-        //header("Location: ../login");
 
     } else {
         header("Location: ../login");
@@ -188,9 +192,9 @@ if (isset($_SESSION['thisIsLoggedUser'])) {
     //echo "User ID: ".$userId."<br>";
     $userProducts = retrieveUserProducts($userId);
 
-   /* echo "userProducts: ";
-    var_dump($userProducts);
-    echo "<br><br>";*/
+    /* echo "userProducts: ";
+     var_dump($userProducts);
+     echo "<br><br>";*/
     if ($userProducts[0] != null) {
         foreach ($userProducts as $uP):
             $productCategories[$uP->product_id] = retrieveProductCategories($uP->product_id);

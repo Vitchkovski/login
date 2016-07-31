@@ -18,11 +18,9 @@
 
 
     <?php if (isset($incorrectProductNameFlag)) { ?>
-        <div align="center">
-            <form class="vertical-form-bottom">
-                <input id="error" type="hidden" readonly><label for="error">Product Name can not be null<br>
-                    <a href='../myPage/index.php?action=close' class="close">(close)</a></label>
-            </form>
+        <div class="alert alert-danger">
+            <a href="../myPage/index.php?action=close" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            Product Name can not be null.
         </div>
 
     <?php } ?>
