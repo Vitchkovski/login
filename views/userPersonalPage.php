@@ -83,7 +83,9 @@
             </tr>
         <?php endforeach;
         } else { ?>
+            <div align="center">
             <br>You do not have products in your cart yet.
+            </div>
         <?php }
         ?>
         </tbody>
