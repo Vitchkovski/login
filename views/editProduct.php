@@ -15,16 +15,7 @@
 <div class="container">
     <h2> Edit Product | <?php echo $userName; ?> <a href='../login/index.php?action=logout'>(logout)</a>
     </h2>
-    <?php if (isset($_SESSION['imageIncorrectFlag']) && $_SESSION['imageIncorrectFlag'] == true) { ?>
-        <div align="center">
-            <form class="vertical-form-bottom">
-                <input id="error" type="hidden" readonly><label for="error">Image you submitted is incorrect. Only
-                    png, jpg and gif files not larger than 3 MB can be used.<br>
-                    <a href='../myPage/index.php?action=close' class="close">(close)</a></label>
-            </form>
-        </div>
 
-    <?php } ?>
 
     <?php if (isset($incorrectProductNameFlag)) { ?>
         <div align="center">

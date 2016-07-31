@@ -229,6 +229,12 @@ if (isset($_SESSION['thisIsLoggedUser'])) {
 
             include("../views/editProduct.php");
 
+
+
+        }
+        if ($_GET['action'] == "close") {
+            $_SESSION['imageIncorrectFlag'] = false;
+            header("Location: ../login");
         }
     } else
         include("../views/userPersonalPage.php");
