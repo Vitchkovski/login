@@ -1,60 +1,94 @@
-<th width="50">
-    <form enctype="multipart/form-data" method="post" action="../myPage/">
-        <div class="hide-upload-btn-div">
-            <img
-                src="<?php if (is_null($uP->product_img_name)) {
-                    ?>../media/products/upload-32.png<?php
-                } else {
-                    ?>../uploads/<?= $userId ?>/cropped/<?= $uP->product_img_name ?><?php
-                } ?>">
+<!DOCTYPE html>
+<html>
 
-            <input type="hidden" name="initialProductPictureName"
-                   value="<?= $uP->product_img_name ?>">
-            <input class="hide-upload-button-input" type="file" name="productPicture" id="file"
-                   size="1">
+<head>
+    <meta charset="utf-8">
+    <title>Registration Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+<div class="container">
+    <h2> Edit Product | <?php echo $userName; ?> <a href='../login/index.php?action=logout'>(logout)</a>
+    </h2>
+    <?php if (isset($_SESSION['imageIncorrectFlag']) && $_SESSION['imageIncorrectFlag'] == true) { ?>
+        <div align="center">
+            <form class="vertical-form-bottom">
+                <input id="error" type="hidden" readonly><label for="error">Image you submitted is incorrect. Only
+                    png, jpg and gif files not larger than 3 MB can be used.<br>
+                    <a href='../myPage/index.php?action=close' class="close">(close)</a></label>
+            </form>
         </div>
-        <!--<input name="productPicture" type="file"></th>-->
-<th width="200"><input type="text" name="productName"
-                       value="<?= escapeSpecialCharactersHTML($uP->product_name) ?>"
-                       placeholder="Product Name" autofocus required maxlength="254"></th>
+
+    <?php } ?>
+
+    <?php if (isset($incorrectProductNameFlag)) { ?>
+        <div align="center">
+            <form class="vertical-form-bottom">
+                <input id="error" type="hidden" readonly><label for="error">Product Name can not be null<br>
+                    <a href='../myPage/index.php?action=close' class="close">(close)</a></label>
+            </form>
+        </div>
+
+    <?php } ?>
 
 
-<th width="300">
-    <form method="post" action="../myPage/">
-        <?php foreach ($productCategories[$uP->product_id] as $pC):
+    <form enctype="multipart/form-data" role="form" method="post" action="../myPage/">
+        <div class="form-group">
+            <div class="hide-upload-btn-div">
+                <img
+                    src="<?php if (is_null($productInfo[0]->product_img_name)) {
+                        ?>../media/products/upload-32.png<?php
+                    } else {
+                        ?>../uploads/<?= $userId ?>/cropped/<?= $productInfo[0]->product_img_name ?><?php
+                    } ?>">
+
+                <input type="hidden" name="initialProductPictureName"
+                       value="<?= $productInfo[0]->product_img_name ?>">
+                <input class="hide-upload-button-input" type="file" name="productPicture" id="file"
+                       size="1">
+            </div>
+        </div>
+        <div class="form-group">
+            <!--<input name="productPicture" type="file"></th>-->
+            <label for="productName">Product Name:</label>
+            <input type="text" name="productName"
+                   value="<?= escapeSpecialCharactersHTML($productInfo[0]->product_name) ?>"
+                   placeholder="Product Name" class="form-control" autofocus maxlength="254">
+
+        </div>
+
+
+        <?php
+
+        foreach ($productCategories[$productInfo[0]->product_id] as $pC):
+
             if (!is_null($pC)) {
                 if (!is_null($pC->category_name) && $pC->category_name != "") { ?>
-                    <input type="text" size="38" name="productCategoriesArray[]"
-                           value="<?= escapeSpecialCharactersHTML($pC->category_name) ?>" maxlength="255">
+                    <div class="form-group">
+                        <label for="productCategoriesArray[]">Category:</label>
+                        <input type="text" class="form-control" size="38" name="productCategoriesArray[]"
+                               value="<?= escapeSpecialCharactersHTML($pC->category_name) ?>" maxlength="255">
+                    </div>
                 <?php }
             }
         endforeach; ?>
-        <input type="text" size="38" name="productCategoriesArray[]"
-               placeholder="Category" maxlength="255">
 
-        <?php
-        if (!empty($_POST['addCategoryFlag'])) { ?>
-            <input type="text" size="38" name="productCategoriesArray[]"
-                   placeholder="Category" maxlength="255">
-        <?php } ?>
-        <input type="hidden" name="addCategoryFlag" value="true">
-        <input type="hidden" name="product_id" value="<?= $uP->product_id ?>">
-        <input type="submit" value="Add Category">
+        <input type="hidden" name="categoryCounter" value="<?= 1 ?>">
+        <input type="hidden" name="product_id" value="<?= $productInfo[0]->product_id ?>">
+
+        <input class="btn btn-default" name="addCategory" type="submit" value="Add Category">
+        <input class="btn btn-success" name="updateProduct" type="submit" value="Save">
 
 
-        <input type="hidden" name="updateUserProductString" value="true">
-</th>
-<input type="hidden" name="product_id" value="<?= $uP->product_id ?>">
-
-<th width="66" align="right"><input TYPE="image" SRC="../media/products/save-32.png"
-                                    HEIGHT="24"
-                                    WIDTH="24" BORDER="0" ALT="Save"></th>
-</form>
-
-<th width="32" align="right">
-    <form action="../myPage/" method="post">
-        <input type="hidden" name="cancelEditModeFlag" value="true">
-        <input TYPE="image" SRC="../media/products/cancel-32.png" HEIGHT="24" WIDTH="24"
-               BORDER="0" ALT="Cancel">
     </form>
-</th>
+</div>
+
+
+</body>
+
+</html>

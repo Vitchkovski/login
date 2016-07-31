@@ -7,17 +7,6 @@ require_once("../models/dataFunctions.php");
 session_start();
 
 
-if (isset($_GET['action'])) {
-
-    if ($_GET['action'] == "edit") {
-
-        $editUserProductFlag = true;
-        $productId = $_GET['product_id'];
-    }
-
-
-}
-
 if (isset($_POST['addCategory'])) {
 
     $categoryCounter = $_POST['categoryCounter'];
@@ -64,7 +53,7 @@ if (!empty($_POST['cancelEditModeFlag']) /*|| isset($_GET['action'])*/) {
 }
 
 
-if (!empty($_POST['updateUserProductString']) && !empty($_POST['product_id'])) {
+if (isset($_POST['updateProduct'])) {
 
     if (isset($_SESSION['thisIsLoggedUser'])) {
 
@@ -77,7 +66,7 @@ if (!empty($_POST['updateUserProductString']) && !empty($_POST['product_id'])) {
 
         }
 
-        //Product Line tobe updated
+        //Product Line to be updated
         $productId = $_POST['product_id'];
 
         //Changes submitted
@@ -98,8 +87,7 @@ if (!empty($_POST['updateUserProductString']) && !empty($_POST['product_id'])) {
 
         }
 
-        var_dump($productCategoriesArray);
-        echo "<- category";
+
         updateUserProductString($userId, $productId, $productName, $pictureNameAfterUpload, $productCategoriesArray);
 
         //incorrect image flag should be saved in session before refreshing
@@ -158,11 +146,10 @@ if (isset($_POST['saveProduct'])) {
 
             //include("../views/userPersonalPage.php");
             header("Location: ../login");
-        }else {
+        } else {
             $_GET['action'] = "add";
             $incorrectProductNameFlag = true;
         }
-
 
 
     } else {
@@ -197,18 +184,30 @@ if (isset($_SESSION['thisIsLoggedUser'])) {
        echo "<br><br>";*/
 
 
-    if (isset($_GET['action']) && $_GET['action'] == "add") {
+    if (isset($_GET['action'])) {
+        if ($_GET['action'] == "add") {
 
-        //defining variables
-        if (!isset($categoryCounter))
-            $categoryCounter = 1;
-        if (!isset($productName))
-            $productName = "";
-        if (!isset($productCategoriesArray[$categoryCounter]))
-            $productCategoriesArray[$categoryCounter - 1] = null;
 
-        include("../views/addProduct.php");
+            //defining variables
+            if (!isset($categoryCounter))
+                $categoryCounter = 1;
+            if (!isset($productName))
+                $productName = "";
+            if (!isset($productCategoriesArray[$categoryCounter]))
+                $productCategoriesArray[$categoryCounter - 1] = null;
 
+            include("../views/addProduct.php");
+
+        }
+        if ($_GET['action'] == "edit") {
+            $productId = $_GET['product_id'];
+
+            $productInfo = retrieveProductInfo($userId, $productId);
+
+
+            include("../views/editProduct.php");
+
+        }
     } else
         include("../views/userPersonalPage.php");
 

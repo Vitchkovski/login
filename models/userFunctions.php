@@ -289,4 +289,23 @@ function retrieveProductCategories($productId)
     return $productCategories;
 }
 
+function retrieveProductInfo($userId, $productId){
+    $db_functions = new DBfunctions();
+
+    $queryToRun = sprintf("select up.user_id,
+                                  up.product_id,
+                                  up.product_name, 
+                                  up.product_img_name
+                                  from user_products up 
+                                  where up.user_id = '%s'  
+                                  and up.product_id = '%s'
+                                  order by up.product_id desc", $userId, $productId);
+
+
+    $productInfo = $db_functions->qrySelect($queryToRun);
+    $db_functions->closeDbConnection();
+
+    return $productInfo;
+}
+
 ?>
