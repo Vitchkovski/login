@@ -32,12 +32,9 @@
 
 
     <?php if (!empty($_POST) && isset($userIsAlreadyExistFlag)) { ?>
-        <div align="center">
-            <form class="vertical-form-bottom">
-                <input id="error" type="hidden" readonly><label for="error">User with such name or email is already
-                    exist. Either provide another credentials or <a class="inner-text-href" href="login">log
-                        in</a></label>
-            </form>
+        <div class="alert alert-danger">
+            <a href="index.php" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            User with such name or email is already exist. Either provide another credentials or log in</a>
         </div>
 
         <?php
@@ -45,11 +42,9 @@
 
     <?php if (isset($passwordIsToShortFlag)) {
         ?>
-        <div align="center">
-            <form class="vertical-form-bottom">
-                <input id="error" type="hidden" readonly><label for="error">Password should contain at least 6
-                    signs!</label>
-            </form>
+        <div class="alert alert-danger">
+            <a href="index.php" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            Password should contain at least 6 signs!</a>
         </div>
         <?php
     } ?>

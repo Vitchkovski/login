@@ -27,13 +27,10 @@
 
 
     <?php if (!empty($_POST) && isset($credentialsAreIncorrectFlag)) { ?>
-        <div align="center">
-            <form class="vertical-form-bottom">
-                <input id="error" type="hidden" readonly><label for="error">Credentials you entered are
-                    incorrect</label>
-            </form>
+        <div class="alert alert-danger">
+            <a href="index.php" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            Credentials you entered are incorrect</a>
         </div>
-
         <?php
     } ?>
 
