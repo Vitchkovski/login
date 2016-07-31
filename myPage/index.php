@@ -30,6 +30,8 @@ if (isset($_POST['addEditCategory'])) {
         $productCategoriesArray = null;
 
     $_GET['action'] = "edit";
+
+    //var_dump($productCategoriesArray);
 }
 
 

@@ -52,7 +52,7 @@
             <label for="productCategoriesArray[]">Category:</label>
             <input type="text" class="form-control" name="productCategoriesArray[]"
                    placeholder="Enter product category"
-                   maxlength="1000" value="<?= $productCategoriesArray[$i]?>">
+                   maxlength="1000" value="<?= escapeSpecialCharactersHTML($productCategoriesArray[$i])?>">
             <input type="hidden" name="newUserProductSubmitted" value="true">
         </div>
         <?php } ?>

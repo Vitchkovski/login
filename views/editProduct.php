@@ -65,6 +65,8 @@
 
         <?php
         $i = 0;
+
+        if (is_null($productCategoriesArray[0])){
         foreach ($productCategories[$productInfo[0]->product_id] as $pC):
 
             if (!is_null($pC)) {
@@ -78,14 +80,14 @@
                 <?php $i++;
                 }
             }
-        endforeach; echo $i; ?>
+        endforeach; echo $i; }?>
 
         <?php for ($i; $i < $categoryCounter; $i++) { ?>
             <div class="form-group">
                 <label for="productCategoriesArray[]">Category:</label>
                 <input type="text" class="form-control" name="productCategoriesArray[]"
                        placeholder="Enter product category"
-                       maxlength="1000" value="<?= $productCategoriesArray[$i]?>">
+                       maxlength="1000" value="<?=escapeSpecialCharactersHTML($productCategoriesArray[$i])?>">
                 <input type="hidden" name="newUserProductSubmitted" value="true">
             </div>
         <?php } ?>
