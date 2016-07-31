@@ -40,7 +40,7 @@
         </div>
         <?php for ($i=0; $i < $categoryCounter; $i++) { ?>
         <div class="form-group">
-            <label for="productCategoriesArray[]">Category:</label>
+            <?php if ($i == 0){ ?><label for="productCategoriesArray[]">Category:</label><?php }?>
             <input type="text" class="form-control" name="productCategoriesArray[]"
                    placeholder="Enter product category"
                    maxlength="1000" value="<?= escapeSpecialCharactersHTML($productCategoriesArray[$i])?>">
@@ -55,5 +55,8 @@
 
 
 </body>
+<footer>
+     
+</footer>
 
 </html>

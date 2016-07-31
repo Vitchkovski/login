@@ -32,15 +32,16 @@
         <div class="form-group">
             <div class="hide-upload-btn-div">
                 <label for="productPicture">Product Picture:</label>
-                <br><img class="img-rounded" style="margin-bottom: 3px" src="<?php if (is_null($productInfo[0]->product_img_name)) {
-                        ?>""<?php
-                    } else {
-                        ?>../uploads/<?= $userId ?>/cropped/<?= $productInfo[0]->product_img_name ?><?php
-                    } ?>">
+                <br><img class="img-rounded" style="margin-bottom: 3px"
+                         src="<?php if (is_null($productInfo[0]->product_img_name)) {
+                         ?>""<?php
+                } else {
+                    ?>../uploads/<?= $userId ?>/cropped/<?= $productInfo[0]->product_img_name ?><?php
+                } ?>">
 
                 <input type="hidden" name="initialProductPictureName"
                        value="<?= $productInfo[0]->product_img_name ?>">
-                <input class="form-control" type="file" name="productPicture" id="file" >
+                <input class="form-control" type="file" name="productPicture" id="file">
             </div>
         </div>
         <div class="form-group">
@@ -56,33 +57,34 @@
         <?php
         $i = 0;
 
-        if (is_null($productCategoriesArray[0])){
-        foreach ($productCategories[$productInfo[0]->product_id] as $pC):
+        if (is_null($productCategoriesArray[0])) {
+            foreach ($productCategories[$productInfo[0]->product_id] as $pC):
 
-            if (!is_null($pC)) {
+                if (!is_null($pC)) {
 
-                if (!is_null($pC->category_name) && $pC->category_name != "") { ?>
-                    <div class="form-group">
-                        <label for="productCategoriesArray[]">Category:</label>
-                        <input type="text" class="form-control" size="38" name="productCategoriesArray[]"
-                               value="<?= escapeSpecialCharactersHTML($pC->category_name) ?>" maxlength="255">
-                    </div>
-                <?php $i++;
+                    if (!is_null($pC->category_name) && $pC->category_name != "") { ?>
+                        <div class="form-group">
+                        <?php if ($i == 0){ ?><label for="productCategoriesArray[]">Category:</label><?php } ?>
+                            <input type="text" class="form-control" size="38" name="productCategoriesArray[]"
+                                   value="<?= escapeSpecialCharactersHTML($pC->category_name) ?>" maxlength="255">
+                        </div>
+                        <?php $i++;
+                    }
                 }
-            }
-        endforeach; echo $i; }?>
+            endforeach;
+        } ?>
 
         <?php for ($i; $i < $categoryCounter; $i++) { ?>
             <div class="form-group">
-                <label for="productCategoriesArray[]">Category:</label>
+                <?php if ($i == 0){ ?><label for="productCategoriesArray[]">Category:</label><?php } ?>
                 <input type="text" class="form-control" name="productCategoriesArray[]"
                        placeholder="Enter product category"
-                       maxlength="1000" value="<?=escapeSpecialCharactersHTML($productCategoriesArray[$i])?>">
+                       maxlength="1000" value="<?= escapeSpecialCharactersHTML($productCategoriesArray[$i]) ?>">
                 <input type="hidden" name="newUserProductSubmitted" value="true">
             </div>
         <?php } ?>
 
-        <input type="hidden" name="categoryCounter" value="<?=$i+1?>">
+        <input type="hidden" name="categoryCounter" value="<?= $i + 1 ?>">
         <input type="hidden" name="product_id" value="<?= $productInfo[0]->product_id ?>">
 
         <input class="btn btn-default" name="addEditCategory" type="submit" value="Add Category">
@@ -94,5 +96,8 @@
 
 
 </body>
+<footer>
+     
+</footer>
 
 </html>
