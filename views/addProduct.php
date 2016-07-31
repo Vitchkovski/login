@@ -35,7 +35,7 @@
         <div class="form-group">
             <label for="productName">Product Name:</label>
             <input type="text" name="productName" class="form-control" placeholder="Enter product name" autofocus
-                   maxlength="254" value="<?=$productName?>">
+                   maxlength="254" value="<?=escapeSpecialCharactersHTML($productName)?>">
         </div>
         <?php for ($i=0; $i < $categoryCounter; $i++) { ?>
         <div class="form-group">

@@ -47,7 +47,7 @@
             <tr>
                 <th><?php if (!is_null($uP->product_img_name)) { ?><a
                         href="../uploads/<?= $userId ?>/original/<?= $uP->product_img_name ?>" target="_blank">
-                        <img
+                        <img class="img-rounded"
                             src="../uploads/<?= $userId ?>/cropped/<?= $uP->product_img_name ?>"></a><?php } ?>
                 </th>
                 <th style="word-wrap: break-word;min-width: 160px;max-width: 300px;"><?= htmlspecialchars(ltrim(rtrim($uP->product_name))) ?></th>
