@@ -4,25 +4,27 @@
 <head>
     <meta charset="utf-8">
     <title>Registration Page</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/signin.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-<body class="main">
-<div class="wrap">
-    <div class="header">
-    </div>
-    <div align="center">
+<body>
+<div class="container">
 
-        <form class="vertical-form-login" method="post">
-            <h1>Enter</h1>
-            <input type="email" name="email" placeholder="Email Address" spellcheck="false"
-                   value="<?= escapeSpecialCharactersHTML($userEscapedEmail) ?>" required maxlength="254"><br>
-            <input type="password" name="password" placeholder="Password" value="" required maxlength="254"><br>
-            <input type="submit" value="Log In"><br>
+    <form class="form-signin" method="post">
+        <h2 class="form-signin-heading">Enter</h2>
+        <input type="email" class="form-control" name="email" placeholder="Email Address" spellcheck="false"
+               value="<?= escapeSpecialCharactersHTML($userEscapedEmail) ?>" required maxlength="254">
+        <input type="password" class="form-control" name="password" placeholder="Password" value="" required
+               maxlength="254">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
+        <div align="center">
             <a class="sign-in" href="../">Register a new account</a>
-            <br>
-        </form>
-    </div>
+        </div>
+        <br>
+    </form>
+
 
     <?php if (!empty($_POST) && isset($credentialsAreIncorrectFlag)) { ?>
         <div align="center">
@@ -36,9 +38,7 @@
     } ?>
 
 </div>
-<footer>
-    Login Page / 2016
-</footer>
+
 </body>
 
 </html>

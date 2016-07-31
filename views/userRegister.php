@@ -4,26 +4,32 @@
 <head>
     <meta charset="utf-8">
     <title>Registration Page</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/signin.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body class="main">
-<div class="wrap">
-    <div class="header">
-    </div>
-    <div align="center">
+<body>
+<div class="container">
 
-        <form class="vertical-form" method="post">
-            <h1>Registration</h1>
-            <input type="email" name="email" placeholder="Email Address" spellcheck="false"
-                   value="<?= escapeSpecialCharactersHTML($userEscapedEmail) ?>" required maxlength="254"><br>
-            <input type="text" name="login" placeholder="Username"
-                   value="<?= escapeSpecialCharactersHTML($userEscapedLogin) ?>" required maxlength="254"><br>
-            <input type="password" name="password" placeholder="Password" value="" required maxlength="254"><br>
-            <input type="submit" value="Save"><br>
+
+    <form class="form-signin" method="post">
+        <h2 class="form-signin-heading">Registration</h2>
+
+        <input type="email" class="form-control" name="email" placeholder="Email Address" spellcheck="false"
+               value="<?= escapeSpecialCharactersHTML($userEscapedEmail) ?>" required maxlength="254">
+
+        <input type="text" class="form-control" name="login" placeholder="Username"
+               value="<?= escapeSpecialCharactersHTML($userEscapedLogin) ?>" required maxlength="254">
+
+        <input type="password" class="form-control" name="password" placeholder="Password" value="" required
+               maxlength="254">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+        <div align="center">
             <a class="sign-in" href="login">Already have an account? Login</a>
-            <br>
-        </form>
-    </div>
+        </div>
+        <br>
+    </form>
+
 
     <?php if (!empty($_POST) && isset($userIsAlreadyExistFlag)) { ?>
         <div align="center">
@@ -50,8 +56,6 @@
 
 
 </div>
-<footer>
-    Registration Page / 2016
-</footer>
+
 </body>
 </html>

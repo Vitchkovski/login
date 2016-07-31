@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>Registration Page</title>
     <link href="../css/bootstrap.min.css" rel="stylesheet">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
