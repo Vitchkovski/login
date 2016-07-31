@@ -119,15 +119,16 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
 }
 
 //updating user products list string
-function updateUserProductString($userId, $productId, $productName, $pictureNameAfterUpload, $productCategoriesString)
+function updateUserProductString($userId, $productId, $productName, $pictureNameAfterUpload, $productCategoriesArray)
 {
 
     $db_functions = new DBfunctions();
 
-    $escapedProductCategoriesString = $db_functions->escapeString(ltrim(rtrim($productCategoriesString)));
+    //$escapedProductCategoriesString = $db_functions->escapeString(ltrim(rtrim($productCategoriesArray)));
 
     //Multiple delimiters can be used for the categories. Defining them and converting categories string to an array
-    $limitedCategoriesArray = categoryStringToArray($escapedProductCategoriesString);
+    //$limitedCategoriesArray = categoryStringToArray($escapedProductCategoriesString);
+
 
     /*echo "limitedCategoriesArray <br>";
     var_dump($limitedCategoriesArray);
@@ -138,10 +139,11 @@ function updateUserProductString($userId, $productId, $productName, $pictureName
 
 
     //if non-existing category was submitted we must create a record for it in corresponding table
-    foreach ($limitedCategoriesArray as $lCA) {
-        if (!is_null($lCA)) {
+    foreach ($productCategoriesArray as $pCA) {
+        $pCA = $db_functions->escapeString(ltrim(rtrim($pCA)));
+        if (!is_null($pCA)) {
             $queryToRun = sprintf("select * from user_categories where user_id = '%s' 
-                                                                   and category_name = '%s'", $userId, $lCA);
+                                                                   and category_name = '%s'", $userId, $pCA);
 
 
             $userCategoryInfo = $db_functions->qrySelect($queryToRun);
@@ -150,15 +152,20 @@ function updateUserProductString($userId, $productId, $productName, $pictureName
             var_dump($userCategoryInfo);
             echo "<br>";*/
 
-            if (is_null($userCategoryInfo[0])) {
+            if (is_null($userCategoryInfo[0]) && $pCA != "") {
 
                 $queryToRun = sprintf("insert into user_categories (user_id, category_name, from_date) 
-                               values ('%s', '%s', now())", $userId, $lCA);
+                               values ('%s', '%s', now())", $userId, $pCA);
 
                 $db_functions->qryFire($queryToRun);
             }
         }
     }
+
+    //delete product categories no longer in use
+    $queryToRun = sprintf('delete from product_categories where product_id = "%1$s" ', $productId);
+
+    $db_functions->qryFire($queryToRun);
 
 
     //mysql treating null php values as "" value and not NULL. Thus defining correct value before update
@@ -182,12 +189,12 @@ function updateUserProductString($userId, $productId, $productName, $pictureName
 
 
     //link between user_products and user_categories must be created - only if new category was submitted
-    foreach ($limitedCategoriesArray as $lCA) {
-
+    foreach ($productCategoriesArray as $pCA) {
+        $pCA = $db_functions->escapeString(ltrim(rtrim($pCA)));
         $queryToRun = sprintf('insert into product_categories (product_id, category_id) 
                                values ("%1$s", (select category_id from user_categories 
                                                                   where user_id = "%2$s"
-                                                                  and category_name = "%3$s"))', $productId, $userId, $lCA);
+                                                                  and category_name = "%3$s"))', $productId, $userId, $pCA);
 
         $db_functions->qryFire($queryToRun);
 
@@ -267,12 +274,13 @@ function retrieveProductCategories($productId)
 
     $queryToRun = sprintf("select pc.product_id,
                                   pc.category_id,
-                                  uc.category_name
+                                  uc.category_name,
+                                  pc.relationship_id
                            from product_categories pc,
                                 user_categories uc                                
                            where pc.product_id = '%s'
                              and pc.category_id = uc.category_id
-                           order by pc.category_id", $productId);
+                           order by pc.relationship_id", $productId);
 
 
     $productCategories = $db_functions->qrySelect($queryToRun);

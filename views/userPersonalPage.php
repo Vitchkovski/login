@@ -37,7 +37,8 @@
         </form>
 
 
-        <?php if (!is_null($userProducts[0])) { ?>
+        <?php
+        if (!is_null($userProducts[0])) { ?>
 
         <table class="products-table">
 
@@ -46,7 +47,7 @@
 
                 <tr>
                     <!-- if Edit button has been clicked we need to open edit-form for that specific product line-->
-                    <?php if (isset($editUserProductFlag) && isset($productId) && $productId == $uP->product_id) {
+                    <?php if (isset($editUserProductFlag)  && isset($productId) && $productId == $uP->product_id) {
                         include "editProduct.php"; ?>
 
 
@@ -64,12 +65,14 @@
                         <th width="200"><?= htmlspecialchars(ltrim(rtrim($uP->product_name))) ?></th>
                         <th width="300"><?php
                             $lastCategoryElement = end($productCategories[$uP->product_id]);
+                            //var_dump($productCategories[$uP->product_id]);
                             foreach ($productCategories[$uP->product_id] as $pC):
+
                                 if (!is_null($pC)) {
 
                                     if (!is_null($pC->category_name) && $pC->category_name != "") {
                                         echo escapeSpecialCharactersHTML($pC->category_name);
-                                        if ($lastCategoryElement->category_id != $pC->category_id && count($productCategories[$uP->product_id]) > 2)
+                                        if ($lastCategoryElement->category_id != $pC->category_id && count($productCategories[$uP->product_id]) > 1)
                                             echo ", ";
                                     }
                                 }

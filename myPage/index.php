@@ -15,6 +15,11 @@ if (isset($_GET['action'])) {
     }
 }
 
+if (!empty($_POST['addCategoryFlag'])) {
+    $editUserProductFlag = true;
+    $productId = $_POST['product_id'];
+}
+
 
 if (!empty($_POST['deleteUserProduct']) && !empty($_POST['product_id'])) {
 
@@ -69,7 +74,7 @@ if (!empty($_POST['updateUserProductString']) && !empty($_POST['product_id'])) {
 
         //Changes submitted
         $productName = $_POST['productName'];
-        $productCategoriesString = $_POST['productCategoriesString'];
+        $productCategoriesArray = $_POST['productCategoriesArray'];
 
         //picture can be not submitted. In that case - setting picture name to the initial value
         if (!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Error on load") {
@@ -85,8 +90,9 @@ if (!empty($_POST['updateUserProductString']) && !empty($_POST['product_id'])) {
 
         }
 
-
-        updateUserProductString($userId, $productId, $productName, $pictureNameAfterUpload, $productCategoriesString);
+        var_dump($productCategoriesArray) ;
+        echo "<- category";
+        updateUserProductString($userId, $productId, $productName, $pictureNameAfterUpload, $productCategoriesArray);
 
         //incorrect image flag should be saved in session before refreshing
         $_SESSION['imageIncorrectFlag'] = false;
@@ -94,7 +100,7 @@ if (!empty($_POST['updateUserProductString']) && !empty($_POST['product_id'])) {
             $_SESSION['imageIncorrectFlag'] = $imageIncorrectFlag;
         }
 
-        header("Location: ../login");
+        //header("Location: ../login");
 
     } else {
         header("Location: ../login");
@@ -140,7 +146,7 @@ if (!empty($_POST['newUserProductSubmitted'])) {
         }
 
         //include("../views/userPersonalPage.php");
-        //header("Location: ../login");
+        header("Location: ../login");
 
     } else {
         header("Location: ../login");
