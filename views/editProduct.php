@@ -53,7 +53,6 @@
 
         <?php
         $i = 0;
-
         if (is_null($productCategoriesArray[0])) {
             foreach ($productCategories[$productInfo[0]->product_id] as $pC):
 
