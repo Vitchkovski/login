@@ -30,8 +30,9 @@
             <div class="hide-upload-btn-div">
                 <label for="productPicture">Product Picture:</label>
                 <br><?php if (!is_null($productInfo[0]->product_img_name)) {?>
-                <img class="img-rounded" style="margin-bottom: 3px"
-                         src="../uploads/<?= $userId ?>/cropped/<?= $productInfo[0]->product_img_name ?>">
+                <a href="../uploads/<?= $userId ?>/original/<?= $productInfo[0]->product_img_name ?>" target="_blank">
+                    <img class="img-rounded" style="margin-bottom: 3px"
+                         src="../uploads/<?= $userId ?>/cropped/<?= $productInfo[0]->product_img_name ?>"></a>
                 <?php } ?>
 
                 <input type="hidden" name="initialProductPictureName"
