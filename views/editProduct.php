@@ -31,17 +31,16 @@
     <form enctype="multipart/form-data" role="form" method="post" action="../myPage/">
         <div class="form-group">
             <div class="hide-upload-btn-div">
-                <img
-                    src="<?php if (is_null($productInfo[0]->product_img_name)) {
-                        ?>../media/products/upload-32.png<?php
+                <label for="productPicture">Product Picture:</label>
+                <br><img class="img-rounded" style="margin-bottom: 3px" src="<?php if (is_null($productInfo[0]->product_img_name)) {
+                        ?>""<?php
                     } else {
                         ?>../uploads/<?= $userId ?>/cropped/<?= $productInfo[0]->product_img_name ?><?php
                     } ?>">
 
                 <input type="hidden" name="initialProductPictureName"
                        value="<?= $productInfo[0]->product_img_name ?>">
-                <input class="hide-upload-button-input" type="file" name="productPicture" id="file"
-                       size="1">
+                <input class="form-control" type="file" name="productPicture" id="file" >
             </div>
         </div>
         <div class="form-group">
