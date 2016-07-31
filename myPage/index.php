@@ -18,9 +18,14 @@ if (isset($_GET['action'])) {
 
 }
 
-if (!empty($_POST['addCategoryFlag'])) {
-    $editUserProductFlag = true;
-    $productId = $_POST['product_id'];
+if (isset($_POST['addCategory'])) {
+
+    $categoryCounter = $_POST['categoryCounter'];
+
+    $productName = $_POST['productName'];
+    $productCategoriesArray = $_POST['productCategoriesArray'];
+
+    $_GET['action'] = "add";
 }
 
 
@@ -113,43 +118,52 @@ if (!empty($_POST['updateUserProductString']) && !empty($_POST['product_id'])) {
 }
 
 
-if (!empty($_POST['newUserProductSubmitted'])) {
+if (isset($_POST['saveProduct'])) {
+
 
     if (isset($_SESSION['thisIsLoggedUser'])) {
 
         $userId = $_SESSION['userSessionId'];
         $productName = $_POST['productName'];
 
-        //product picture submitted
-        if (isset ($_FILES["productPicture"]) && !empty($_FILES["productPicture"]["name"])) {
+        if ($productName != null || $productName != "") {
 
-            $pictureNameAfterUpload = uploadProductPicture($userId);
+            //product picture submitted
+            if (isset ($_FILES["productPicture"]) && !empty($_FILES["productPicture"]["name"])) {
 
+                $pictureNameAfterUpload = uploadProductPicture($userId);
+
+            }
+
+            $productCategoriesArray = $_POST['productCategoriesArray'];
+
+
+            //picture can be not submitted. In that case - setting picture name to NULL
+            if (!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Error on load") {
+
+                if (isset($pictureNameAfterUpload) && $pictureNameAfterUpload == "Error on load")
+                    $imageIncorrectFlag = true;
+
+                $pictureNameAfterUpload = null;
+
+            }
+
+            addProductToUserList($userId, $productName, $pictureNameAfterUpload, $productCategoriesArray);
+
+            //incorrect image flag should be saved in session before refreshing
+            $_SESSION['imageIncorrectFlag'] = false;
+            if (isset($imageIncorrectFlag)) {
+                $_SESSION['imageIncorrectFlag'] = $imageIncorrectFlag;
+            }
+
+            //include("../views/userPersonalPage.php");
+            header("Location: ../login");
+        }else {
+            $_GET['action'] = "add";
+            $incorrectProductNameFlag = true;
         }
 
-        $productCategoriesString = $_POST['productCategoriesString'];
 
-
-        //picture can be not submitted. In that case - setting picture name to NULL
-        if (!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Error on load") {
-
-            if (isset($pictureNameAfterUpload) && $pictureNameAfterUpload == "Error on load")
-                $imageIncorrectFlag = true;
-
-            $pictureNameAfterUpload = null;
-
-        }
-
-        addProductToUserList($userId, $productName, $pictureNameAfterUpload, $productCategoriesString);
-
-        //incorrect image flag should be saved in session before refreshing
-        $_SESSION['imageIncorrectFlag'] = false;
-        if (isset($imageIncorrectFlag)) {
-            $_SESSION['imageIncorrectFlag'] = $imageIncorrectFlag;
-        }
-
-        //include("../views/userPersonalPage.php");
-        header("Location: ../login");
 
     } else {
         header("Location: ../login");
@@ -185,10 +199,18 @@ if (isset($_SESSION['thisIsLoggedUser'])) {
 
     if (isset($_GET['action']) && $_GET['action'] == "add") {
 
+        //defining variables
+        if (!isset($categoryCounter))
+            $categoryCounter = 1;
+        if (!isset($productName))
+            $productName = "";
+        if (!isset($productCategoriesArray[$categoryCounter]))
+            $productCategoriesArray[$categoryCounter - 1] = null;
+
         include("../views/addProduct.php");
 
-    }else
-    include("../views/userPersonalPage.php");
+    } else
+        include("../views/userPersonalPage.php");
 
 } else {
     //Session is not started for the user - opening login page

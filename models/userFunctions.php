@@ -43,18 +43,18 @@ function deleteProductFromUserList($userId, $productId)
 }
 
 
-function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $productCategoriesString)
+function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $productCategoriesArray)
 {
     $db_functions = new DBfunctions();
 
-    $escapedProductCategoriesString = $db_functions->escapeString(ltrim(rtrim($productCategoriesString)));
+    //$escapedProductCategoriesString = $db_functions->escapeString(ltrim(rtrim($productCategoriesString)));
 
     //Multiple delimiters can be used for the categories. Defining them and converting categories string to an array
-    $limitedCategoriesArray = categoryStringToArray($escapedProductCategoriesString);
+    //$limitedCategoriesArray = categoryStringToArray($escapedProductCategoriesString);
 
-    echo "limitedCategoriesArray <br>";
+   /* echo "limitedCategoriesArray <br>";
     var_dump($limitedCategoriesArray);
-    echo "<br>";
+    echo "<br>";*/
 
     $escapedProductName = $db_functions->escapeString(ltrim(rtrim($productName)));
 
@@ -76,10 +76,10 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
     echo "Test";
 
     //if non-existing category was submitted we must create a record for it in corresponding table
-    foreach ($limitedCategoriesArray as $lCA) {
-        if (!is_null($lCA)) {
+    foreach ($productCategoriesArray as $pCA) {
+        if (!is_null($pCA)) {
             $queryToRun = sprintf("select * from user_categories where user_id = '%s' 
-                                                                   and category_name = '%s'", $userId, $lCA);
+                                                                   and category_name = '%s'", $userId, $pCA);
 
 
             $userCategoryInfo = $db_functions->qrySelect($queryToRun);
@@ -91,7 +91,7 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
             if (is_null($userCategoryInfo[0])) {
 
                 $queryToRun = sprintf("insert into user_categories (user_id, category_name, from_date) 
-                               values ('%s', '%s', now())", $userId, $lCA);
+                               values ('%s', '%s', now())", $userId, $pCA);
 
                 $db_functions->qryFire($queryToRun);
             }
@@ -100,12 +100,12 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
 
 
     //link between user_products and user_categories must be created
-    foreach ($limitedCategoriesArray as $lCA) {
+    foreach ($productCategoriesArray as $pCA) {
 
         $queryToRun = sprintf('insert into product_categories (product_id, category_id) 
                                values ("%1$s", (select category_id from user_categories 
                                                                   where user_id = "%2$s"
-                                                                  and category_name = "%3$s"))', $lastCreatedProductID, $userId, $lCA);
+                                                                  and category_name = "%3$s"))', $lastCreatedProductID, $userId, $pCA);
 
         $db_functions->qryFire($queryToRun);
 
