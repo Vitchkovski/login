@@ -50,8 +50,8 @@
                         <img
                             src="../uploads/<?= $userId ?>/cropped/<?= $uP->product_img_name ?>"></a><?php } ?>
                 </th>
-                <th><?= htmlspecialchars(ltrim(rtrim($uP->product_name))) ?></th>
-                <th><?php
+                <th style="word-wrap: break-word;min-width: 160px;max-width: 300px;"><?= htmlspecialchars(ltrim(rtrim($uP->product_name))) ?></th>
+                <th style="word-wrap: break-word;min-width: 160px;max-width: 300px;"><?php
                     $lastCategoryElement = end($productCategories[$uP->product_id]);
                     //var_dump($productCategories[$uP->product_id]);
                     foreach ($productCategories[$uP->product_id] as $pC):

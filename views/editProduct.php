@@ -37,7 +37,7 @@
 
                 <input type="hidden" name="initialProductPictureName"
                        value="<?= $productInfo[0]->product_img_name ?>">
-                <input class="form-control" type="file" name="productPicture" id="file">
+                <input type="file" name="productPicture" id="file">
             </div>
         </div>
         <div class="form-group">
