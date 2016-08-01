@@ -72,14 +72,14 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
 
     $lastCreatedProductID = $db_functions->getLastCreatedID();
 
-    echo "Last ID: " . $lastCreatedProductID;
-    echo "Test";
 
     //if non-existing category was submitted we must create a record for it in corresponding table
     foreach ($productCategoriesArray as $pCA) {
-        if (!is_null($pCA) && $pCA != "") {
+
+        $escapedCategoryName = $db_functions->escapeString(ltrim(rtrim($pCA)));
+        if (!is_null($escapedCategoryName) && $escapedCategoryName != "") {
             $queryToRun = sprintf("select * from user_categories where user_id = '%s' 
-                                                                   and category_name = '%s'", $userId, $pCA);
+                                                                   and category_name = '%s'", $userId, $escapedCategoryName);
 
 
             $userCategoryInfo = $db_functions->qrySelect($queryToRun);
@@ -91,7 +91,7 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
             if (is_null($userCategoryInfo[0])) {
 
                 $queryToRun = sprintf("insert into user_categories (user_id, category_name, from_date) 
-                               values ('%s', '%s', now())", $userId, $pCA);
+                               values ('%s', '%s', now())", $userId, $escapedCategoryName);
 
                 $db_functions->qryFire($queryToRun);
             }
@@ -101,11 +101,12 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
 
     //link between user_products and user_categories must be created
     foreach ($productCategoriesArray as $pCA) {
+        $escapedCategoryName = $db_functions->escapeString(ltrim(rtrim($pCA)));
 
         $queryToRun = sprintf('insert into product_categories (product_id, category_id) 
                                values ("%1$s", (select category_id from user_categories 
                                                                   where user_id = "%2$s"
-                                                                  and category_name = "%3$s"))', $lastCreatedProductID, $userId, $pCA);
+                                                                  and category_name = "%3$s"))', $lastCreatedProductID, $userId, $escapedCategoryName);
 
         $db_functions->qryFire($queryToRun);
 
@@ -142,8 +143,9 @@ function updateUserProductString($userId, $productId, $productName, $pictureName
     foreach ($productCategoriesArray as $pCA) {
         $pCA = $db_functions->escapeString(ltrim(rtrim($pCA)));
         if (!is_null($pCA) && $pCA != "") {
+            $escapedCategoryName = $db_functions->escapeString(ltrim(rtrim($pCA)));
             $queryToRun = sprintf("select * from user_categories where user_id = '%s' 
-                                                                   and category_name = '%s'", $userId, $pCA);
+                                                                   and category_name = '%s'", $userId, $escapedCategoryName);
 
 
             $userCategoryInfo = $db_functions->qrySelect($queryToRun);
@@ -155,7 +157,7 @@ function updateUserProductString($userId, $productId, $productName, $pictureName
             if (is_null($userCategoryInfo[0])) {
 
                 $queryToRun = sprintf("insert into user_categories (user_id, category_name, from_date) 
-                               values ('%s', '%s', now())", $userId, $pCA);
+                               values ('%s', '%s', now())", $userId, $escapedCategoryName);
 
                 $db_functions->qryFire($queryToRun);
             }
@@ -190,11 +192,13 @@ function updateUserProductString($userId, $productId, $productName, $pictureName
 
     //link between user_products and user_categories must be created - only if new category was submitted
     foreach ($productCategoriesArray as $pCA) {
+        $escapedCategoryName = $db_functions->escapeString(ltrim(rtrim($pCA)));
+
         $pCA = $db_functions->escapeString(ltrim(rtrim($pCA)));
         $queryToRun = sprintf('insert into product_categories (product_id, category_id) 
                                values ("%1$s", (select category_id from user_categories 
                                                                   where user_id = "%2$s"
-                                                                  and category_name = "%3$s"))', $productId, $userId, $pCA);
+                                                                  and category_name = "%3$s"))', $productId, $userId, $escapedCategoryName);
 
         $db_functions->qryFire($queryToRun);
 

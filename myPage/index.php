@@ -167,7 +167,7 @@ if (isset($_POST['saveProduct'])) {
             }
 
             //include("../views/userPersonalPage.php");
-            header("Location: ../login");
+            //header("Location: ../login");
         } else {
             $_GET['action'] = "add";
             $incorrectProductNameFlag = true;
