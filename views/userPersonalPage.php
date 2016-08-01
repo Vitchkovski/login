@@ -19,11 +19,12 @@
     <?php if (isset($_SESSION['imageIncorrectFlag']) && $_SESSION['imageIncorrectFlag'] == true) { ?>
         <div align="center">
 
-                <div class="alert alert-danger">
-                    <a href="../myPage/index.php?action=close" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    Image you submitted is incorrect. Only
-                    png, jpg and gif files not larger than 3 MB can be used.<br>
-                </div>
+            <div class="alert alert-danger">
+                <a href="../myPage/index.php?action=close" class="close" data-dismiss="alert"
+                   aria-label="close">&times;</a>
+                Image you submitted is incorrect. Only
+                png, jpg and gif files not larger than 3 MB can be used.<br>
+            </div>
 
         </div>
     <?php } ?>
@@ -49,7 +50,7 @@
                 <th><?php if (!is_null($uP->product_img_name)) { ?><a
                         href="../uploads/<?= $userId ?>/original/<?= $uP->product_img_name ?>" target="_blank">
                         <img class="img-rounded"
-                            src="../uploads/<?= $userId ?>/cropped/<?= $uP->product_img_name ?>"></a><?php } ?>
+                             src="../uploads/<?= $userId ?>/cropped/<?= $uP->product_img_name ?>"></a><?php } ?>
                 </th>
                 <th style="word-wrap: break-word;min-width: 160px;max-width: 300px;"><?= htmlspecialchars(ltrim(rtrim($uP->product_name))) ?></th>
                 <th style="word-wrap: break-word;min-width: 160px;max-width: 300px;"><?php
@@ -61,7 +62,9 @@
 
                             if (!is_null($pC->category_name) && $pC->category_name != "") {
                                 echo escapeSpecialCharactersHTML($pC->category_name);
-                                if ($lastCategoryElement->category_id != $pC->category_id && count($productCategories[$uP->product_id]) > 1)
+                                if ($lastCategoryElement->category_id != $pC->category_id
+                                    && count($productCategories[$uP->product_id]) > 1
+                                )
                                     echo ", ";
                             }
                         }
@@ -70,13 +73,17 @@
 
                 <th>
                     <div align="right">
-                    <form action="../myPage/" method="post">
-                    <a class="btn btn-default" href='../myPage/index.php?action=edit&product_id=<?= $uP->product_id ?>'>Edit</a>
-                        <input type="hidden" name="product_id" value="<?= $uP->product_id ?>">
-                        <input type="hidden" name="deleteUserProduct" value="true">
-                        <input class="btn btn-danger" TYPE="submit" onclick="if(confirm('Delete product?'))submit();else return false;" value="Delete">
+                        <form action="../myPage/" method="post">
+                            <a class="btn btn-default"
+                               href='../myPage/index.php?action=edit&product_id=<?= $uP->product_id ?>'>
+                                Edit
+                            </a>
+                            <input type="hidden" name="product_id" value="<?= $uP->product_id ?>">
+                            <input type="hidden" name="deleteUserProduct" value="true">
+                            <input class="btn btn-danger" TYPE="submit"
+                                   onclick="if(confirm('Delete product?'))submit();else return false;" value="Delete">
 
-                    </form>
+                        </form>
                     </div>
                 </th>
 
@@ -84,7 +91,7 @@
         <?php endforeach;
         } else { ?>
             <div align="center">
-            <br>You do not have products in your cart yet.
+                <br>You do not have products in your cart yet.
             </div>
         <?php }
         ?>

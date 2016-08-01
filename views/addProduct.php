@@ -23,7 +23,6 @@
             </div>
 
 
-
     <?php } ?>
 
     <form enctype="multipart/form-data" role="form" method="post" action="../myPage/">

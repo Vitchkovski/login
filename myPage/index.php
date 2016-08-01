@@ -6,7 +6,7 @@ require_once("../models/dataFunctions.php");
 
 session_start();
 
-
+//add category button was clicked
 if (isset($_POST['addSaveCategory'])) {
 
     $categoryCounter = $_POST['categoryCounter'];
@@ -114,6 +114,7 @@ if (isset($_POST['updateProduct'])) {
             if (isset($imageIncorrectFlag)) {
                 $_SESSION['imageIncorrectFlag'] = $imageIncorrectFlag;
             }
+
         } else {
             $_GET['action'] = "edit";
             $incorrectProductNameFlag = true;
@@ -167,7 +168,7 @@ if (isset($_POST['saveProduct'])) {
             }
 
             //include("../views/userPersonalPage.php");
-            //header("Location: ../login");
+
         } else {
             $_GET['action'] = "add";
             $incorrectProductNameFlag = true;

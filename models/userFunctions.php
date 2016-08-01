@@ -47,14 +47,6 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
 {
     $db_functions = new DBfunctions();
 
-    //$escapedProductCategoriesString = $db_functions->escapeString(ltrim(rtrim($productCategoriesString)));
-
-    //Multiple delimiters can be used for the categories. Defining them and converting categories string to an array
-    //$limitedCategoriesArray = categoryStringToArray($escapedProductCategoriesString);
-
-   /* echo "limitedCategoriesArray <br>";
-    var_dump($limitedCategoriesArray);
-    echo "<br>";*/
 
     $escapedProductName = $db_functions->escapeString(ltrim(rtrim($productName)));
 
@@ -106,7 +98,9 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
         $queryToRun = sprintf('insert into product_categories (product_id, category_id) 
                                values ("%1$s", (select category_id from user_categories 
                                                                   where user_id = "%2$s"
-                                                                  and category_name = "%3$s"))', $lastCreatedProductID, $userId, $escapedCategoryName);
+                                                                  and category_name = "%3$s"))', $lastCreatedProductID,
+            $userId,
+            $escapedCategoryName);
 
         $db_functions->qryFire($queryToRun);
 
@@ -125,18 +119,7 @@ function updateUserProductString($userId, $productId, $productName, $pictureName
 
     $db_functions = new DBfunctions();
 
-    //$escapedProductCategoriesString = $db_functions->escapeString(ltrim(rtrim($productCategoriesArray)));
-
-    //Multiple delimiters can be used for the categories. Defining them and converting categories string to an array
-    //$limitedCategoriesArray = categoryStringToArray($escapedProductCategoriesString);
-
-
-    /*echo "limitedCategoriesArray <br>";
-    var_dump($limitedCategoriesArray);
-    echo "<br>";*/
-
     $escapedProductName = $db_functions->escapeString(ltrim(rtrim($productName)));
-
 
 
     //if non-existing category was submitted we must create a record for it in corresponding table
@@ -198,7 +181,9 @@ function updateUserProductString($userId, $productId, $productName, $pictureName
         $queryToRun = sprintf('insert into product_categories (product_id, category_id) 
                                values ("%1$s", (select category_id from user_categories 
                                                                   where user_id = "%2$s"
-                                                                  and category_name = "%3$s"))', $productId, $userId, $escapedCategoryName);
+                                                                  and category_name = "%3$s"))', $productId,
+                                                                                                 $userId,
+                                                                                                 $escapedCategoryName);
 
         $db_functions->qryFire($queryToRun);
 
@@ -293,7 +278,8 @@ function retrieveProductCategories($productId)
     return $productCategories;
 }
 
-function retrieveProductInfo($userId, $productId){
+function retrieveProductInfo($userId, $productId)
+{
     $db_functions = new DBfunctions();
 
     $queryToRun = sprintf("select up.user_id,
