@@ -19,6 +19,7 @@ if (isset($_POST['addSaveCategory'])) {
     $_GET['action'] = "add";
 }
 
+
 if (isset($_POST['addEditCategory'])) {
 
     $categoryCounter = $_POST['categoryCounter'];

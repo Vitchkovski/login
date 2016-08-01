@@ -47,8 +47,11 @@
         </div>
         <?php } ?>
         <input type="hidden" name="categoryCounter" value="<?=$i+1?>">
-        <input class="btn btn-default" name="addSaveCategory" type="submit" value="Add Category">
-        <input class="btn btn-success" name="saveProduct" type="submit" value="Save">
+        <div align="right">
+            <input class="btn btn-default" name="addSaveCategory" type="submit" value="Add Category">
+            <input class="btn btn-success" name="saveProduct" type="submit" value="Save">
+            <a class="btn btn-danger" href="../myPage/index.php?action=close">Cancel</a>
+        </div>
     </form>
 </div>
 

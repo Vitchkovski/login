@@ -8,7 +8,6 @@
     <link href="../css/bootstrap.min.css" rel="stylesheet">
 
 
-
 </head>
 
 <body>
@@ -30,10 +29,11 @@
         <div class="form-group">
             <div class="hide-upload-btn-div">
                 <label for="productPicture">Product Picture:</label>
-                <br><?php if (!is_null($productInfo[0]->product_img_name)) {?>
-                <a href="../uploads/<?= $userId ?>/original/<?= $productInfo[0]->product_img_name ?>" target="_blank">
-                    <img class="img-rounded" style="margin-bottom: 3px"
-                         src="../uploads/<?= $userId ?>/cropped/<?= $productInfo[0]->product_img_name ?>"></a>
+                <br><?php if (!is_null($productInfo[0]->product_img_name)) { ?>
+                    <a href="../uploads/<?= $userId ?>/original/<?= $productInfo[0]->product_img_name ?>"
+                       target="_blank">
+                        <img class="img-rounded" style="margin-bottom: 3px"
+                             src="../uploads/<?= $userId ?>/cropped/<?= $productInfo[0]->product_img_name ?>"></a>
                 <?php } ?>
 
                 <input type="hidden" name="initialProductPictureName"
@@ -60,7 +60,7 @@
 
                     if (!is_null($pC->category_name) && $pC->category_name != "") { ?>
                         <div class="form-group">
-                        <?php if ($i == 0){ ?><label for="productCategoriesArray[]">Category:</label><?php } ?>
+                            <?php if ($i == 0) { ?><label for="productCategoriesArray[]">Category:</label><?php } ?>
                             <input type="text" class="form-control" size="38" name="productCategoriesArray[]"
                                    value="<?= escapeSpecialCharactersHTML($pC->category_name) ?>" maxlength="255">
                         </div>
@@ -72,7 +72,7 @@
 
         <?php for ($i; $i < $categoryCounter; $i++) { ?>
             <div class="form-group">
-                <?php if ($i == 0){ ?><label for="productCategoriesArray[]">Category:</label><?php } ?>
+                <?php if ($i == 0) { ?><label for="productCategoriesArray[]">Category:</label><?php } ?>
                 <input type="text" class="form-control" name="productCategoriesArray[]"
                        placeholder="Enter product category"
                        maxlength="1000" value="<?= escapeSpecialCharactersHTML($productCategoriesArray[$i]) ?>">
@@ -83,9 +83,11 @@
         <input type="hidden" name="categoryCounter" value="<?= $i + 1 ?>">
         <input type="hidden" name="product_id" value="<?= $productInfo[0]->product_id ?>">
 
-        <input class="btn btn-default" name="addEditCategory" type="submit" value="Add Category">
-        <input class="btn btn-success" name="updateProduct" type="submit" value="Save">
-
+        <div align="right">
+            <input class="btn btn-default" name="addEditCategory" type="submit" value="Add Category">
+            <input class="btn btn-success" name="updateProduct" type="submit" value="Save">
+            <a class="btn btn-danger" href="../myPage/index.php?action=close">Cancel</a>
+        </div>
 
     </form>
 </div>
