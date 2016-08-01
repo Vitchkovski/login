@@ -69,7 +69,7 @@ function addProductToUserList($userId, $productName, $pictureNameAfterUpload, $p
     foreach ($productCategoriesArray as $pCA) {
 
         $pCA = $db_functions->escapeString(ltrim(rtrim($pCA)));
-        if (!is_null($escapedCategoryName) && $escapedCategoryName != "") {
+        if (!is_null($pCA) && $pCA != "") {
             $queryToRun = sprintf("select * from user_categories where user_id = '%s' 
                                                                    and category_name = '%s'", $userId, $pCA);
 
@@ -176,7 +176,7 @@ function updateUserProductString($userId, $productId, $productName, $pictureName
 
     //link between user_products and user_categories must be created - only if new category was submitted
     foreach ($productCategoriesArray as $pCA) {
-        $escapedCategoryName = $db_functions->escapeString(ltrim(rtrim($pCA)));
+        $pCA = $db_functions->escapeString(ltrim(rtrim($pCA)));
 
         $pCA = $db_functions->escapeString(ltrim(rtrim($pCA)));
         $queryToRun = sprintf('insert into product_categories (product_id, category_id) 
@@ -184,7 +184,7 @@ function updateUserProductString($userId, $productId, $productName, $pictureName
                                                                   where user_id = "%2$s"
                                                                   and category_name = "%3$s"))', $productId,
                                                                                                  $userId,
-                                                                                                 $escapedCategoryName);
+                                                                                                 $pCA);
 
         $db_functions->qryFire($queryToRun);
 
