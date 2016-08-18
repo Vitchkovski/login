@@ -42,7 +42,7 @@ class MyPage extends CI_Controller
 
         } else {
             //Session is not started for the user - opening login page
-            redirect(base_url() . 'index.php/login');
+            redirect(base_url('index.php/login'));
 
         }
 
@@ -100,7 +100,7 @@ class MyPage extends CI_Controller
                         $_SESSION['imageIncorrectFlag'] = $data['imageIncorrectFlag'];
                     }
 
-                    redirect(base_url() . 'index.php/myPage');
+                    redirect(base_url('index.php/myPage'));
                 } else {
                     $data['incorrectProductNameFlag'] = true;
 
@@ -140,11 +140,11 @@ class MyPage extends CI_Controller
                 $_SESSION['imageIncorrectFlag'] = false;
             }
 
-            redirect(base_url() . 'index.php/myPage');
+            redirect(base_url('index.php/myPage'));
 
 
         } else {
-            redirect(base_url() . 'index.php/login');
+            redirect(base_url('index.php/login') );
         }
     }
 
@@ -212,14 +212,14 @@ class MyPage extends CI_Controller
                         $_SESSION['imageIncorrectFlag'] = $imageIncorrectFlag;
                     }
 
-                    redirect(base_url() . 'index.php/myPage');
+                    redirect(base_url('index.php/myPage'));
 
 
                 } else {
                     $data['incorrectProductNameFlag'] = true;
                 }
             } else {
-                redirect(base_url() . 'index.php/login');
+                redirect(base_url('index.php/login'));
             }
         }
 
@@ -246,7 +246,7 @@ class MyPage extends CI_Controller
         session_start();
 
         $_SESSION['imageIncorrectFlag'] = false;
-        redirect(base_url() . 'index.php/myPage');
+        redirect(base_url('index.php/myPage'));
     }
 
 }

@@ -20,7 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <?php if (!empty($_POST) && isset($credentialsAreIncorrectFlag)) { ?>
         <div class="alert alert-danger">
-            <a href="<?php echo base_url(); ?>index.php/main/login" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <a href="<?php echo base_url("index.php/main/login"); ?>" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             Credentials you entered are incorrect</a>
         </div>
         <?php

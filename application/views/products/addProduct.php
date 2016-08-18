@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
             <div class="alert alert-danger">
-                <a href="<?php echo base_url(); ?>index.php/myPage/addProduct" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <a href="<?php echo base_url("index.php/myPage/addProduct"); ?>" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 Product Name can not be null.
             </div>
 
@@ -41,7 +41,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div align="right">
             <input class="btn btn-default" name="addCategory" type="submit" value="Add Category">
             <input class="btn btn-success" name="saveProduct" type="submit" value="Save">
-            <a class="btn btn-danger" href="<?php echo base_url(); ?>index.php/myPage">Cancel</a>
+            <a class="btn btn-danger" href="<?php echo base_url("index.php/myPage"); ?>">Cancel</a>
         </div>
     </form>
 </div>

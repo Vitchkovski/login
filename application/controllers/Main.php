@@ -45,7 +45,7 @@ class Main extends CI_Controller
                     $_SESSION['userSessionName'] = $userName;
 
                     //redirecting to the personal page
-                    redirect(base_url().'index.php/myPage');
+                    redirect(base_url('index.php/myPage'));
                 } else {
                     //password is to short. Notifying user.
                     $data['passwordIsToShortFlag'] = true;
@@ -82,7 +82,7 @@ class Main extends CI_Controller
         session_unset();
         session_destroy();
 
-        redirect(base_url().'index.php/main');
+        redirect(base_url('index.php/main'));
     }
 
 

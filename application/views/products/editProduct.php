@@ -8,22 +8,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <?php if (isset($incorrectProductNameFlag)) { ?>
         <div class="alert alert-danger">
-            <a href="<?php echo base_url(); ?>index.php/myPage/editProduct/<?= $productId ?>" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <a href="<?php echo base_url("index.php/myPage/editProduct/"); ?><?= $productId ?>" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             Product Name can not be null.
         </div>
 
     <?php } ?>
 
 
-    <form enctype="multipart/form-data" role="form" method="post" action="<?php echo base_url(); ?>index.php/myPage/editProduct/<?= $productInfo[0]->product_id ?>">
+    <form enctype="multipart/form-data" role="form" method="post" action="<?php echo base_url("index.php/myPage/editProduct/"); ?><?= $productInfo[0]->product_id ?>">
         <div class="form-group">
             <div class="hide-upload-btn-div">
                 <label for="productPicture">Product Picture:</label>
                 <br><?php if (!is_null($productInfo[0]->product_img_name)) { ?>
-                    <a href="<?php echo base_url(); ?>assets/img/uploads/<?= $userId ?>/original/<?= $productInfo[0]->product_img_name ?>"
+                    <a href="<?php echo base_url("assets/img/uploads/"); ?><?= $userId ?>/original/<?= $productInfo[0]->product_img_name ?>"
                        target="_blank">
                         <img class="img-rounded" style="margin-bottom: 3px"
-                             src="<?php echo base_url(); ?>assets/img/uploads/<?= $userId ?>/cropped/<?= $productInfo[0]->product_img_name ?>"></a>
+                             src="<?php echo base_url("assets/img/uploads/"); ?><?= $userId ?>/cropped/<?= $productInfo[0]->product_img_name ?>"></a>
                 <?php } ?>
 
                 <input type="hidden" name="initialProductPictureName"
@@ -76,7 +76,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div align="right">
             <input class="btn btn-default" name="addCategory" type="submit" value="Add Category">
             <input class="btn btn-success" name="updateProduct" type="submit" value="Save">
-            <a class="btn btn-danger" href="<?php echo base_url(); ?>index.php/myPage">Cancel</a>
+            <a class="btn btn-danger" href="<?php echo base_url("index.php/myPage"); ?>">Cancel</a>
         </div>
 
     </form>

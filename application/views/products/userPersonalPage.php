@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div align="center">
 
             <div class="alert alert-danger">
-                <a href="<?php echo base_url(); ?>index.php/myPage/closeMessage" class="close" data-dismiss="alert"
+                <a href="<?php echo base_url("index.php/myPage/closeMessage"); ?>" class="close" data-dismiss="alert"
                    aria-label="close">&times;</a>
                 Image you submitted is incorrect. Only
                 png, jpg and gif files not larger than 3 MB can be used.<br>
@@ -20,8 +20,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     <?php } ?>
     <div align="right">
-        <a class="btn btn-success" href='<?php echo base_url(); ?>index.php/myPage/addProduct'>Add New Product</a>
-        <a href='<?php echo base_url(); ?>index.php/main/logout' class="btn btn-warning">Logout</a>
+        <a class="btn btn-success" href='<?php echo base_url("index.php/myPage/addProduct"); ?>'>Add New Product</a>
+        <a href='<?php echo base_url("index.php/main/logout"); ?>' class="btn btn-warning">Logout</a>
     </div>
     <?php
     if (!empty($userProducts)) { ?>
@@ -39,9 +39,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php foreach ($userProducts as $uP): ?>
             <tr>
                 <th><?php if (!is_null($uP->product_img_name)) { ?><a
-                        href="<?php echo base_url(); ?>assets/img/uploads/<?= $userId ?>/original/<?= $uP->product_img_name ?>" target="_blank">
+                        href="<?php echo base_url("assets/img/uploads/"); ?><?= $userId ?>/original/<?= $uP->product_img_name ?>" target="_blank">
                         <img class="img-rounded"
-                             src="<?php echo base_url(); ?>assets/img/uploads/<?= $userId ?>/cropped/<?= $uP->product_img_name ?>"></a><?php } ?>
+                             src="<?php echo base_url("assets/img/uploads/"); ?><?= $userId ?>/cropped/<?= $uP->product_img_name ?>"></a><?php } ?>
                 </th>
                 <th style="word-wrap: break-word;min-width: 160px;max-width: 300px;"><?= htmlspecialchars(ltrim(rtrim($uP->product_name))) ?></th>
                 <th style="word-wrap: break-word;min-width: 160px;max-width: 300px;"><?php
@@ -64,9 +64,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                 <th>
                     <div align="right">
-                        <form action="<?php echo base_url(); ?>index.php/myPage/deleteProduct" method="post">
+                        <form action="<?php echo base_url("index.php/myPage/deleteProduct"); ?>" method="post">
                             <a class="btn btn-default"
-                               href='<?php echo base_url(); ?>index.php/myPage/editProduct/<?= $uP->product_id ?>'>
+                               href='<?php echo base_url("index.php/myPage/editProduct/"); ?><?= $uP->product_id ?>'>
                                 Edit
                             </a>
                             <input type="hidden" name="product_id" value="<?= $uP->product_id ?>">
