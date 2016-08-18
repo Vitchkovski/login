@@ -27,3 +27,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-project
 
 assests/img
+user_guide/
+
+license.txt
+readme.rst
