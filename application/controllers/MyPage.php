@@ -10,15 +10,12 @@ class MyPage extends CI_Controller
 
         if (isset($_SESSION['thisIsLoggedUser'])) {
 
-            $this->load->helper('url');
             $this->load->helper('dataFunctions');
             $this->load->model('userModel');
 
             $data['userId'] = $_SESSION['userSessionId'];
             //$userEmail = $_SESSION['userSessionEmail'];
             $data['userName'] = $_SESSION['userSessionName'];
-
-
 
 
             //echo "User ID: ".$userId."<br>";
@@ -39,12 +36,13 @@ class MyPage extends CI_Controller
             var_dump($data['productCategories']);
             echo "<br><br>";*/
 
-
-             $this->load->view('userPersonalPage', $data);
+            $this->load->view('header');
+            $this->load->view('products/userPersonalPage', $data);
+            $this->load->view('footer');
 
         } else {
             //Session is not started for the user - opening login page
-            redirect(base_url().'index.php/login');
+            redirect(base_url() . 'index.php/login');
 
         }
 
@@ -53,9 +51,9 @@ class MyPage extends CI_Controller
     public function addProduct()
     {
         session_start();
-        $this->load->helper('url');
         $this->load->helper('dataFunctions');
         $this->load->model('userModel');
+        $this->load->view('footer');
 
         if (isset($_POST['addCategory'])) {
 
@@ -102,8 +100,8 @@ class MyPage extends CI_Controller
                         $_SESSION['imageIncorrectFlag'] = $data['imageIncorrectFlag'];
                     }
 
-                    redirect(base_url().'index.php/myPage');
-                }else {
+                    redirect(base_url() . 'index.php/myPage');
+                } else {
                     $data['incorrectProductNameFlag'] = true;
 
                 }
@@ -115,17 +113,18 @@ class MyPage extends CI_Controller
             $data['categoryCounter'] = 1;
         if (!isset($data['productName']))
             $data['productName'] = "";
-        if (!isset( $data['productCategoriesArray'][$data['categoryCounter']]))
+        if (!isset($data['productCategoriesArray'][$data['categoryCounter']]))
             $data['productCategoriesArray'][$data['categoryCounter'] - 1] = null;
 
-        $this->load->view('addProduct', $data);
+        $this->load->view('header');
+        $this->load->view('products/addProduct', $data);
+        $this->load->view('footer');
     }
 
     public function deleteProduct()
     {
         session_start();
 
-        $this->load->helper('url');
         $this->load->helper('dataFunctions');
         $this->load->model('userModel');
 
@@ -141,11 +140,11 @@ class MyPage extends CI_Controller
                 $_SESSION['imageIncorrectFlag'] = false;
             }
 
-            redirect(base_url().'index.php/myPage');
+            redirect(base_url() . 'index.php/myPage');
 
 
         } else {
-            redirect(base_url().'index.php/login');
+            redirect(base_url() . 'index.php/login');
         }
     }
 
@@ -153,9 +152,9 @@ class MyPage extends CI_Controller
     {
         session_start();
 
-        $this->load->helper('url');
         $this->load->helper('dataFunctions');
         $this->load->model('userModel');
+
 
         //echo $this->uri->segment(3);
 
@@ -213,14 +212,14 @@ class MyPage extends CI_Controller
                         $_SESSION['imageIncorrectFlag'] = $imageIncorrectFlag;
                     }
 
-                    redirect(base_url().'index.php/myPage');
+                    redirect(base_url() . 'index.php/myPage');
 
 
                 } else {
                     $data['incorrectProductNameFlag'] = true;
                 }
-            }else {
-                redirect(base_url().'index.php/login');
+            } else {
+                redirect(base_url() . 'index.php/login');
             }
         }
 
@@ -235,18 +234,19 @@ class MyPage extends CI_Controller
 
         $data['productCategories'][$data['productId']] = $this->userModel->retrieveProductCategories($data['productId']);
 
-
-        $this->load->view('editProduct', $data);
+        $this->load->view('header');
+        $this->load->view('products/editProduct', $data);
+        $this->load->view('footer');
 
     }
 
-    public function closeMessage(){
+    public function closeMessage()
+    {
 
         session_start();
-        $this->load->helper('url');
 
         $_SESSION['imageIncorrectFlag'] = false;
-        redirect(base_url().'index.php/myPage');
+        redirect(base_url() . 'index.php/myPage');
     }
 
 }

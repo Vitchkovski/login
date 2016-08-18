@@ -1,8 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php $this->load->view('header');?>
-<body>
+
 <div class="container">
 
     <form class="form-signin" method="post">
@@ -26,8 +25,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <?php if (!empty($_POST) && isset($userIsAlreadyExistFlag)) { ?>
         <div class="alert alert-danger">
-            <a href="index.php" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            User with such email is already exist. Either provide another credentials or log in</a>
+            <a href="<?php echo base_url(); ?>index.php/main" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            User with such email is already exist.</a>
         </div>
 
         <?php
@@ -36,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php if (isset($passwordIsToShortFlag)) {
         ?>
         <div class="alert alert-danger">
-            <a href="index.php" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <a href="<?php echo base_url(); ?>index.php/main" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             Password should contain at least 6 signs!</a>
         </div>
         <?php
@@ -44,6 +43,3 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 </div>
-
-</body>
-</html>

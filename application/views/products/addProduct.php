@@ -1,8 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php $this->load->view('header');?>
-<body>
 
 <div class="container">
     <h2> Add New Product to the List | <?php echo $_SESSION['userSessionName']; ?></h2>
@@ -47,11 +45,3 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </form>
 </div>
-
-
-</body>
-<footer>
-     
-</footer>
-
-</html>

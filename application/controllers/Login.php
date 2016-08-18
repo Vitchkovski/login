@@ -6,7 +6,6 @@ class Login extends CI_Controller
 
     public function index()
     {
-        $this->load->helper('url');
         $this->load->helper('dataFunctions');
         $this->load->model('userModel');
 
@@ -51,7 +50,10 @@ class Login extends CI_Controller
 
                 $data['credentialsAreIncorrectFlag'] = true;
 
-                $this->load->view('userLogin', $data);
+                $this->load->view('header');
+                $this->load->view('login/userLogin', $data);
+                $this->load->view('footer');
+
             }
 
 
@@ -68,8 +70,9 @@ class Login extends CI_Controller
 
             } else {
                 //Session is not started for the user - opening login page
-
-                $this->load->view('userLogin');
+                $this->load->view('header');
+                $this->load->view('login/userLogin');
+                $this->load->view('footer');
             }
         }
     }

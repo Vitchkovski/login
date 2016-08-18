@@ -6,7 +6,6 @@ class Main extends CI_Controller
 
     public function index()
     {
-        $this->load->helper('url');
         $this->load->helper('dataFunctions');
 
         if (!empty($_POST['login'])) {
@@ -50,8 +49,10 @@ class Main extends CI_Controller
                 } else {
                     //password is to short. Notifying user.
                     $data['passwordIsToShortFlag'] = true;
-                    $this->load->view('userRegister', $data);
 
+                    $this->load->view('header');
+                    $this->load->view('login/userRegister', $data);
+                    $this->load->view('footer');
                 }
             } else {
                 //User is already exist. Retrieving id.
@@ -61,13 +62,15 @@ class Main extends CI_Controller
                 $_SESSION['userSessionEmail'] = $_POST['email'];
                 $_SESSION['userSessionLogin'] = $_POST['login'];
 
-
-                $this->load->view('userRegister', $data);
+                $this->load->view('header');
+                $this->load->view('login/userRegister', $data);
+                $this->load->view('footer');
             }
         } else {
             //Nothing submitted yet - form just opened.
-
-            $this->load->view('userRegister');
+            $this->load->view('header');
+            $this->load->view('login/userRegister');
+            $this->load->view('footer');
 
         }
     }
@@ -79,7 +82,6 @@ class Main extends CI_Controller
         session_unset();
         session_destroy();
 
-        $this->load->helper('url');
         redirect(base_url().'index.php/main');
     }
 

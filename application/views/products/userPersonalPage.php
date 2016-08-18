@@ -1,8 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php $this->load->view('header');?>
-<body>
 
 <div class="container">
 
@@ -91,10 +89,3 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </tbody>
     </table>
 </div>
-
-</body>
-<footer>
-     
-</footer>
-
-</html>

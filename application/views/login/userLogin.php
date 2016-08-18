@@ -1,8 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php $this->load->view('header');?>
-<body>
+
 <div class="container">
 
     <form class="form-signin" method="post">
@@ -28,7 +27,3 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     } ?>
 
 </div>
-
-</body>
-
-</html>
