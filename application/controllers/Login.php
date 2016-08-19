@@ -41,7 +41,7 @@ class Login extends CI_Controller
                 $_SESSION['userSessionEmail'] = $userEmail;
                 $_SESSION['userSessionName'] = $userName;
 
-                redirect(base_url('index.php/myPage'));
+                redirect(base_url('index.php/products'));
                 //include("../views/userPersonalPage.php");
 
                 //Login Succesfull
@@ -65,7 +65,7 @@ class Login extends CI_Controller
             //Redirecting authorized user to the personal info page
             if (isset($_SESSION['thisIsLoggedUser'])) {
 
-                redirect(base_url('index.php/myPage'));
+                redirect(base_url('index.php/products'));
 
 
             } else {

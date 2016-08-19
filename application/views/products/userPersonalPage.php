@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div align="center">
 
             <div class="alert alert-danger">
-                <a href="<?php echo base_url("index.php/myPage/closeMessage"); ?>" class="close" data-dismiss="alert"
+                <a href="<?php echo base_url("index.php/products/closeMessage"); ?>" class="close" data-dismiss="alert"
                    aria-label="close">&times;</a>
                 Image you submitted is incorrect. Only
                 png, jpg and gif files not larger than 3 MB can be used.<br>
@@ -20,8 +20,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     <?php } ?>
     <div align="right">
-        <a class="btn btn-success" href='<?php echo base_url("index.php/myPage/addProduct"); ?>'>Add New Product</a>
-        <a href='<?php echo base_url("index.php/myPage/logout"); ?>' class="btn btn-warning">Logout</a>
+        <a class="btn btn-success" href='<?php echo base_url("index.php/products/addProduct"); ?>'>Add New Product</a>
+        <a href='<?php echo base_url("index.php/products/logout"); ?>' class="btn btn-warning">Logout</a>
     </div>
     <?php
     if (!empty($userProducts)) { ?>
@@ -64,9 +64,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                 <th>
                     <div align="right">
-                        <form action="<?php echo base_url("index.php/myPage/deleteProduct"); ?>" method="post">
+                        <form action="<?php echo base_url("index.php/products/deleteProduct"); ?>" method="post">
                             <a class="btn btn-default"
-                               href='<?php echo base_url("index.php/myPage/editProduct/"); ?><?= $uP->product_id ?>'>
+                               href='<?php echo base_url("index.php/products/editProduct/"); ?><?= $uP->product_id ?>'>
                                 Edit
                             </a>
                             <input type="hidden" name="product_id" value="<?= $uP->product_id ?>">

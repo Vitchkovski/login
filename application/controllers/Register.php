@@ -45,7 +45,7 @@ class Register extends CI_Controller
                     $_SESSION['userSessionName'] = $userName;
 
                     //redirecting to the personal page
-                    redirect(base_url('index.php/myPage'));
+                    redirect(base_url('index.php/products'));
                 } else {
                     //password is to short. Notifying user.
                     $data['passwordIsToShortFlag'] = true;

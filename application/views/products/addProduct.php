@@ -10,14 +10,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
             <div class="alert alert-danger">
-                <a href="<?php echo base_url("index.php/myPage/addProduct"); ?>" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <a href="<?php echo base_url("index.php/products/addProduct"); ?>" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 Product Name can not be null.
             </div>
 
 
     <?php } ?>
 
-    <form enctype="multipart/form-data" role="form" method="post" action="<?php echo base_url(); ?>index.php/myPage/addProduct">
+    <form enctype="multipart/form-data" role="form" method="post" action="<?php echo base_url(); ?>index.php/products/addProduct">
         <div class="form-group">
             <label for="productPicture">Product Picture</label>
             <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
@@ -41,7 +41,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div align="right">
             <input class="btn btn-default" name="addCategory" type="submit" value="Add Category">
             <input class="btn btn-success" name="saveProduct" type="submit" value="Save">
-            <a class="btn btn-danger" href="<?php echo base_url("index.php/myPage"); ?>">Cancel</a>
+            <a class="btn btn-danger" href="<?php echo base_url("index.php/products"); ?>">Cancel</a>
         </div>
     </form>
 </div>
