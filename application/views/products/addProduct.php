@@ -20,7 +20,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <form enctype="multipart/form-data" role="form" method="post" action="<?php echo base_url(); ?>index.php/products/addProduct">
         <div class="form-group">
             <label for="productPicture">Product Picture</label>
-            <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
             <input name="productPicture" type="file">
         </div>
         <div class="form-group">
