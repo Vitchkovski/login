@@ -249,4 +249,12 @@ class MyPage extends CI_Controller
         redirect(base_url('index.php/myPage'));
     }
 
+    public function logout() {
+        session_start();
+        session_unset();
+        session_destroy();
+
+        redirect(base_url('index.php/login'));
+    }
+
 }

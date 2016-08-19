@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php } ?>
     <div align="right">
         <a class="btn btn-success" href='<?php echo base_url("index.php/myPage/addProduct"); ?>'>Add New Product</a>
-        <a href='<?php echo base_url("index.php/main/logout"); ?>' class="btn btn-warning">Logout</a>
+        <a href='<?php echo base_url("index.php/myPage/logout"); ?>' class="btn btn-warning">Logout</a>
     </div>
     <?php
     if (!empty($userProducts)) { ?>

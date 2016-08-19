@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Main extends CI_Controller
+class Register extends CI_Controller
 {
 
     public function index()
@@ -77,13 +77,7 @@ class Main extends CI_Controller
 
 
 
-    public function logout() {
-        session_start();
-        session_unset();
-        session_destroy();
 
-        redirect(base_url('index.php/main'));
-    }
 
 
 }

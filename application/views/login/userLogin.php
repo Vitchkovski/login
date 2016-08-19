@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                maxlength="254">
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
         <div align="center">
-            <a class="sign-in" href="../">Register a new account</a>
+            <a class="sign-in" href="<?php echo base_url("index.php/register"); ?>">Register a new account</a>
         </div>
         <br>
     </form>
@@ -20,7 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <?php if (!empty($_POST) && isset($credentialsAreIncorrectFlag)) { ?>
         <div class="alert alert-danger">
-            <a href="<?php echo base_url("index.php/main/login"); ?>" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <a href="<?php echo base_url("index.php/login"); ?>" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             Credentials you entered are incorrect</a>
         </div>
         <?php
