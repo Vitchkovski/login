@@ -8,10 +8,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <h2 class="form-signin-heading">Registration</h2>
 
         <input type="email" class="form-control" name="email" placeholder="Email Address" spellcheck="false"
-               value="<?php if (!empty($_POST['email'])) echo escapeSpecialCharactersHTML($_POST['email']); ?>" required maxlength="254">
+               value="<?php echo set_value('email'); ?>" required maxlength="254">
 
         <input type="text" class="form-control" name="login" placeholder="Username"
-               value="<?php if (!empty($_POST['login'])) echo escapeSpecialCharactersHTML($_POST['login']); ?>" required maxlength="254">
+               value="<?php echo set_value('login'); ?>" required maxlength="254">
 
         <input type="password" class="form-control" name="password" placeholder="Password" value="" required
                maxlength="254">

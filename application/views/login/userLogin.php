@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <form class="form-signin" method="post">
         <h2 class="form-signin-heading">Enter</h2>
         <input type="email" class="form-control" name="email" placeholder="Email Address" spellcheck="false"
-               value="<?php if (!empty($_POST['email'])) echo escapeSpecialCharactersHTML($_POST['email']); ?>" required maxlength="254">
+               value="<?php echo set_value('email'); ?>" required maxlength="254">
         <input type="password" class="form-control" name="password" placeholder="Password" value="" required
                maxlength="254">
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
@@ -25,5 +25,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         <?php
     } ?>
-
 </div>
