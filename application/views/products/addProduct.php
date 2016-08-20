@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <?php } ?>
 
-    <form enctype="multipart/form-data" role="form" method="post" action="<?php echo base_url(); ?>index.php/products/addProduct">
+    <form enctype="multipart/form-data" role="form" method="post" action="<?php echo base_url("index.php/products/addProduct"); ?>">
         <div class="form-group">
             <label for="productPicture">Product Picture</label>
             <input name="productPicture" type="file">

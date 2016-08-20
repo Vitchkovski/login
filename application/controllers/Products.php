@@ -42,7 +42,7 @@ class Products extends CI_Controller
 
         } else {
             //Session is not started for the user - opening login page
-            redirect(base_url('index.php/login'));
+            redirect(base_url('index.php/users/login'));
 
         }
 
@@ -144,7 +144,7 @@ class Products extends CI_Controller
 
 
         } else {
-            redirect(base_url('index.php/login') );
+            redirect(base_url('index.php/users/login') );
         }
     }
 
@@ -219,7 +219,7 @@ class Products extends CI_Controller
                     $data['incorrectProductNameFlag'] = true;
                 }
             } else {
-                redirect(base_url('index.php/login'));
+                redirect(base_url('index.php/users/login'));
             }
         }
 
@@ -249,12 +249,5 @@ class Products extends CI_Controller
         redirect(base_url('index.php/products'));
     }
 
-    public function logout() {
-        session_start();
-        session_unset();
-        session_destroy();
-
-        redirect(base_url('index.php/login'));
-    }
 
 }
