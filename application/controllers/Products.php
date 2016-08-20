@@ -11,7 +11,7 @@ class Products extends CI_Controller
         if (isset($_SESSION['thisIsLoggedUser'])) {
 
             $this->load->helper('dataFunctions');
-            $this->load->model('userModel');
+            $this->load->model('productsModel');
 
             $data['userId'] = $_SESSION['userSessionId'];
             //$userEmail = $_SESSION['userSessionEmail'];
@@ -19,7 +19,7 @@ class Products extends CI_Controller
 
 
             //echo "User ID: ".$userId."<br>";
-            $data['userProducts'] = $this->userModel->retrieveUserProducts($data['userId']);
+            $data['userProducts'] = $this->productsModel->retrieveUserProducts($data['userId']);
 
 
             /*echo "userProducts: ";
@@ -27,7 +27,7 @@ class Products extends CI_Controller
             echo "<br><br>";*/
             if (!empty($data['userProducts'])) {
                 foreach ($data['userProducts'] as $uP):
-                    $data['productCategories'][$uP->product_id] = $this->userModel->retrieveProductCategories($uP->product_id);
+                    $data['productCategories'][$uP->product_id] = $this->productsModel->retrieveProductCategories($uP->product_id);
                 endforeach;
 
             }
@@ -52,7 +52,7 @@ class Products extends CI_Controller
     {
         session_start();
         $this->load->helper('dataFunctions');
-        $this->load->model('userModel');
+        $this->load->model('productsModel');
         $this->load->view('footer');
 
         if (isset($_POST['addCategory'])) {
@@ -92,7 +92,7 @@ class Products extends CI_Controller
 
                     }
 
-                    $this->userModel->addProductToUserList($data['userId'], $productName, $pictureNameAfterUpload, $productCategoriesArray);
+                    $this->productsModel->addProductToUserList($data['userId'], $productName, $pictureNameAfterUpload, $productCategoriesArray);
 
                     //incorrect image flag should be saved in session before refreshing
                     $_SESSION['imageIncorrectFlag'] = false;
@@ -126,7 +126,7 @@ class Products extends CI_Controller
         session_start();
 
         $this->load->helper('dataFunctions');
-        $this->load->model('userModel');
+        $this->load->model('productsModel');
 
         if (isset($_SESSION['thisIsLoggedUser'])) {
 
@@ -134,7 +134,7 @@ class Products extends CI_Controller
             $productId = $_POST['product_id'];
 
 
-            $this->userModel->deleteProductFromUserList($userId, $productId);
+            $this->productsModel->deleteProductFromUserList($userId, $productId);
 
             if (isset($_SESSION['imageIncorrectFlag']) && $_SESSION['imageIncorrectFlag'] == true) {
                 $_SESSION['imageIncorrectFlag'] = false;
@@ -153,7 +153,7 @@ class Products extends CI_Controller
         session_start();
 
         $this->load->helper('dataFunctions');
-        $this->load->model('userModel');
+        $this->load->model('productsModel');
 
 
         //echo $this->uri->segment(3);
@@ -204,7 +204,7 @@ class Products extends CI_Controller
                     }
 
 
-                    $this->userModel->updateUserProductString($data['userId'], $data['productId'], $productName, $pictureNameAfterUpload, $productCategoriesArray);
+                    $this->productsModel->updateUserProductString($data['userId'], $data['productId'], $productName, $pictureNameAfterUpload, $productCategoriesArray);
 
                     //incorrect image flag should be saved in session before refreshing
                     $_SESSION['imageIncorrectFlag'] = false;
@@ -230,9 +230,9 @@ class Products extends CI_Controller
         if (!isset($data['productCategoriesArray'][$data['categoryCounter']]))
             $data['productCategoriesArray'][$data['categoryCounter'] - 1] = null;
 
-        $data['productInfo'] = $this->userModel->retrieveProductInfo($data['userId'], $data['productId']);
+        $data['productInfo'] = $this->productsModel->retrieveProductInfo($data['userId'], $data['productId']);
 
-        $data['productCategories'][$data['productId']] = $this->userModel->retrieveProductCategories($data['productId']);
+        $data['productCategories'][$data['productId']] = $this->productsModel->retrieveProductCategories($data['productId']);
 
         $this->load->view('header');
         $this->load->view('products/editProduct', $data);
