@@ -42,14 +42,14 @@ class UserModel extends CI_Model
 
     }
 
-    function retrieveUserInfo($login, $email, $password)
+    function retrieveUserInfo($email, $password)
     {
 
         $this->load->database();
 
         $hashedPassword = hash('sha512', $password);
 
-        $sql = "select * from users where (login = " . $this->db->escape($login) . " or email = " . $this->db->escape($email) . ") 
+        $sql = "select * from users where email = " . $this->db->escape($email) . " 
                                      and password = '" . $hashedPassword . "'";
 
         $query = $this->db->query($sql);

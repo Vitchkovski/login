@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
 <div class="container">
-    <h2> Edit Product | <?php echo $_SESSION['userSessionName']; ?></h2>
+    <h2> Edit Product | <?php echo $userName; ?></h2>
 
 
     <?php if (isset($incorrectProductNameFlag)) { ?>

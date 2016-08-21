@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <div class="container">
 
-    <form class="form-signin" method="post">
+    <form class="form-signin" action="<?php echo base_url("index.php/users/register"); ?>" method="post">
         <h2 class="form-signin-heading">Registration</h2>
 
         <input type="email" class="form-control" name="email" placeholder="Email Address" spellcheck="false"
@@ -41,5 +41,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php
     } ?>
 
-
+    <?php echo validation_errors('<p class="alert alert-danger">');  ?>
 </div>

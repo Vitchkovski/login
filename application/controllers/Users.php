@@ -6,68 +6,43 @@ class Users extends CI_Controller
 
     public function register()
     {
-        $this->load->helper('dataFunctions');
+        $this->load->library('form_validation');
 
-        if (!empty($_POST['login'])) {
-            $userEscapedLogin = escapeSpecialCharactersHTML($_POST['login']);
-        }
-        if (!empty($_POST['email'])) {
-            $userEscapedEmail = escapeSpecialCharactersHTML($_POST['email']);
-        }
-        if (!empty($_POST['password'])) {
-            $userEscapedPassword = escapeSpecialCharactersHTML($_POST['password']);
-        }
+        //validation rules
+        $this->form_validation->set_rules('email', 'Email Address', 'trim|required|min_length[6]|max_length[100]|valid_email|is_unique[users.email]',
+            array('is_unique' => 'User with this email is already exist.'));
+        $this->form_validation->set_rules('login', 'Username', 'trim|required|min_length[3]|max_length[25]|is_unique[users.login]');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|max_length[50]');
+
+        //sanitizing input
+        $userSanitizedLogin = $this->input->post('login', TRUE);
+        $userSanitizedEmail = $this->input->post('email', TRUE);
+        $userSanitizedPassword = $this->input->post('password', TRUE);
 
 
-        if (!empty($_POST) && isset($userEscapedLogin) && isset($userEscapedEmail) && isset($userEscapedPassword)) {
+        if ($this->form_validation->run() == TRUE) {
+
+            //Creating user in the database if everything is correct
             $this->load->model('userModel');
 
+            $this->userModel->addNewUserToDB($userSanitizedLogin, $userSanitizedEmail, $userSanitizedPassword);
 
-            if (!$this->userModel->checkIfUserExist($userEscapedLogin, $userEscapedEmail)) {
+            //retrieving user info and putting it into session data
+            $userInfo = $this->userModel->retrieveUserInfo($userSanitizedEmail, $userSanitizedPassword);
 
-                //User does not exist. Creating user in the database
-                if (validateIfPasswordSecure($userEscapedPassword)) {
-                    //pass is complicated enough
-                    $this->userModel->addNewUserToDB($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
+            $session_data = array(
+                'userSessionId' => $userInfo[0]->user_id,
+                'userSessionEmail' => $userInfo[0]->email,
+                'userSessionName' => $userInfo[0]->login
+            );
 
-                    //immediately after login - retrieving user info
-                    $userInfo = $this->userModel->retrieveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
+            $this->session->set_userdata($session_data);
 
-                    $userId = $userInfo[0]->user_id;
-                    $userEmail = $userInfo[0]->email;
-                    $userName = $userInfo[0]->login;
+            //redirecting to the personal page
+            redirect(base_url('index.php/products'));
 
-                    session_start();
-                    $_SESSION['thisIsLoggedUser'] = true;
-
-                    $_SESSION['userSessionId'] = $userId;
-                    $_SESSION['userSessionEmail'] = $userEmail;
-                    $_SESSION['userSessionName'] = $userName;
-
-                    //redirecting to the personal page
-                    redirect(base_url('index.php/products'));
-                } else {
-                    //password is to short. Notifying user.
-                    $data['passwordIsToShortFlag'] = true;
-
-                    $this->load->view('header');
-                    $this->load->view('login/userRegister', $data);
-                    $this->load->view('footer');
-                }
-            } else {
-                //User is already exist. Retrieving id.
-                $data['userIsAlreadyExistFlag'] = true;
-
-                session_start();
-                $_SESSION['userSessionEmail'] = $_POST['email'];
-                $_SESSION['userSessionLogin'] = $_POST['login'];
-
-                $this->load->view('header');
-                $this->load->view('login/userRegister', $data);
-                $this->load->view('footer');
-            }
         } else {
-            //Nothing submitted yet - form just opened.
+            //Nothing submitted yet or validation failed - form just opened.
             $this->load->view('header');
             $this->load->view('login/userRegister');
             $this->load->view('footer');
@@ -78,47 +53,51 @@ class Users extends CI_Controller
 
     public function login()
     {
-        $this->load->helper('dataFunctions');
         $this->load->model('userModel');
+        $this->load->library('form_validation');
 
-        if (!empty($_POST) && !isset($_POST['logout_flag'])) {
+        //some basic initial checks
+        $this->form_validation->set_rules('email', 'Email Address', 'trim|required|min_length[6]|max_length[100]|valid_email');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|max_length[50]');
 
-            //escaping special & space characters first for all input
-            if (!empty($_POST['email'])) {
-                $userEscapedEmail = escapeSpecialCharactersHTML($_POST['email']);
+        if ($this->form_validation->run() == FALSE) {
+            //something went wrong or form just opened - opening login page and showing the errors if required
+
+            if ($this->session->userdata('userSessionId')) {
+                //if user is authorized we are opening personal page instead of login one
+                redirect(base_url('index.php/products'));
+
+            } else {
+                //Session is not started for the user - opening login page
+                $this->load->view('header');
+                $this->load->view('login/userLogin');
+                $this->load->view('footer');
             }
-            if (!empty($_POST['password'])) {
-                $userEscapedPassword = escapeSpecialCharactersHTML($_POST['password']);
-            }
-            $userEscapedLogin = "";
+        } else {
+            //data is ok, now check if credentials are correct
 
+            //sanitizing input
+            $userSanitizedEmail = $this->input->post('email', TRUE);
+            $userSanitizedPassword = $this->input->post('password', TRUE);
 
+            $userInfo = $this->userModel->retrieveUserInfo($userSanitizedEmail, $userSanitizedPassword);
 
-            $userInfo = $this->userModel->retrieveUserInfo($userEscapedLogin, $userEscapedEmail, $userEscapedPassword);
-
-            //credentials are correct
             if (!empty($userInfo)) {
+                //credentials are correct. Setting session data and opening personal page
 
+                $session_data = array(
+                    'userSessionId' => $userInfo[0]->user_id,
+                    'userSessionEmail' => $userInfo[0]->email,
+                    'userSessionName' => $userInfo[0]->login
+                );
 
-                $userId = $userInfo[0]->user_id;
-                $userEmail = $userInfo[0]->email;
-                $userName = $userInfo[0]->login;
-
-                //$userProducts = retrieveUserProducts($userId);
-
-                session_start();
-                $_SESSION['thisIsLoggedUser'] = true;
-
-                $_SESSION['userSessionId'] = $userId;
-                $_SESSION['userSessionEmail'] = $userEmail;
-                $_SESSION['userSessionName'] = $userName;
+                $this->session->set_userdata($session_data);
 
                 redirect(base_url('index.php/products'));
-                //include("../views/userPersonalPage.php");
 
-                //Login Succesfull
+
             } else {
-                //credentials are incorrect. Notifying user
+                //credentials are incorrect or user is not exist. Notifying user
 
                 $data['credentialsAreIncorrectFlag'] = true;
 
@@ -129,28 +108,12 @@ class Users extends CI_Controller
             }
 
 
-        } else {
-            //Nothing submitted yet - form just opened. Defining variables.
-            session_start();
-
-
-            //Redirecting authorized user to the personal info page
-            if (isset($_SESSION['thisIsLoggedUser'])) {
-
-                redirect(base_url('index.php/products'));
-
-
-            } else {
-                //Session is not started for the user - opening login page
-                $this->load->view('header');
-                $this->load->view('login/userLogin');
-                $this->load->view('footer');
-            }
         }
     }
 
-    public function logout() {
-        session_start();
+    public function logout()
+    {
+        //session_start();
         session_unset();
         session_destroy();
 

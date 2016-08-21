@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <div class="container">
 
-    <form class="form-signin" method="post">
+    <form class="form-signin" action="<?php echo base_url("index.php/users/login"); ?>" method="post">
         <h2 class="form-signin-heading">Enter</h2>
         <input type="email" class="form-control" name="email" placeholder="Email Address" spellcheck="false"
                value="<?php echo set_value('email'); ?>" required maxlength="254">
@@ -18,11 +18,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </form>
 
 
-    <?php if (!empty($_POST) && isset($credentialsAreIncorrectFlag)) { ?>
+    <?php if (isset($credentialsAreIncorrectFlag)) { ?>
         <div class="alert alert-danger">
-            <a href="<?php echo base_url("index.php/users/login"); ?>" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            Credentials you entered are incorrect</a>
+            Credentials you entered are incorrect.
         </div>
         <?php
     } ?>
+
+    <?php echo validation_errors('<p class="alert alert-danger">');  ?>
 </div>

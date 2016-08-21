@@ -6,16 +6,14 @@ class Products extends CI_Controller
 
     public function index()
     {
-        session_start();
 
-        if (isset($_SESSION['thisIsLoggedUser'])) {
+        if ($this->session->userdata('userSessionId')) {
 
             $this->load->helper('dataFunctions');
             $this->load->model('productsModel');
 
-            $data['userId'] = $_SESSION['userSessionId'];
-            //$userEmail = $_SESSION['userSessionEmail'];
-            $data['userName'] = $_SESSION['userSessionName'];
+            $data['userId'] = $this->session->userdata('userSessionId');
+            $data['userName'] = $this->session->userdata('userSessionName');
 
 
             //echo "User ID: ".$userId."<br>";
@@ -243,7 +241,7 @@ class Products extends CI_Controller
     public function closeMessage()
     {
 
-        session_start();
+        //session_start();
 
         $_SESSION['imageIncorrectFlag'] = false;
         redirect(base_url('index.php/products'));
