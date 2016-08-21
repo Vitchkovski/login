@@ -6,8 +6,10 @@ class Products extends CI_Controller
 
     public function index()
     {
+        //main function - opening product page
 
         if ($this->session->userdata('userSessionId')) {
+            //if user is logged in retrieving user info, user products
 
             $this->load->helper('dataFunctions');
             $this->load->model('productsModel');
@@ -48,10 +50,10 @@ class Products extends CI_Controller
 
     public function addProduct()
     {
-        session_start();
+
         $this->load->helper('dataFunctions');
         $this->load->model('productsModel');
-        $this->load->view('footer');
+
 
         if (isset($_POST['addCategory'])) {
 
@@ -63,73 +65,86 @@ class Products extends CI_Controller
 
         }
 
-        if (isset($_POST['saveProduct'])) {
-            if (isset($_SESSION['thisIsLoggedUser'])) {
-                $data['userId'] = $_SESSION['userSessionId'];
-                $productName = $_POST['productName'];
+        $this->load->library('form_validation');
 
-                if ($productName != null || $productName != "") {
-
-                    //product picture submitted
-                    if (isset ($_FILES["productPicture"]) && !empty($_FILES["productPicture"]["name"])) {
-
-                        $pictureNameAfterUpload = uploadProductPicture($data['userId']);
-
-                    }
-
-                    $productCategoriesArray = $_POST['productCategoriesArray'];
+        //validation rules
+        $this->form_validation->set_rules('productName', 'Product Name', 'trim|required|max_length[254]');
+        $this->form_validation->set_rules('productCategoriesArray[]', 'Product Category', 'trim|max_length[254]');
 
 
-                    //picture can be not submitted. In that case - setting picture name to NULL
-                    if (!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Error on load") {
+        if ($this->form_validation->run() == FALSE) {
+            //data is incorrect (or form just opened) - returning to add product page, notifying user
 
-                        if (isset($pictureNameAfterUpload) && $pictureNameAfterUpload == "Error on load")
-                            $data['imageIncorrectFlag'] = true;
+            //defining variables
+            if (!isset($data['categoryCounter']))
+                $data['categoryCounter'] = 1;
+            if (!isset($data['productName']))
+                $data['productName'] = "";
+            if (!isset($data['productCategoriesArray'][$data['categoryCounter']]))
+                $data['productCategoriesArray'][$data['categoryCounter'] - 1] = null;
 
-                        $pictureNameAfterUpload = null;
+            $this->load->view('header');
+            $this->load->view('products/addProduct', $data);
+            $this->load->view('footer');
+        } else {
+            //everything is fine, attempting to insert product
+            if ($this->session->userdata('userSessionId')) {
+                //logged user
 
-                    }
+                $userId = $this->session->userdata('userSessionId');
+                $productName = $this->input->post('productName', TRUE);
 
-                    $this->productsModel->addProductToUserList($data['userId'], $productName, $pictureNameAfterUpload, $productCategoriesArray);
 
-                    //incorrect image flag should be saved in session before refreshing
-                    $_SESSION['imageIncorrectFlag'] = false;
-                    if (isset($data['imageIncorrectFlag'])) {
-                        $_SESSION['imageIncorrectFlag'] = $data['imageIncorrectFlag'];
-                    }
+                //product picture submitted
+                if (isset ($_FILES["productPicture"]) && !empty($_FILES["productPicture"]["name"])) {
 
-                    redirect(base_url('index.php/products'));
-                } else {
-                    $data['incorrectProductNameFlag'] = true;
+                    $pictureNameAfterUpload = uploadProductPicture($data['userId']);
 
                 }
+
+                $productCategoriesArray = $this->input->post('productCategoriesArray', TRUE);
+
+
+                //picture can be not submitted. In that case - setting picture name to NULL
+                if (!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Error on load") {
+
+                    if (isset($pictureNameAfterUpload) && $pictureNameAfterUpload == "Error on load")
+                        $data['imageIncorrectFlag'] = true;
+
+                    $pictureNameAfterUpload = null;
+
+                }
+
+                $this->productsModel->addProductToUserList($userId, $productName, $pictureNameAfterUpload, $productCategoriesArray);
+
+                //incorrect image flag should be saved in session before refreshing
+                $_SESSION['imageIncorrectFlag'] = false;
+                if (isset($data['imageIncorrectFlag'])) {
+                    $_SESSION['imageIncorrectFlag'] = $data['imageIncorrectFlag'];
+                }
+
+                redirect(base_url('index.php/products'));
+
+            } else {
+                //user is not logged in
+                $this->load->view('header');
+                $this->load->view('products/userPersonalPage', $data);
+                $this->load->view('footer');
             }
         }
 
-        //defining variables
-        if (!isset($data['categoryCounter']))
-            $data['categoryCounter'] = 1;
-        if (!isset($data['productName']))
-            $data['productName'] = "";
-        if (!isset($data['productCategoriesArray'][$data['categoryCounter']]))
-            $data['productCategoriesArray'][$data['categoryCounter'] - 1] = null;
-
-        $this->load->view('header');
-        $this->load->view('products/addProduct', $data);
-        $this->load->view('footer');
     }
 
     public function deleteProduct()
     {
-        session_start();
 
         $this->load->helper('dataFunctions');
         $this->load->model('productsModel');
 
-        if (isset($_SESSION['thisIsLoggedUser'])) {
+        if ($this->session->userdata('userSessionId')) {
 
-            $userId = $_SESSION['userSessionId'];
-            $productId = $_POST['product_id'];
+            $userId = $this->session->userdata('userSessionId');
+            $productId = $this->input->post('product_id', TRUE);
 
 
             $this->productsModel->deleteProductFromUserList($userId, $productId);
@@ -142,21 +157,18 @@ class Products extends CI_Controller
 
 
         } else {
-            redirect(base_url('index.php/users/login') );
+            redirect(base_url('index.php/users/login'));
         }
     }
 
     public function editProduct()
     {
-        session_start();
 
         $this->load->helper('dataFunctions');
         $this->load->model('productsModel');
 
 
-        //echo $this->uri->segment(3);
-
-        $data['userId'] = $_SESSION['userSessionId'];
+        $data['userId'] = $this->session->userdata('userSessionId');
 
         if (isset($_POST['addCategory'])) {
 
@@ -168,9 +180,37 @@ class Products extends CI_Controller
 
         }
 
-        if (isset($_POST['updateProduct'])) {
-            if (isset($_SESSION['thisIsLoggedUser'])) {
-                $data['userId'] = $_SESSION['userSessionId'];
+        $this->load->library('form_validation');
+
+        //validation rules
+        $this->form_validation->set_rules('productName', 'Product Name', 'trim|required|max_length[254]');
+        $this->form_validation->set_rules('productCategoriesArray[]', 'Product Category', 'trim|max_length[254]');
+
+
+        if ($this->form_validation->run() == FALSE) {
+            //something is incorrect or form just opened
+
+            if (!isset($data['productId']))
+                $data['productId'] = $this->uri->segment(3);
+            if (!isset($data['categoryCounter']))
+                $data['categoryCounter'] = 1;
+            if (!isset($data['productCategoriesArray'][$data['categoryCounter']]))
+                $data['productCategoriesArray'][$data['categoryCounter'] - 1] = null;
+
+            $data['productInfo'] = $this->productsModel->retrieveProductInfo($data['userId'], $data['productId']);
+
+            $data['productCategories'][$data['productId']] = $this->productsModel->retrieveProductCategories($data['productId']);
+
+            $this->load->view('header');
+            $this->load->view('products/editProduct', $data);
+            $this->load->view('footer');
+
+        } else {
+            //data is correct
+            if ($this->session->userdata('userSessionId')) {
+                //logged user
+
+                $userId = $this->session->userdata('userSessionId');
 
                 //product picture submitted
                 if (isset ($_FILES["productPicture"]) && !empty($_FILES["productPicture"]["name"])) {
@@ -180,68 +220,49 @@ class Products extends CI_Controller
                 }
 
                 //Product Line to be updated
-                $data['productId'] = $_POST['product_id'];
+                $productId = $this->input->post('product_id', TRUE);
 
                 //Changes submitted
-                $productName = $_POST['productName'];
-                $productCategoriesArray = $_POST['productCategoriesArray'];
-
-                if ($productName != null || $productName != "") {
-                    //picture can be not submitted. In that case - setting picture name to the initial value
-                    if (!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Error on load") {
-
-                        if (isset($pictureNameAfterUpload) && $pictureNameAfterUpload == "Error on load")
-                            $imageIncorrectFlag = true;
-
-                        $pictureNameAfterUpload = $_POST['initialProductPictureName'];
-
-                        //empty value after submit to null for processing
-                        if ($pictureNameAfterUpload == "")
-                            $pictureNameAfterUpload = null;
-
-                    }
+                $productName = $this->input->post('productName', TRUE);
+                $productCategoriesArray = $this->input->post('productCategoriesArray', TRUE);
 
 
-                    $this->productsModel->updateUserProductString($data['userId'], $data['productId'], $productName, $pictureNameAfterUpload, $productCategoriesArray);
+                //picture can be not submitted. In that case - setting picture name to the initial value
+                if (!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Error on load") {
 
-                    //incorrect image flag should be saved in session before refreshing
-                    $_SESSION['imageIncorrectFlag'] = false;
-                    if (isset($imageIncorrectFlag)) {
-                        $_SESSION['imageIncorrectFlag'] = $imageIncorrectFlag;
-                    }
+                    if (isset($pictureNameAfterUpload) && $pictureNameAfterUpload == "Error on load")
+                        $imageIncorrectFlag = true;
 
-                    redirect(base_url('index.php/products'));
+                    $pictureNameAfterUpload = $_POST['initialProductPictureName'];
 
+                    //empty value after submit to null for processing
+                    if ($pictureNameAfterUpload == "")
+                        $pictureNameAfterUpload = null;
 
-                } else {
-                    $data['incorrectProductNameFlag'] = true;
                 }
+
+
+                $this->productsModel->updateUserProductString($userId, $productId, $productName, $pictureNameAfterUpload, $productCategoriesArray);
+
+                //incorrect image flag should be saved in session before refreshing
+                $_SESSION['imageIncorrectFlag'] = false;
+                if (isset($imageIncorrectFlag)) {
+                    $_SESSION['imageIncorrectFlag'] = $imageIncorrectFlag;
+                }
+
+                redirect(base_url('index.php/products'));
+
+
             } else {
+                //user is not logged in
                 redirect(base_url('index.php/users/login'));
             }
         }
-
-        if (!isset($data['productId']))
-            $data['productId'] = $this->uri->segment(3);
-        if (!isset($data['categoryCounter']))
-            $data['categoryCounter'] = 1;
-        if (!isset($data['productCategoriesArray'][$data['categoryCounter']]))
-            $data['productCategoriesArray'][$data['categoryCounter'] - 1] = null;
-
-        $data['productInfo'] = $this->productsModel->retrieveProductInfo($data['userId'], $data['productId']);
-
-        $data['productCategories'][$data['productId']] = $this->productsModel->retrieveProductCategories($data['productId']);
-
-        $this->load->view('header');
-        $this->load->view('products/editProduct', $data);
-        $this->load->view('footer');
 
     }
 
     public function closeMessage()
     {
-
-        //session_start();
 
         $_SESSION['imageIncorrectFlag'] = false;
         redirect(base_url('index.php/products'));
