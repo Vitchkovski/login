@@ -22,24 +22,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <br>
     </form>
 
-
-    <?php if (!empty($_POST) && isset($userIsAlreadyExistFlag)) { ?>
-        <div class="alert alert-danger">
-            <a href="<?php echo base_url("index.php/users/register"); ?>" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            User with such email is already exist.</a>
-        </div>
-
-        <?php
-    } ?>
-
-    <?php if (isset($passwordIsToShortFlag)) {
-        ?>
-        <div class="alert alert-danger">
-            <a href="<?php echo base_url("index.php/users/register"); ?>" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            Password should contain at least 6 signs!</a>
-        </div>
-        <?php
-    } ?>
-
     <?php echo validation_errors('<p class="alert alert-danger">');  ?>
 </div>
