@@ -199,11 +199,15 @@ class Products extends CI_Controller
 
             $data['productInfo'] = $this->productsModel->retrieveProductInfo($data['userId'], $data['productId']);
 
-            $data['productCategories'][$data['productId']] = $this->productsModel->retrieveProductCategories($data['productId']);
+            if ($data['productInfo']) {
+                //checking if product exist for the user
+                $data['productCategories'][$data['productId']] = $this->productsModel->retrieveProductCategories($data['productId']);
 
-            $this->load->view('header');
-            $this->load->view('products/editProduct', $data);
-            $this->load->view('footer');
+                $this->load->view('header');
+                $this->load->view('products/editProduct', $data);
+                $this->load->view('footer');
+            } else
+                redirect(base_url('index.php/products'));
 
         } else {
             //data is correct
