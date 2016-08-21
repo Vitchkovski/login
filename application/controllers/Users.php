@@ -99,7 +99,7 @@ class Users extends CI_Controller
             } else {
                 //credentials are incorrect or user is not exist. Notifying user
 
-                $data['credentialsAreIncorrectFlag'] = true;
+                $data['errorMsg'] = 'Credentials you entered are incorrect.';
 
                 $this->load->view('header');
                 $this->load->view('login/userLogin', $data);

@@ -18,12 +18,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </form>
 
 
-    <?php if (isset($credentialsAreIncorrectFlag)) { ?>
-        <div class="alert alert-danger">
-            Credentials you entered are incorrect.
-        </div>
-        <?php
-    } ?>
-
-    <?php echo validation_errors('<p class="alert alert-danger">');  ?>
+    <?php if (isset($errorMsg)) {
+        echo '<p class="alert alert-danger" >' . $errorMsg . '</p >';
+    }
+    echo validation_errors('<p class="alert alert-danger">'); ?>
 </div>
