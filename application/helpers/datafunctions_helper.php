@@ -1,13 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-function validateIfPasswordSecure($password)
-{
-    if (strlen($password) < 6)
-        return false;
-
-    return true;
-}
 
 function escapeSpecialCharactersHTML($string)
 {

@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <div class="container">
 
-    <h2 align="center">My Product List Page | <?php echo $userName; ?>
+    <h2 align="center">My Product List Page | <?php echo $this->session->userdata('userSessionName'); ?>
 
     </h2><br>
     <?php if (isset($_SESSION['imageIncorrectFlag']) && $_SESSION['imageIncorrectFlag'] == true) { ?>

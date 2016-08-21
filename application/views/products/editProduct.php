@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
 <div class="container">
-    <h2> Edit Product | <?php echo $userName; ?></h2>
+    <h2> Edit Product | <?php echo $this->session->userdata('userSessionName'); ?></h2>
 
 
     <?php if (isset($incorrectProductNameFlag)) { ?>
@@ -80,5 +80,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
 
     </form>
+    <p><?php echo validation_errors('<p class="alert alert-danger">');  ?></p>
 </div>
 

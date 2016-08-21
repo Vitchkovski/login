@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
 <div class="container">
-    <h2> Add New Product to the List | <?php echo $userName; ?></h2>
+    <h2> Add New Product to the List | <?php echo $this->session->userdata('userSessionName'); ?></h2>
 
 
     <?php if (isset($incorrectProductNameFlag)) { ?>
@@ -25,7 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="form-group">
             <label for="productName">Product Name:</label>
             <input type="text" name="productName" class="form-control" placeholder="Enter product name" autofocus
-                   maxlength="254" value="<?=escapeSpecialCharactersHTML($productName)?>">
+                   maxlength="254" value="<?php echo set_value('productName'); ?>">
         </div>
         <?php for ($i=0; $i < $categoryCounter; $i++) { ?>
         <div class="form-group">
@@ -43,4 +43,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <a class="btn btn-danger" href="<?php echo base_url("index.php/products"); ?>">Cancel</a>
         </div>
     </form>
+    <p><?php echo validation_errors('<p class="alert alert-danger">');  ?></p>
 </div>
