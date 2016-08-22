@@ -9,10 +9,16 @@ class UserModel extends CI_Model
         $this->load->database();
 
         $hashedPassword = hash('sha512', $password);
+        $login = $this->db->escape_str(ltrim(rtrim($login)));
+        $email = $this->db->escape_str(ltrim(rtrim($email)));
 
-        $sql = "insert into users (login, email, password) values (" . $this->db->escape(ltrim(rtrim($login))) . "," . $this->db->escape(ltrim(rtrim($email))) . ",'" . $hashedPassword . "')";
+        $data = array(
+            'login' => $login ,
+            'email' => $email ,
+            'password' => $hashedPassword
+        );
 
-        $this->db->query($sql);
+        $this->db->insert('users', $data);
 
         $this->db->close();
 
@@ -25,15 +31,21 @@ class UserModel extends CI_Model
     {
         $this->load->database();
 
-        $sql = "select * from users where login = " . $this->db->escape($login) . " or email = " . $this->db->escape($email) . "";
+        $login = $this->db->escape(ltrim(rtrim($login)));
+        $email = $this->db->escape(ltrim(rtrim($email)));
 
-        $query = $this->db->query($sql);
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->where('login =', $login);
+        $this->db->or_where('email =', $email);
+
+
+        $query = $this->db->get();
+
         $this->db->close();
 
 
         $userInfo = $query->result_object();
-
-
 
         if (!empty($userInfo))
             return true;
@@ -48,11 +60,11 @@ class UserModel extends CI_Model
         $this->load->database();
 
         $hashedPassword = hash('sha512', $password);
+        $email = $this->db->escape_str(ltrim(rtrim($email)));
 
-        $sql = "select * from users where email = " . $this->db->escape($email) . " 
-                                     and password = '" . $hashedPassword . "'";
+        $query = $this->db->get_where('users', array('email' => $email,
+            'password' => $hashedPassword));
 
-        $query = $this->db->query($sql);
         $this->db->close();
 
         $userInfo = $query->result_object();
@@ -114,8 +126,6 @@ class UserModel extends CI_Model
         $this->db->close();
 
     }
-
-
 
 
 }

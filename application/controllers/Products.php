@@ -102,7 +102,7 @@ class Products extends CI_Controller
 
                 }
 
-                $productCategoriesArray = $this->input->post('productCategoriesArray', TRUE);
+                $productCategoriesArray = $this->input->post('productCategoriesArray[]', TRUE);
 
 
                 //picture can be not submitted. In that case - setting picture name to NULL
@@ -114,7 +114,7 @@ class Products extends CI_Controller
                     $pictureNameAfterUpload = null;
 
                 }
-
+                var_dump($productCategoriesArray);
                 $this->productsModel->addProductToUserList($userId, $productName, $pictureNameAfterUpload, $productCategoriesArray);
 
                 //incorrect image flag should be saved in session before refreshing

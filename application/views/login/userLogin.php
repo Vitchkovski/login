@@ -12,7 +12,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                maxlength="254">
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
         <div align="center">
-            <a class="sign-in" href="<?php echo base_url("index.php/users/register"); ?>">Register a new account</a>
+            <a class="sign-in" href="<?php echo base_url("index.php/users/register"); ?>">Register account</a> /
+            <a class="sign-in" href="<?php echo base_url("index.php/users/reset_password"); ?>">Forgot your password?</a>
         </div>
         <br>
     </form>

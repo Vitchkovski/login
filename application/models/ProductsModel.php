@@ -7,12 +7,8 @@ class ProductsModel extends CI_Model
     {
         $this->load->database();
 
-
-        $sql = "delete from user_products where user_id = " . $userId . "
-                                            and product_id = " . $productId . "";
-
-
-        $this->db->query($sql);
+        $this->db->delete('user_products', array('user_id' => $userId,
+            'product_id' => $productId));
 
         $this->db->close();
 
@@ -42,41 +38,44 @@ class ProductsModel extends CI_Model
         //if non-existing category was submitted we must create a record for it in corresponding table
         foreach ($productCategoriesArray as $pCA) {
 
-            $pCA = $this->db->escape(ltrim(rtrim($pCA)));
+            $pCA = $this->db->escape_str(ltrim(rtrim($pCA)));
 
 
-            if ($pCA != "''") {
-                $sql = "select * from user_categories where user_id = " . $userId . " 
+            if ($pCA != "") {
+                $query = $this->db->get_where('user_categories', array('user_id' => $userId,
+                    'category_name' => $pCA));
+
+               /* $sql = "select * from user_categories where user_id = " . $userId . "
                                                                    and category_name = " . $pCA . "";
 
-                $query = $this->db->query($sql);
+                $query = $this->db->query($sql);*/
 
                 $userCategoryInfo = $query->result_object();
 
-                /*echo "userCategoryInfo <br>";
-                var_dump($userCategoryInfo);
-                echo "<br>";*/
 
                 if (empty($userCategoryInfo)) {
 
-                    $sql = "insert into user_categories (user_id, category_name, from_date) 
-                               values (" . $userId . ", " . $pCA . ", now())";
+                    $data = array(
+                        'user_id' => $userId ,
+                        'category_name' => $pCA ,
+                        'from_date' => 'now()'
+                    );
 
-                    $this->db->query($sql);
+                    $this->db->insert('user_categories', $data);
 
 
                 }
 
                 $sql = "delete from product_x_categories where product_id = " . $lastCreatedProductID . " and category_id = (select category_id from user_categories 
                                                                   where user_id = " . $userId . "
-                                                                  and category_name = " . $pCA . ")";
+                                                                  and category_name = " . "'" . $pCA . "'" . ")";
 
                 $this->db->query($sql);
 
                 $sql = "insert into product_x_categories (product_id, category_id) 
                                values (" . $lastCreatedProductID . ", (select category_id from user_categories 
                                                                   where user_id = " . $userId . "
-                                                                  and category_name = " . $pCA . "))";
+                                                                  and category_name = " . "'" . $pCA . "'" . "))";
 
                 $this->db->query($sql);
 
@@ -96,34 +95,25 @@ class ProductsModel extends CI_Model
 
         $this->load->database();
 
-        //delete product categories no longer in use
-        $sql = "delete from product_x_categories where product_id = " . $productId . "";
-
-        $this->db->query($sql);
-
+        $this->db->delete('product_x_categories', array('product_id' => $productId));
 
         //if non-existing category was submitted we must create a record for it in corresponding table
         foreach ($productCategoriesArray as $pCA) {
-            $pCA = $this->db->escape(ltrim(rtrim($pCA)));
+            $pCA = $this->db->escape_str(ltrim(rtrim($pCA)));
 
-            if ($pCA != "''") {
+            if ($pCA != "") {
+                $query = $this->db->get_where('user_categories', array('user_id' => $userId,
+                    'category_name' => $pCA));
 
-                $sql = "select * from user_categories where user_id = " . $userId . "
-                                                                   and category_name =" . $pCA . "";
-
-                $query = $this->db->query($sql);
 
 
                 $userCategoryInfo = $query->result_object();
 
-                /*echo "userCategoryInfo <br>";
-                var_dump($userCategoryInfo);
-                echo "<br>";*/
 
                 if (empty($userCategoryInfo)) {
 
                     $sql = "insert into user_categories (user_id, category_name, from_date) 
-                               values (" . $userId . ", " . $pCA . ", now())";
+                               values (" . $userId . ", " . "'".$pCA."'" . ", now())";
 
                     $this->db->query($sql);
                 }
@@ -152,21 +142,21 @@ class ProductsModel extends CI_Model
 
         //link between user_products and user_categories must be created - only if new category was submitted
         foreach ($productCategoriesArray as $pCA) {
-            $pCA = $this->db->escape(ltrim(rtrim($pCA)));
+            $pCA = $this->db->escape_str(ltrim(rtrim($pCA)));
 
-            if ($pCA != "''") {
+            if ($pCA != "") {
 
                 //delete product categories no longer in use
                 $sql = "delete from product_x_categories where product_id = " . $productId . " and category_id = (select category_id from user_categories 
                                                                   where user_id = " . $userId . "
-                                                                  and category_name = " . $pCA . ")";
+                                                                  and category_name = " . "'".$pCA ."'". ")";
 
                 $this->db->query($sql);
 
                 $sql = "insert into product_x_categories (product_id, category_id) 
                                values (" . $productId . ", (select category_id from user_categories 
                                                                   where user_id = " . $userId . "
-                                                                  and category_name = " . $pCA . "))";
+                                                                  and category_name = " ."'". $pCA ."'". "))";
 
                 $this->db->query($sql);
 
@@ -181,19 +171,17 @@ class ProductsModel extends CI_Model
     {
         $this->load->database();
 
-        $sql = "select up.user_id,
-                                  up.product_id,
-                                  up.product_name, 
-                                  up.product_img_name
-                                  from user_products up 
-                                  where up.user_id = '" . $userId . "' 
-                                  order by up.product_id desc";
+        $this->db->select('*');
+        $this->db->from('user_products');
+        $this->db->where('user_id =', $userId);
+        $this->db->order_by('product_id', "desc");
 
+        $query = $this->db->get();
 
-        $query = $this->db->query($sql);
         $this->db->close();
 
         $userProducts = $query->result_object();
+
 
         return $userProducts;
     }
@@ -225,17 +213,14 @@ class ProductsModel extends CI_Model
     {
         $this->load->database();
 
-        $sql = "select up.user_id,
-                                  up.product_id,
-                                  up.product_name, 
-                                  up.product_img_name
-                                  from user_products up 
-                                  where up.user_id = " . $userId . " 
-                                  and up.product_id = '" . $productId . "'
-                                  order by up.product_id desc";
+        $this->db->select('*');
+        $this->db->from('user_products');
+        $this->db->where('user_id =', $userId);
+        $this->db->where('product_id =', $productId);
+        $this->db->order_by('product_id', "desc");
 
+        $query = $this->db->get();
 
-        $query = $this->db->query($sql);
         $this->db->close();
 
         $productInfo = $query->result_object();
