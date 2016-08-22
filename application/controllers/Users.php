@@ -148,7 +148,20 @@ class Users extends CI_Controller
 
     function sendResetPassword($email, $userName)
     {
-        $this->load->library('email');
+
+        $config = Array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.gmail.com',
+            'smtp_port' => 465,
+            'smtp_user' => 'bot_mail@vitchkovski.com',
+            'smtp_pass' => 'zxcqp98F',
+            'mailtype' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n",
+            'crlf' => "\r\n"
+        );
+
+        $this->load->library('email', $config);
         $emailResetLinkCode = sha1($this->config->item('encryption_key') . $userName);
 
         $this->email->set_mailtype('html');
@@ -157,7 +170,7 @@ class Users extends CI_Controller
 
         $this->email->subject('Reset your Email');
         $message = '<p>Hi ' . $userName . '.</p>';
-        $message .= '<p>Please click <strong><a href="' . base_url() . 'login/resetYourPassword/' . $email . '/' . $emailResetLinkCode . '">here</a></strong> to reset your password.</p>';
+        $message .= '<p>Please click <strong><a href="' . base_url() . 'users/resetYourPassword/' . $email . '/' . $emailResetLinkCode . '">here</a></strong> to reset your password.</p>';
 
         $this->email->message($message);
 
@@ -220,11 +233,11 @@ class Users extends CI_Controller
 
             $this->userModel->updatePassword($userEmail, $userNewPassword);
 
-            $data['successMessage'] = 'Your password has been reset. You can now <a href="<?php echo base_url("index.php/users/login"); ?>">login</a>';
+            $data['successMessage'] = 'Your password has been reset.';
 
 
             $this->load->view('header');
-            $this->load->view('login/userPasswordUpdate', $data);
+            $this->load->view('login/userLogin', $data);
             $this->load->view('footer');
 
         }

@@ -181,10 +181,6 @@ class Products extends CI_Controller
 
             if (!isset($data['productId']))
                 $data['productId'] = $this->uri->segment(3);
-            /*if (!isset($data['categoryCounter']))
-                $data['categoryCounter'] = 1;
-            if (!isset($data['productCategoriesArray'][$data['categoryCounter']]))
-                $data['productCategoriesArray'][$data['categoryCounter'] - 1] = null;*/
 
             $data['productInfo'] = $this->productsModel->retrieveProductInfo($data['userId'], $data['productId']);
 

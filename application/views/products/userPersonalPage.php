@@ -88,4 +88,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         ?>
         </tbody>
     </table>
+    <?php if (isset($errorMsg)) {
+        echo '<p class="alert alert-danger" >' . $errorMsg . '</p >';
+    }
+    echo validation_errors('<p class="alert alert-danger">'); ?>
 </div>
