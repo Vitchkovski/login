@@ -8,14 +8,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <?php if (isset($incorrectProductNameFlag)) { ?>
         <div class="alert alert-danger">
-            <a href="<?php echo base_url("index.php/products/editProduct/"); ?><?= $productId ?>" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <a href="<?php echo base_url("index.php/products/editProduct/"); ?><?= $productId ?>" class="close"
+               data-dismiss="alert" aria-label="close">&times;</a>
             Product Name can not be null.
         </div>
 
     <?php } ?>
 
 
-    <form enctype="multipart/form-data" role="form" method="post" action="<?php echo base_url("index.php/products/editProduct/"); ?><?= $productInfo[0]->product_id ?>">
+    <form enctype="multipart/form-data" role="form" method="post"
+          action="<?php echo base_url("index.php/products/editProduct/"); ?><?= $productInfo[0]->product_id ?>">
         <div class="form-group">
             <div class="hide-upload-btn-div">
                 <label for="productPicture">Product Picture:</label>
@@ -43,29 +45,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         <?php
         $i = 0;
-        if (is_null($productCategoriesArray[0])) {
-            foreach ($productCategories[$productInfo[0]->product_id] as $pC):
+        foreach ($productCategories[$productInfo[0]->product_id] as $pC):
 
-                if (!is_null($pC)) {
+            if (!is_null($pC)) {
 
-                    if (!is_null($pC->category_name) && $pC->category_name != "") { ?>
-                        <div class="form-group">
-                            <?php if ($i == 0) { ?><label for="productCategoriesArray[]">Category:</label><?php } ?>
-                            <input type="text" class="form-control" size="38" name="productCategoriesArray[]"
-                                   value="<?= escapeSpecialCharactersHTML($pC->category_name) ?>" maxlength="255">
-                        </div>
-                        <?php $i++;
-                    }
+                if (!is_null($pC->category_name) && $pC->category_name != "") { ?>
+                    <div class="form-group">
+                        <?php if ($i == 0) { ?><label for="productCategoriesArray[]">Category:</label><?php } ?>
+                        <input type="text" class="form-control" size="38" name="productCategoriesArray[]"
+                               value="<?= escapeSpecialCharactersHTML($pC->category_name) ?>" maxlength="255">
+                    </div>
+                    <?php $i++;
                 }
-            endforeach;
-        } ?>
+            }
+        endforeach;
+        ?>
 
         <div id="add_field_area">
             <div id="category1" class="form-group">
                 <?php if ($i == 0) { ?>
-                <input type="text" class="form-control" name="productCategoriesArray[]"
-                       placeholder="Enter product category"
-                       maxlength="1000" value="">
+                    <label for="productCategoriesArray[]">Category:</label>
+                    <input type="text" class="form-control" name="productCategoriesArray[]"
+                           placeholder="Enter product category"
+                           maxlength="1000" value="">
                 <?php } ?>
             </div>
         </div>

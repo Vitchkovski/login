@@ -76,12 +76,10 @@ class Products extends CI_Controller
             //data is incorrect (or form just opened) - returning to add product page, notifying user
 
             //defining variables
-            if (!isset($data['categoryCounter']))
-                $data['categoryCounter'] = 1;
             if (!isset($data['productName']))
                 $data['productName'] = "";
-            if (!isset($data['productCategoriesArray'][$data['categoryCounter']]))
-                $data['productCategoriesArray'][$data['categoryCounter'] - 1] = null;
+           /* if (!isset($data['productCategoriesArray'][$data['categoryCounter']]))
+                $data['productCategoriesArray'][$data['categoryCounter'] - 1] = null;*/
 
             $this->load->view('header');
             $this->load->view('products/addProduct', $data);
@@ -170,15 +168,6 @@ class Products extends CI_Controller
 
         $data['userId'] = $this->session->userdata('userSessionId');
 
-        if (isset($_POST['addCategory'])) {
-
-            $data['categoryCounter'] = $_POST['categoryCounter'];
-
-            $data['productName'] = $_POST['productName'];
-            $data['productId'] = $_POST['product_id'];
-            $data['productCategoriesArray'] = $_POST['productCategoriesArray'];
-
-        }
 
         $this->load->library('form_validation');
 
@@ -192,10 +181,10 @@ class Products extends CI_Controller
 
             if (!isset($data['productId']))
                 $data['productId'] = $this->uri->segment(3);
-            if (!isset($data['categoryCounter']))
+            /*if (!isset($data['categoryCounter']))
                 $data['categoryCounter'] = 1;
             if (!isset($data['productCategoriesArray'][$data['categoryCounter']]))
-                $data['productCategoriesArray'][$data['categoryCounter'] - 1] = null;
+                $data['productCategoriesArray'][$data['categoryCounter'] - 1] = null;*/
 
             $data['productInfo'] = $this->productsModel->retrieveProductInfo($data['userId'], $data['productId']);
 
