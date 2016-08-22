@@ -38,7 +38,6 @@ class ProductsModel extends CI_Model
         //if non-existing category was submitted we must create a record for it in corresponding table
         foreach ($productCategoriesArray as $pCA) {
 
-            $pCA = $this->db->escape_str(ltrim(rtrim($pCA)));
 
 
             if ($pCA != "") {
@@ -68,14 +67,15 @@ class ProductsModel extends CI_Model
 
                 $sql = "delete from product_x_categories where product_id = " . $lastCreatedProductID . " and category_id = (select category_id from user_categories 
                                                                   where user_id = " . $userId . "
-                                                                  and category_name = " . "'" . $pCA . "'" . ")";
+                                                                  and category_name = ". $this->db->escape($pCA) .")";
 
                 $this->db->query($sql);
+
 
                 $sql = "insert into product_x_categories (product_id, category_id) 
                                values (" . $lastCreatedProductID . ", (select category_id from user_categories 
                                                                   where user_id = " . $userId . "
-                                                                  and category_name = " . "'" . $pCA . "'" . "))";
+                                                                  and category_name = ". $this->db->escape($pCA) ."))";
 
                 $this->db->query($sql);
 
@@ -99,7 +99,7 @@ class ProductsModel extends CI_Model
 
         //if non-existing category was submitted we must create a record for it in corresponding table
         foreach ($productCategoriesArray as $pCA) {
-            $pCA = $this->db->escape_str(ltrim(rtrim($pCA)));
+            //$pCA = $this->db->escape_str(ltrim(rtrim($pCA)));
 
             if ($pCA != "") {
                 $query = $this->db->get_where('user_categories', array('user_id' => $userId,
@@ -113,7 +113,7 @@ class ProductsModel extends CI_Model
                 if (empty($userCategoryInfo)) {
 
                     $sql = "insert into user_categories (user_id, category_name, from_date) 
-                               values (" . $userId . ", " . "'".$pCA."'" . ", now())";
+                               values (" . $userId . ", ". $this->db->escape($pCA) .", now())";
 
                     $this->db->query($sql);
                 }
@@ -142,21 +142,21 @@ class ProductsModel extends CI_Model
 
         //link between user_products and user_categories must be created - only if new category was submitted
         foreach ($productCategoriesArray as $pCA) {
-            $pCA = $this->db->escape_str(ltrim(rtrim($pCA)));
+            //$pCA = $this->db->escape_str(ltrim(rtrim($pCA)));
 
             if ($pCA != "") {
 
                 //delete product categories no longer in use
                 $sql = "delete from product_x_categories where product_id = " . $productId . " and category_id = (select category_id from user_categories 
                                                                   where user_id = " . $userId . "
-                                                                  and category_name = " . "'".$pCA ."'". ")";
+                                                                  and category_name = ". $this->db->escape($pCA) .")";
 
                 $this->db->query($sql);
 
                 $sql = "insert into product_x_categories (product_id, category_id) 
                                values (" . $productId . ", (select category_id from user_categories 
                                                                   where user_id = " . $userId . "
-                                                                  and category_name = " ."'". $pCA ."'". "))";
+                                                                  and category_name = ". $this->db->escape($pCA) ."))";
 
                 $this->db->query($sql);
 

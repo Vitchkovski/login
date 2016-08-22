@@ -60,26 +60,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             endforeach;
         } ?>
 
-        <?php for ($i; $i < $categoryCounter; $i++) { ?>
-            <div class="form-group">
-                <?php if ($i == 0) { ?><label for="productCategoriesArray[]">Category:</label><?php } ?>
+        <div id="add_field_area">
+            <div id="category1" class="form-group">
+                <?php if ($i == 0) { ?>
                 <input type="text" class="form-control" name="productCategoriesArray[]"
                        placeholder="Enter product category"
-                       maxlength="1000" value="<?= escapeSpecialCharactersHTML($productCategoriesArray[$i]) ?>">
-                <input type="hidden" name="newUserProductSubmitted" value="true">
+                       maxlength="1000" value="">
+                <?php } ?>
             </div>
-        <?php } ?>
+        </div>
+
 
         <input type="hidden" name="categoryCounter" value="<?= $i + 1 ?>">
         <input type="hidden" name="product_id" value="<?= $productInfo[0]->product_id ?>">
 
         <div align="right">
-            <input class="btn btn-default" name="addCategory" type="submit" value="Add Category">
+            <a class="btn btn-warning" onclick="addField();">Add New Category</a>
             <input class="btn btn-success" name="updateProduct" type="submit" value="Save">
             <a class="btn btn-danger" href="<?php echo base_url("index.php/products"); ?>">Cancel</a>
         </div>
 
     </form>
-    <p><?php echo validation_errors('<p class="alert alert-danger">');  ?></p>
+    <p><?php echo validation_errors('<p class="alert alert-danger">'); ?></p>
 </div>
 
