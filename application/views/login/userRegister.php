@@ -22,5 +22,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <br>
     </form>
 
-    <?php echo validation_errors('<p class="alert alert-danger">');  ?>
+    <?php if (isset($errorMsg)) {
+        echo '<p class="alert alert-danger" >' . $errorMsg . '</p >';
+    }
+    echo validation_errors('<p class="alert alert-danger">'); ?>
 </div>
