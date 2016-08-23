@@ -230,7 +230,7 @@ class Products extends CI_Controller
         @mkdir("/var/www/vitchkovski.com/public_html/codeigniter/assets/img/uploads/" . $userId . "/cropped", 0777, true);
         @mkdir("/var/www/vitchkovski.com/public_html/codeigniter/assets/img/uploads/" . $userId . "/original", 0777, true);
 
-        $config['upload_path'] = '/var/www/vitchkovski.com/public_html/codeigniter/assets/img/uploads/' . $userId . '/original';
+        $config['upload_path'] = '/var/www/vitchkovski.com/public_html/codeigniter/assets/img/uploads/' . $userId . '/original/';
         $config['allowed_types'] = 'gif|jpg|png';
         $config['overwrite'] = false;
         $config['remove_spaces'] = true;
@@ -248,11 +248,11 @@ class Products extends CI_Controller
             redirect(uri_string());
         } else {
             //Image Resizing
-            $config['source_image'] = $this->upload->upload_path . $this->upload->file_name;
+            $config['source_image'] = $this->upload->upload_path .'/'. $this->upload->file_name;
             $config['maintain_ratio'] = TRUE;
             $config['width'] = 48;
             $config['height'] = 48;
-            $config['new_image'] = '/var/www/vitchkovski.com/public_html/codeigniter/assets/img/uploads/' . $userId . '/cropped' . $this->upload->file_name;
+            $config['new_image'] = '/var/www/vitchkovski.com/public_html/codeigniter/assets/img/uploads/' . $userId . '/cropped/' . $this->upload->file_name;
 
             $this->load->library('image_lib', $config);
 
