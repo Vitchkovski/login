@@ -72,6 +72,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
 
     </form>
-    <p><?php echo validation_errors('<p class="alert alert-danger">'); ?></p>
+    <p><?php if ($this->session->flashdata('errorMsg')) {
+            echo '<p class="alert alert-danger" >' . $this->session->flashdata('errorMsg') . '</p >';
+        }
+
+        echo validation_errors('<p class="alert alert-danger">'); ?></p>
 </div>
 

@@ -241,7 +241,11 @@ class Products extends CI_Controller
 
         if (!$this->upload->do_upload('productPicture')) {
             $this->session->set_flashdata('errorMsg', $this->upload->display_errors('', ''));
-            redirect(base_url('index.php/products'));
+
+            //this string is to save submitted product name
+            $this->session->set_flashdata('productName', $this->input->post('productName', TRUE));
+
+            redirect(uri_string());
         } else {
             //Image Resizing
             $config['source_image'] = $this->upload->upload_path . $this->upload->file_name;
@@ -254,7 +258,7 @@ class Products extends CI_Controller
 
             if (!$this->image_lib->resize()) {
                 $this->session->set_flashdata('errorMsg', $this->image_lib->display_errors('', ''));
-                redirect(base_url('index.php/products'));
+                //redirect(base_url('index.php/products'));
             }
 
             return $this->upload->file_name;

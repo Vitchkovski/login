@@ -14,7 +14,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="form-group">
             <label for="productName">Product Name:</label>
             <input type="text" name="productName" class="form-control" placeholder="Enter product name" autofocus
-                   maxlength="254" value="<?php echo set_value('productName'); ?>">
+                   maxlength="254" value="<?php echo ($this->session->flashdata('productName'))
+                ? $this->session->flashdata('productName')
+                : set_value('productName'); ?>">
         </div>
 
         <div id="add_field_area">
@@ -33,5 +35,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <a class="btn btn-danger" href="<?php echo base_url("index.php/products"); ?>">Cancel</a>
         </div>
     </form>
-    <p><?php echo validation_errors('<p class="alert alert-danger">'); ?></p>
+    <p><?php if ($this->session->flashdata('errorMsg')) {
+            echo '<p class="alert alert-danger" >' . $this->session->flashdata('errorMsg') . '</p >';
+        }
+
+        echo validation_errors('<p class="alert alert-danger">'); ?></p>
 </div>
