@@ -141,6 +141,12 @@ class Users extends CI_Controller
                 $this->load->view('header');
                 $this->load->view('login/userPasswordRecovery', $data);
                 $this->load->view('footer');
+            } else {
+                $data['errorMsg'] = 'Email you entered is incorrect';
+
+                $this->load->view('header');
+                $this->load->view('login/userPasswordRecovery', $data);
+                $this->load->view('footer');
             }
 
         }
