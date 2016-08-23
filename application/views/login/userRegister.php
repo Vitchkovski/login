@@ -26,4 +26,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         echo '<p class="alert alert-danger" >' . $errorMsg . '</p >';
     }
     echo validation_errors('<p class="alert alert-danger">'); ?>
+
+    <?php if (isset($successMessage)) {
+        echo '<p class="alert alert-success" >' . $successMessage . '</p >';
+    }
+    ?>
+
 </div>

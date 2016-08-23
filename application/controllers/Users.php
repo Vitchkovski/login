@@ -185,12 +185,16 @@ class Users extends CI_Controller
 
     function resetYourPassword($email, $emailResetLinkCode)
     {
+        //user just followed the link to reset his password
         if (isset($email, $emailResetLinkCode)) {
+
             $data['email'] = trim($email);
             $data['emailSecureHash'] = sha1($email . $emailResetLinkCode);
             $data['emailResetLinkCode'] = $emailResetLinkCode;
 
             $this->load->model('userModel');
+
+            //We need to confirm if data received is correct
             $verifyResetLinkCode = $this->userModel->verifyResetLinkCode($data['email'], $emailResetLinkCode);
 
 
@@ -214,6 +218,8 @@ class Users extends CI_Controller
 
     function update_password()
     {
+        //actually updating password
+
         if (!isset($_POST['email'], $_POST['emailSecureHash']) || $_POST['emailSecureHash'] !== sha1($_POST['email'] . $_POST['emailResetLinkCode'])) {
             //Most likely this is an attempt to hack recovery, just dying in this case.
             die('Error updating password.');

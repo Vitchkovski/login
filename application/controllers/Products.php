@@ -18,7 +18,6 @@ class Products extends CI_Controller
             $data['userName'] = $this->session->userdata('userSessionName');
 
 
-            //echo "User ID: ".$userId."<br>";
             $data['userProducts'] = $this->productsModel->retrieveUserProducts($data['userId']);
 
 
@@ -55,16 +54,6 @@ class Products extends CI_Controller
         $this->load->model('productsModel');
 
 
-        if (isset($_POST['addCategory'])) {
-
-            $data['categoryCounter'] = $_POST['categoryCounter'];
-
-            $data['productName'] = $_POST['productName'];
-
-            $data['productCategoriesArray'] = $_POST['productCategoriesArray'];
-
-        }
-
         $this->load->library('form_validation');
 
         //validation rules
@@ -75,15 +64,10 @@ class Products extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             //data is incorrect (or form just opened) - returning to add product page, notifying user
 
-            //defining variables
-            if (!isset($data['productName']))
-                $data['productName'] = "";
-           /* if (!isset($data['productCategoriesArray'][$data['categoryCounter']]))
-                $data['productCategoriesArray'][$data['categoryCounter'] - 1] = null;*/
-
             $this->load->view('header');
-            $this->load->view('products/addProduct', $data);
+            $this->load->view('products/addProduct');
             $this->load->view('footer');
+
         } else {
             //everything is fine, attempting to insert product
             if ($this->session->userdata('userSessionId')) {
@@ -112,7 +96,8 @@ class Products extends CI_Controller
                     $pictureNameAfterUpload = null;
 
                 }
-                var_dump($productCategoriesArray);
+
+                //saving new product
                 $this->productsModel->addProductToUserList($userId, $productName, $pictureNameAfterUpload, $productCategoriesArray);
 
                 //incorrect image flag should be saved in session before refreshing
@@ -121,12 +106,13 @@ class Products extends CI_Controller
                     $_SESSION['imageIncorrectFlag'] = $data['imageIncorrectFlag'];
                 }
 
+                //returning to product page
                 redirect(base_url('index.php/products'));
 
             } else {
                 //user is not logged in
                 $this->load->view('header');
-                $this->load->view('products/userPersonalPage', $data);
+                $this->load->view('products/userPersonalPage');
                 $this->load->view('footer');
             }
         }
@@ -179,8 +165,7 @@ class Products extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             //something is incorrect or form just opened
 
-            if (!isset($data['productId']))
-                $data['productId'] = $this->uri->segment(3);
+            $data['productId'] = $this->uri->segment(3);
 
             $data['productInfo'] = $this->productsModel->retrieveProductInfo($data['userId'], $data['productId']);
 
@@ -191,7 +176,9 @@ class Products extends CI_Controller
                 $this->load->view('header');
                 $this->load->view('products/editProduct', $data);
                 $this->load->view('footer');
+
             } else {
+                //someone passed product id parameter from url and it is incorrect
                 $this->session->set_flashdata('errorMsg', 'Product ID is incorrect.');
                 redirect(base_url('index.php/products'));
             }
