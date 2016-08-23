@@ -89,7 +89,7 @@ class Products extends CI_Controller
 
                 //picture can be not submitted. In that case - setting picture name to NULL
                 if (!isset ($pictureNameAfterUpload)) {
-                    $pictureNameAfterUpload = null;
+                    $pictureNameAfterUpload = "null";
                 }
 
                 //saving new product
@@ -199,7 +199,7 @@ class Products extends CI_Controller
 
                     //empty value after submit to null for processing
                     if ($pictureNameAfterUpload == "")
-                        $pictureNameAfterUpload = null;
+                        $pictureNameAfterUpload = "null";
 
                 }
 

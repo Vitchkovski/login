@@ -21,9 +21,6 @@ class ProductsModel extends CI_Model
 
 
         //mysql treating null php values as "" value and not NULL. Thus defining correct value before insert
-        if (is_null($pictureNameAfterUpload))
-            $pictureNameAfterUpload = "null";
-
 
         $sql = "insert into user_products (user_id, product_name, product_img_name) 
                                values (" . $userId . ", 
@@ -122,13 +119,6 @@ class ProductsModel extends CI_Model
 
 
             }
-        }
-
-
-        //mysql treating null php values as "" value and not NULL. Thus defining correct value before update
-
-        if (is_null($pictureNameAfterUpload)) {
-            $pictureNameAfterUpload = "null";
         }
 
 
