@@ -39,9 +39,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php foreach ($userProducts as $uP): ?>
             <tr>
                 <th><?php if (!is_null($uP->product_img_name)) { ?><a
-                        href="<?php echo base_url("assets/img/uploads/"); ?><?= $userId ?>/original/<?= $uP->product_img_name ?>" target="_blank">
+                        href="<?php echo base_url("assets/img/uploads/"); ?><?= $userId ?>/original/<?= $uP->product_img_name ?>"
+                        target="_blank">
                         <img class="img-rounded"
-                             src="<?php echo base_url("assets/img/uploads/"); ?><?= $userId ?>/cropped/<?= $uP->product_img_name ?>"></a><?php } ?>
+                             src="<?php echo base_url("assets/img/uploads/"); ?><?= $userId ?>/cropped/<?= $uP->product_img_name ?>">
+                        </a><?php } ?>
                 </th>
                 <th style="word-wrap: break-word;min-width: 160px;max-width: 300px;"><?= htmlspecialchars(ltrim(rtrim($uP->product_name))) ?></th>
                 <th style="word-wrap: break-word;min-width: 160px;max-width: 300px;"><?php
@@ -88,8 +90,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         ?>
         </tbody>
     </table>
-    <?php if (isset($errorMsg)) {
-        echo '<p class="alert alert-danger" >' . $errorMsg . '</p >';
+    <?php if ($this->session->flashdata('errorMsg')) {
+        echo '<p class="alert alert-danger" >' . $this->session->flashdata('errorMsg') . '</p >';
     }
+
     echo validation_errors('<p class="alert alert-danger">'); ?>
+
 </div>
