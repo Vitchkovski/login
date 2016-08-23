@@ -78,9 +78,9 @@ class Products extends CI_Controller
 
 
                 //product picture submitted
-                if (isset ($_FILES["productPicture"]) && !empty($_FILES["productPicture"]["name"])) {
+                if ($_FILES["productPicture"]['error'] == 0) {
 
-                    $pictureNameAfterUpload = uploadProductPicture($data['userId']);
+                    $pictureNameAfterUpload = $this->uploadProductPicture($userId);
 
                 }
 
@@ -88,23 +88,12 @@ class Products extends CI_Controller
 
 
                 //picture can be not submitted. In that case - setting picture name to NULL
-                if (!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Error on load") {
-
-                    if (isset($pictureNameAfterUpload) && $pictureNameAfterUpload == "Error on load")
-                        $data['imageIncorrectFlag'] = true;
-
+                if (!isset ($pictureNameAfterUpload)) {
                     $pictureNameAfterUpload = null;
-
                 }
 
                 //saving new product
                 $this->productsModel->addProductToUserList($userId, $productName, $pictureNameAfterUpload, $productCategoriesArray);
-
-                //incorrect image flag should be saved in session before refreshing
-                $_SESSION['imageIncorrectFlag'] = false;
-                if (isset($data['imageIncorrectFlag'])) {
-                    $_SESSION['imageIncorrectFlag'] = $data['imageIncorrectFlag'];
-                }
 
                 //returning to product page
                 redirect(base_url('index.php/products'));
@@ -191,10 +180,8 @@ class Products extends CI_Controller
                 $userId = $this->session->userdata('userSessionId');
 
                 //product picture submitted
-                if (isset ($_FILES["productPicture"]) && !empty($_FILES["productPicture"]["name"])) {
-
-                    $pictureNameAfterUpload = uploadProductPicture($data['userId']);
-
+                if ($_FILES["productPicture"]['error'] == 0) {
+                    $pictureNameAfterUpload = $this->uploadProductPicture($userId);
                 }
 
                 //Product Line to be updated
@@ -206,12 +193,9 @@ class Products extends CI_Controller
 
 
                 //picture can be not submitted. In that case - setting picture name to the initial value
-                if (!isset ($pictureNameAfterUpload) || $pictureNameAfterUpload == "Error on load") {
+                if (!isset($pictureNameAfterUpload)) {
 
-                    if (isset($pictureNameAfterUpload) && $pictureNameAfterUpload == "Error on load")
-                        $imageIncorrectFlag = true;
-
-                    $pictureNameAfterUpload = $_POST['initialProductPictureName'];
+                    $pictureNameAfterUpload = $this->input->post('initialProductPictureName', TRUE);
 
                     //empty value after submit to null for processing
                     if ($pictureNameAfterUpload == "")
@@ -221,12 +205,6 @@ class Products extends CI_Controller
 
 
                 $this->productsModel->updateUserProductString($userId, $productId, $productName, $pictureNameAfterUpload, $productCategoriesArray);
-
-                //incorrect image flag should be saved in session before refreshing
-                $_SESSION['imageIncorrectFlag'] = false;
-                if (isset($imageIncorrectFlag)) {
-                    $_SESSION['imageIncorrectFlag'] = $imageIncorrectFlag;
-                }
 
                 redirect(base_url('index.php/products'));
 
@@ -244,6 +222,44 @@ class Products extends CI_Controller
 
         $_SESSION['imageIncorrectFlag'] = false;
         redirect(base_url('index.php/products'));
+    }
+
+    public function uploadProductPicture($userId)
+    {
+        //Creating directories for the user on the server
+        @mkdir("/var/www/vitchkovski.com/public_html/codeigniter/assets/img/uploads/" . $userId . "/cropped", 0777, true);
+        @mkdir("/var/www/vitchkovski.com/public_html/codeigniter/assets/img/uploads/" . $userId . "/original", 0777, true);
+
+        $config['upload_path'] = '/var/www/vitchkovski.com/public_html/codeigniter/assets/img/uploads/' . $userId . '/original';
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['overwrite'] = false;
+        $config['remove_spaces'] = true;
+        $config['max_size'] = '3000';// in KB
+        $config['file_name'] = $userId . '-' . time() . '.png';
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('productPicture')) {
+            $this->session->set_flashdata('errorMsg', $this->upload->display_errors('', ''));
+            redirect(base_url('index.php/products'));
+        } else {
+            //Image Resizing
+            $config['source_image'] = $this->upload->upload_path . $this->upload->file_name;
+            $config['maintain_ratio'] = TRUE;
+            $config['width'] = 48;
+            $config['height'] = 48;
+            $config['new_image'] = '/var/www/vitchkovski.com/public_html/codeigniter/assets/img/uploads/' . $userId . '/cropped' . $this->upload->file_name;
+
+            $this->load->library('image_lib', $config);
+
+            if (!$this->image_lib->resize()) {
+                $this->session->set_flashdata('errorMsg', $this->image_lib->display_errors('', ''));
+                redirect(base_url('index.php/products'));
+            }
+
+            return $this->upload->file_name;
+        }
+
     }
 
 
