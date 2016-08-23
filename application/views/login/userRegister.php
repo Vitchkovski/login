@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <form class="form-signin" action="<?php echo base_url("index.php/users/register"); ?>" method="post">
         <h2 class="form-signin-heading">Registration</h2>
-
+        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
         <input type="email" class="form-control" name="email" placeholder="Email Address" spellcheck="false"
                value="<?php echo set_value('email'); ?>" required maxlength="254">
 

@@ -6,6 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <form class="form-signin" action="<?php echo base_url("index.php/users/reset_password"); ?>" method="post">
         <h2 class="form-signin-heading">Reset Password</h2>
+        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
         <input type="email" class="form-control" name="email" placeholder="Enter Your Email" spellcheck="false"
                value="<?php echo set_value('email'); ?>" required maxlength="254" style="margin-bottom: 10px">
 

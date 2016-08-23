@@ -13,6 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         <div class="form-group">
             <label for="productName">Product Name:</label>
+            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
             <input type="text" name="productName" class="form-control" placeholder="Enter product name" autofocus
                    maxlength="254" value="<?php echo ($this->session->flashdata('productName'))
                 ? $this->session->flashdata('productName')

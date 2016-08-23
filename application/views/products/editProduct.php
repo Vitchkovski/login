@@ -7,6 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <form enctype="multipart/form-data" role="form" method="post"
           action="<?php echo base_url("index.php/products/editProduct/"); ?><?= $productInfo[0]->product_id ?>">
+        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
         <div class="form-group">
             <div class="hide-upload-btn-div">
                 <label for="productPicture">Product Picture:</label>

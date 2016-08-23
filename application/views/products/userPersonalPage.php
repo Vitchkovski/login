@@ -7,18 +7,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <h2 align="center">My Product List Page | <?php echo $this->session->userdata('userSessionName'); ?>
 
     </h2><br>
-    <?php if (isset($_SESSION['imageIncorrectFlag']) && $_SESSION['imageIncorrectFlag'] == true) { ?>
-        <div align="center">
-
-            <div class="alert alert-danger">
-                <a href="<?php echo base_url("index.php/products/closeMessage"); ?>" class="close" data-dismiss="alert"
-                   aria-label="close">&times;</a>
-                Image you submitted is incorrect. Only
-                png, jpg and gif files not larger than 3 MB can be used.<br>
-            </div>
-
-        </div>
-    <?php } ?>
     <div align="right">
         <a class="btn btn-success" href='<?php echo base_url("index.php/products/addProduct"); ?>'>Add New Product</a>
         <a href='<?php echo base_url("index.php/users/logout"); ?>' class="btn btn-warning">Logout</a>
@@ -47,6 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </th>
                 <th style="word-wrap: break-word;min-width: 160px;max-width: 300px;"><?= htmlspecialchars(ltrim(rtrim($uP->product_name))) ?></th>
                 <th style="word-wrap: break-word;min-width: 160px;max-width: 300px;"><?php
+                    //below code is to list all categories as a line with , delimiters
                     $lastCategoryElement = end($productCategories[$uP->product_id]);
                     //var_dump($productCategories[$uP->product_id]);
                     foreach ($productCategories[$uP->product_id] as $pC):
@@ -71,6 +60,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                href='<?php echo base_url("index.php/products/editProduct/"); ?><?= $uP->product_id ?>'>
                                 Edit
                             </a>
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                             <input type="hidden" name="product_id" value="<?= $uP->product_id ?>">
                             <input type="hidden" name="deleteUserProduct" value="true">
                             <input class="btn btn-danger" TYPE="submit"
