@@ -5,17 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="container">
     <h2> Edit Product | <?php echo $this->session->userdata('userSessionName'); ?></h2>
 
-
-    <?php if (isset($incorrectProductNameFlag)) { ?>
-        <div class="alert alert-danger">
-            <a href="<?php echo base_url("index.php/products/editProduct/"); ?><?= $productId ?>" class="close"
-               data-dismiss="alert" aria-label="close">&times;</a>
-            Product Name can not be null.
-        </div>
-
-    <?php } ?>
-
-
     <form enctype="multipart/form-data" role="form" method="post"
           action="<?php echo base_url("index.php/products/editProduct/"); ?><?= $productInfo[0]->product_id ?>">
         <div class="form-group">
@@ -44,6 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
         <?php
+        //showing all existing product categories
         $i = 0;
         foreach ($productCategories[$productInfo[0]->product_id] as $pC):
 
@@ -63,7 +53,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         <div id="add_field_area">
             <div id="category1" class="form-group">
-                <?php if ($i == 0) { ?>
+                <?php if ($i == 0) {
+                    //showing this field only if there are NO existing product categories
+                    ?>
                     <label for="productCategoriesArray[]">Category:</label>
                     <input type="text" class="form-control" name="productCategoriesArray[]"
                            placeholder="Enter product category"
@@ -72,10 +64,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         </div>
 
-
-        <input type="hidden" name="categoryCounter" value="<?= $i + 1 ?>">
         <input type="hidden" name="product_id" value="<?= $productInfo[0]->product_id ?>">
-
         <div align="right">
             <a class="btn btn-warning" onclick="addField();">Add New Category</a>
             <input class="btn btn-success" name="updateProduct" type="submit" value="Save">
