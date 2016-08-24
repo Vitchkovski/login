@@ -19,13 +19,13 @@ class ProductsModel extends CI_Model
     {
         $this->load->database();
 
+        $data = array(
+            'user_id' => $userId,
+            'product_name' => $productName
+        );
+        $this->db->set('product_img_name', "(if ('" . $pictureNameAfterUpload . "' = 'null', null, '" . $pictureNameAfterUpload . "'))", FALSE);
 
-        $sql = "insert into user_products (user_id, product_name, product_img_name) 
-                               values (" . $userId . ", 
-                               " . $this->db->escape(ltrim(rtrim($productName))) . ", 
-                               if ('" . $pictureNameAfterUpload . "' = 'null', null, '" . $pictureNameAfterUpload . "'))";
-
-        $this->db->query($sql);
+        $this->db->insert('user_products', $data);
 
         $lastCreatedProductID = $this->db->insert_id();
 
@@ -122,14 +122,14 @@ class ProductsModel extends CI_Model
 
 
         //updating existing record in user's product list
-        $sql = "update user_products 
-                           set product_name = " . $this->db->escape(ltrim(rtrim($productName))) . ",
-							   product_img_name = (if ('" . $pictureNameAfterUpload . "' = 'null', null, '" . $pictureNameAfterUpload . "'))
-						   where product_id = " . $productId . "";
 
+        $data = array(
+            'product_name' => $productName
+        );
+        $this->db->set('product_img_name', "(if ('" . $pictureNameAfterUpload . "' = 'null', null, '" . $pictureNameAfterUpload . "'))", FALSE);
 
-        $this->db->query($sql);
-
+        $this->db->where('product_id', $productId);
+        $this->db->update('user_products', $data);
 
         //link between user_products and user_categories must be created - only if new category was submitted
         foreach ($productCategoriesArray as $pCA) {
