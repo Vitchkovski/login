@@ -175,9 +175,6 @@ class Products extends CI_Controller
                 //product picture submitted
                 if ($_FILES["productPicture"]['error'] == 0) {
                     $pictureNameAfterUpload = $this->uploadProductPicture($userId);
-                } elseif ($_FILES["productPicture"]['error'] !== 0) {
-                    //In most cases upload errors should be caught by CI in uploadProductPicture. If not - showing this msg
-                    $this->session->set_flashdata('errorMsg', 'There was an error on file upload. Please contact administrator.');
                 }
 
                 //Product Line to be updated
