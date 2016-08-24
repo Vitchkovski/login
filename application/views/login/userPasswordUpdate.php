@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <input type="hidden" name="emailResetLinkCode" value="<?= $emailResetLinkCode ?>">
         <?php } ?>
         <input type="password" class="form-control" name="password" placeholder="New Password" value="" required
-               maxlength="254">
+               maxlength="254" readonly>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Update My Password</button>
     </form>
 
