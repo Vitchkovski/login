@@ -20,8 +20,6 @@ class ProductsModel extends CI_Model
         $this->load->database();
 
 
-        //mysql treating null php values as "" value and not NULL. Thus defining correct value before insert
-
         $sql = "insert into user_products (user_id, product_name, product_img_name) 
                                values (" . $userId . ", 
                                " . $this->db->escape(ltrim(rtrim($productName))) . ", 
@@ -36,8 +34,8 @@ class ProductsModel extends CI_Model
         foreach ($productCategoriesArray as $pCA) {
 
 
-
             if ($pCA != "") {
+                //checking if category is already exist
                 $query = $this->db->get_where('user_categories', array('user_id' => $userId,
                     'category_name' => $pCA));
 
@@ -46,9 +44,9 @@ class ProductsModel extends CI_Model
 
 
                 if (empty($userCategoryInfo)) {
-                //creating category
+                    //creating category if it is not exist
                     $data = array(
-                        'user_id' => $userId ,
+                        'user_id' => $userId,
                         'category_name' => $pCA
 
                     );
@@ -63,15 +61,16 @@ class ProductsModel extends CI_Model
 
                 }
 
+                //cleaning table before insert to prevent duplicates
                 $this->db->delete('product_x_categories', array('product_id' => $lastCreatedProductID,
                     'category_id' => $userCategoryInfo[0]->category_id));
 
 
                 $data = array(
-                    'product_id' => $lastCreatedProductID ,
+                    'product_id' => $lastCreatedProductID,
                     'category_id' => $userCategoryInfo[0]->category_id
                 );
-
+                //saving data
                 $this->db->insert('product_x_categories', $data);
 
             }
@@ -83,31 +82,31 @@ class ProductsModel extends CI_Model
 
     }
 
-//updating user products list string
+    //updating user products list string
     function updateUserProductString($userId, $productId, $productName, $pictureNameAfterUpload, $productCategoriesArray)
     {
 
         $this->load->database();
 
+        //cleaning table before insert to prevent duplicates
         $this->db->delete('product_x_categories', array('product_id' => $productId));
 
         //if non-existing category was submitted we must create a record for it in corresponding table
         foreach ($productCategoriesArray as $pCA) {
-            //$pCA = $this->db->escape_str(ltrim(rtrim($pCA)));
 
             if ($pCA != "") {
+                //checking if category is already exist
                 $query = $this->db->get_where('user_categories', array('user_id' => $userId,
                     'category_name' => $pCA));
-
 
 
                 $userCategoryInfo = $query->result_object();
 
 
                 if (empty($userCategoryInfo)) {
-
+                    //creating unexisting category
                     $data = array(
-                        'user_id' => $userId ,
+                        'user_id' => $userId,
                         'category_name' => $pCA
 
                     );
@@ -136,18 +135,17 @@ class ProductsModel extends CI_Model
         foreach ($productCategoriesArray as $pCA) {
 
             if ($pCA != "") {
-                //delete product categories no longer in use
-
                 //retrieving category info for a future use
                 $query = $this->db->get_where('user_categories', array('user_id' => $userId,
                     'category_name' => $pCA));
                 $userCategoryInfo = $query->result_object();
 
+                //cleaning table before insert to prevent duplicates
                 $this->db->delete('product_x_categories', array('product_id' => $productId,
                     'category_id' => $userCategoryInfo[0]->category_id));
 
                 $data = array(
-                    'product_id' => $productId ,
+                    'product_id' => $productId,
                     'category_id' => $userCategoryInfo[0]->category_id
                 );
 

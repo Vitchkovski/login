@@ -11,7 +11,6 @@ class Products extends CI_Controller
         if ($this->session->userdata('userSessionId')) {
             //if user is logged in retrieving user info, user products
 
-            $this->load->helper('dataFunctions');
             $this->load->model('productsModel');
 
             $data['userId'] = $this->session->userdata('userSessionId');
@@ -49,14 +48,14 @@ class Products extends CI_Controller
 
     public function addProduct()
     {
+        //adding product to the list
 
-        $this->load->helper('dataFunctions');
         $this->load->model('productsModel');
 
 
         $this->load->library('form_validation');
 
-        //validation rules
+        //some basic validation rules
         $this->form_validation->set_rules('productName', 'Product Name', 'trim|required|max_length[254]');
         $this->form_validation->set_rules('productCategoriesArray[]', 'Product Category', 'trim|max_length[254]');
 
@@ -82,6 +81,9 @@ class Products extends CI_Controller
 
                     $pictureNameAfterUpload = $this->uploadProductPicture($userId);
 
+                } elseif ($_FILES["productPicture"]['error'] !== 0) {
+                    //In most cases upload errors should be caught by CI in uploadProductPicture. If not - showing this msg
+                    $this->session->set_flashdata('errorMsg', 'There was an error on file upload. Please contact administrator.');
                 }
 
                 $productCategoriesArray = $this->input->post('productCategoriesArray[]', TRUE);
@@ -111,23 +113,19 @@ class Products extends CI_Controller
     public function deleteProduct()
     {
 
-        $this->load->helper('dataFunctions');
+
         $this->load->model('productsModel');
 
         if ($this->session->userdata('userSessionId')) {
-
+            //user should be logged in
             $userId = $this->session->userdata('userSessionId');
             $productId = $this->input->post('product_id', TRUE);
 
 
             $this->productsModel->deleteProductFromUserList($userId, $productId);
 
-            if (isset($_SESSION['imageIncorrectFlag']) && $_SESSION['imageIncorrectFlag'] == true) {
-                $_SESSION['imageIncorrectFlag'] = false;
-            }
 
             redirect(base_url('index.php/products'));
-
 
         } else {
             redirect(base_url('index.php/users/login'));
@@ -137,51 +135,52 @@ class Products extends CI_Controller
     public function editProduct()
     {
 
-        $this->load->helper('dataFunctions');
         $this->load->model('productsModel');
 
-
-        $data['userId'] = $this->session->userdata('userSessionId');
-
-
-        $this->load->library('form_validation');
-
-        //validation rules
-        $this->form_validation->set_rules('productName', 'Product Name', 'trim|required|max_length[254]');
-        $this->form_validation->set_rules('productCategoriesArray[]', 'Product Category', 'trim|max_length[254]');
+        if ($this->session->userdata('userSessionId')) {
+            //user should be logged in
+            $data['userId'] = $this->session->userdata('userSessionId');
 
 
-        if ($this->form_validation->run() == FALSE) {
-            //something is incorrect or form just opened
+            $this->load->library('form_validation');
 
-            $data['productId'] = $this->uri->segment(3);
+            //validation rules
+            $this->form_validation->set_rules('productName', 'Product Name', 'trim|required|max_length[254]');
+            $this->form_validation->set_rules('productCategoriesArray[]', 'Product Category', 'trim|max_length[254]');
 
-            $data['productInfo'] = $this->productsModel->retrieveProductInfo($data['userId'], $data['productId']);
 
-            if ($data['productInfo']) {
-                //product exist for the user
-                $data['productCategories'][$data['productId']] = $this->productsModel->retrieveProductCategories($data['productId']);
+            if ($this->form_validation->run() == FALSE) {
+                //something is incorrect or form just opened
 
-                $this->load->view('header');
-                $this->load->view('products/editProduct', $data);
-                $this->load->view('footer');
+                $data['productId'] = $this->uri->segment(3);
+
+                $data['productInfo'] = $this->productsModel->retrieveProductInfo($data['userId'], $data['productId']);
+
+                if ($data['productInfo']) {
+                    //product exist for the user
+                    $data['productCategories'][$data['productId']] = $this->productsModel->retrieveProductCategories($data['productId']);
+
+                    $this->load->view('header');
+                    $this->load->view('products/editProduct', $data);
+                    $this->load->view('footer');
+
+                } else {
+                    //someone passed product id parameter from url and it is incorrect
+                    $this->session->set_flashdata('errorMsg', 'Product ID is incorrect.');
+                    redirect(base_url('index.php/products'));
+                }
 
             } else {
-                //someone passed product id parameter from url and it is incorrect
-                $this->session->set_flashdata('errorMsg', 'Product ID is incorrect.');
-                redirect(base_url('index.php/products'));
-            }
-
-        } else {
-            //data is correct
-            if ($this->session->userdata('userSessionId')) {
-                //logged user
+                //data is correct
 
                 $userId = $this->session->userdata('userSessionId');
 
                 //product picture submitted
                 if ($_FILES["productPicture"]['error'] == 0) {
                     $pictureNameAfterUpload = $this->uploadProductPicture($userId);
+                } elseif ($_FILES["productPicture"]['error'] !== 0) {
+                    //In most cases upload errors should be caught by CI in uploadProductPicture. If not - showing this msg
+                    $this->session->set_flashdata('errorMsg', 'There was an error on file upload. Please contact administrator.');
                 }
 
                 //Product Line to be updated
@@ -209,19 +208,12 @@ class Products extends CI_Controller
                 redirect(base_url('index.php/products'));
 
 
-            } else {
-                //user is not logged in
-                redirect(base_url('index.php/users/login'));
             }
+        } else {
+            //user is not logged in
+            redirect(base_url('index.php/users/login'));
         }
 
-    }
-
-    public function closeMessage()
-    {
-
-        $_SESSION['imageIncorrectFlag'] = false;
-        redirect(base_url('index.php/products'));
     }
 
     public function uploadProductPicture($userId)
@@ -230,6 +222,7 @@ class Products extends CI_Controller
         @mkdir("/var/www/vitchkovski.com/public_html/codeigniter/assets/img/uploads/" . $userId . "/cropped", 0777, true);
         @mkdir("/var/www/vitchkovski.com/public_html/codeigniter/assets/img/uploads/" . $userId . "/original", 0777, true);
 
+        //defining upload config
         $config['upload_path'] = '/var/www/vitchkovski.com/public_html/codeigniter/assets/img/uploads/' . $userId . '/original/';
         $config['allowed_types'] = 'gif|jpg|png';
         $config['overwrite'] = false;
@@ -239,16 +232,18 @@ class Products extends CI_Controller
 
         $this->load->library('upload', $config);
 
+        //do upload
         if (!$this->upload->do_upload('productPicture')) {
             $this->session->set_flashdata('errorMsg', $this->upload->display_errors('', ''));
 
-            //this string is to save submitted product name
+            //this string is to save submitted product name so user will not have to re-enter it
             $this->session->set_flashdata('productName', $this->input->post('productName', TRUE));
 
+            //something went wrong, so we arereturning to the same product edit page and showing error
             redirect(uri_string());
         } else {
             //Image Resizing
-            $config['source_image'] = $this->upload->upload_path .'/'. $this->upload->file_name;
+            $config['source_image'] = $this->upload->upload_path . '/' . $this->upload->file_name;
             $config['maintain_ratio'] = TRUE;
             $config['width'] = 48;
             $config['height'] = 48;

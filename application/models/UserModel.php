@@ -94,6 +94,7 @@ class UserModel extends CI_Model
 
         $this->load->database();
 
+        //checking if user with submitted email actually exist in the system
         $this->db->select('*');
         $this->db->from('users');
         $this->db->where('email =', $email);
@@ -103,6 +104,7 @@ class UserModel extends CI_Model
 
         $userInfo = $query->result_object();
 
+        //checking if security data is correct
         if(!empty ($userInfo) && $resetEmailCode == sha1($this->config->item('encryption_key') . $userInfo[0]->login) ){
         return true;
         } else {

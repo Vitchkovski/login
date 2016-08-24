@@ -113,6 +113,7 @@ class Users extends CI_Controller
 
     public function reset_password()
     {
+        //initial password reset function. Opening form, asking for email
         $this->load->library('form_validation');
 
         //some basic initial checks
@@ -134,6 +135,8 @@ class Users extends CI_Controller
             if (!empty($userInfo)) {
 
                 $userName = $userInfo[0]->login;
+
+                //sending email here
                 $this->sendResetPassword($userEmail, $userName);
 
                 $data['successMessage'] = 'Email to reset your password has been sent to ' . $userEmail . '.';
@@ -154,7 +157,7 @@ class Users extends CI_Controller
 
     function sendResetPassword($email, $userName)
     {
-
+        //function to send reset link
         $config = Array(
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.gmail.com',
@@ -168,6 +171,8 @@ class Users extends CI_Controller
         );
 
         $this->load->library('email', $config);
+
+        //preventing user from resetting password for another user by sub,itting someone else's email
         $emailResetLinkCode = sha1($this->config->item('encryption_key') . $userName);
 
         $this->email->set_mailtype('html');
@@ -189,7 +194,10 @@ class Users extends CI_Controller
         if (isset($email, $emailResetLinkCode)) {
 
             $data['email'] = trim($email);
+
+            //data for hidden security field
             $data['emailSecureHash'] = sha1($email . $emailResetLinkCode);
+
             $data['emailResetLinkCode'] = $emailResetLinkCode;
 
             $this->load->model('userModel');
@@ -218,7 +226,7 @@ class Users extends CI_Controller
 
     function update_password()
     {
-        //actually updating password
+        //actually updating password in the DB
 
         if (!isset($_POST['email'], $_POST['emailSecureHash']) || $_POST['emailSecureHash'] !== sha1($_POST['email'] . $_POST['emailResetLinkCode'])) {
             //Most likely this is an attempt to hack recovery, just dying in this case.
